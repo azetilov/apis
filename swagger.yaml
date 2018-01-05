@@ -1163,7 +1163,7 @@ definitions:
     example:
       _links:
         marketArticles:
-          href: /articles?area_code=A1,region_code=50
+          href: /articles?area_code=A1&region_code=50
       areaCode: 'A1'
       regionCode: '50'
 
