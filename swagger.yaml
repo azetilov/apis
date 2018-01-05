@@ -40,7 +40,7 @@ info:
     1. Article-specific
 
     ## Marketing Channels
-    Furthermore, there are three marketing channels (domains):
+    Furthermore, there are three marketing channels:
 
     1. eCommerce
     1. Retail (HERO)
@@ -51,6 +51,24 @@ info:
 
     > NOTE: Due to the Apiary limitations, marketing channels datamodels are not
     rendered. To see a marketing channel model see the source OpenAPI Spec file.
+
+    ### Marketing Channel-specific Behavior
+    Due to nature of different marketing channels, a request for the same article
+    number might have different result in different channel. For example, 
+    
+    ```
+    GET /articles/CY1203
+    ```
+
+    Might return `200` response in a global channel, but a similar request in 
+    `ecom` channel: 
+
+    ```
+    GET /articles/CY1203?marketingChannel=ecom&country=ch
+    ```
+
+    Might result in a `404` response because the product is not in the current 
+    "range" for the given country.
 
     ## Season Information
     Where applicable, seasonal information might be retrieved using the optional
