@@ -16,8 +16,10 @@ info:
     The API affords the following top-level actions:
     - Retrieve all articles
     - Retrieve all articles for a particular market
+    - Retrieve all articles for a particular country (site)
     - Retrieve particular article information
     - Retrieve particular article information on a specific market
+    - Retrieve particular article information for a particular country (site)
     - Retrieve the catalogue information for a particular article
     - Retrieve the catalogue information for a particular model
     - Retrieve the catalogue information for a particular model and market
@@ -62,7 +64,8 @@ info:
 
     ## Embedding Related Resoruces
     For the performance reasons over HTTP/1.1 the article-related resources will
-    be embeded under `_embedded` field as specified in HAL representation format.
+    be embeded under `_embedded` field as specified in [HAL](http://stateless.co/hal_specification.html)
+     representation format.
 
 produces:
   - application/hal+json      # Representation message format
@@ -134,6 +137,7 @@ paths:
         | marketing channel | query              | `marketingChannel`         |
         | market            | query              | `region_code`, `area_code` |
         | site              | query              | `country`                  |
+        | language          | header             | `Accept-Language`          |
 
         > NOTE: The embedded articles in the `_embedded` field might not represent
         > the latest information, nor be complete. To retireve the full up-to-date
@@ -147,9 +151,19 @@ paths:
         - $ref: '#/parameters/areaCodeQuery'
         - $ref: '#/parameters/regionCodeQuery'
         - $ref: '#/parameters/countryCodeQuery'
+        - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
           description: The list of articles
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language
           schema:
             $ref: '#/definitions/articlesHAL'
 
@@ -170,6 +184,7 @@ paths:
         | marketing channel | query              | `marketingChannel`         |
         | market            | query              | `region_code`, `area_code` |
         | site              | query              | `country`                  |
+        | language          | header             | `Accept-Language`          |
 
       parameters:
         - $ref: '#/parameters/season'
@@ -178,9 +193,19 @@ paths:
         - $ref: '#/parameters/regionCodeQuery'
         - $ref: '#/parameters/countryCodeQuery'
         - $ref: '#/parameters/fields'
+        - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
           description: One Article
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language
           schema:
             $ref: '#/definitions/articleHAL'
 
