@@ -60,6 +60,10 @@ info:
     negotiation](https://adidas-group.gitbooks.io/api-guidelines/content/execution/localization.html)
     using the `Accept-Language` HTTP Header.
 
+    ## Embedding Related Resoruces
+    For the performance reasons over HTTP/1.1 the article-related resources will
+    be embeded under `_embedded` field as specified in HAL representation format.
+
 produces:
   - application/hal+json      # Representation message format
   - application/problem+json  # Error message format
@@ -97,6 +101,8 @@ paths:
                   href: /articles
                 article:
                   href: /articles/{article_id}
+                countryArticles:
+                  href: /articles{?country}
                 marketArticles:
                   href: /articles{?area_code,region_code}
                 marketArticle:
@@ -127,6 +133,7 @@ paths:
         | season            | query              | `articleSeason`            |
         | marketing channel | query              | `marketingChannel`         |
         | market            | query              | `region_code`, `area_code` |
+        | site              | query              | `country`                  |
 
         > NOTE: The embedded articles in the `_embedded` field might not represent
         > the latest information, nor be complete. To retireve the full up-to-date
@@ -139,6 +146,7 @@ paths:
         - $ref: '#/parameters/marketingChannel'
         - $ref: '#/parameters/areaCodeQuery'
         - $ref: '#/parameters/regionCodeQuery'
+        - $ref: '#/parameters/countryCodeQuery'
       responses:
         200:
           description: The list of articles
@@ -161,12 +169,14 @@ paths:
         | season            | query              | `articleSeason`            |
         | marketing channel | query              | `marketingChannel`         |
         | market            | query              | `region_code`, `area_code` |
+        | site              | query              | `country`                  |
 
       parameters:
         - $ref: '#/parameters/season'
         - $ref: '#/parameters/marketingChannel'
         - $ref: '#/parameters/areaCodeQuery'
         - $ref: '#/parameters/regionCodeQuery'
+        - $ref: '#/parameters/countryCodeQuery'
         - $ref: '#/parameters/fields'
       responses:
         200:
@@ -376,7 +386,7 @@ paths:
 
       responses:
         200:
-          description: | 
+          description: |
             List of area-code region-code tuples toghether with their specific article
             listings.
           schema:
@@ -421,6 +431,15 @@ parameters:
     required: false
     type: string
     x-example: '50'
+
+  # Country (site) Code
+  countryCodeQuery:
+    name: country
+    in: query
+    description: Code of a country
+    required: false
+    type: string
+    x-example: 'ch'
 
   # Marketing Channel
   marketingChannel:
@@ -926,7 +945,7 @@ definitions:
       color3:
         $ref: '#/definitions/codeDescriptionTuple'
       color4:
-        $ref: '#/definitions/codeDescriptionTuple'      
+        $ref: '#/definitions/codeDescriptionTuple'
     example:
       color1:
         code: "A0QM"
@@ -1081,7 +1100,7 @@ definitions:
       markets:
         - $ref: '#/definitions/marketHAL/example'
 
-  marketHAL: 
+  marketHAL:
     type: object
     allOf:
       - $ref: '#/definitions/halResource'
