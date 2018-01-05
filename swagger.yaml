@@ -503,10 +503,12 @@ parameters:
   season:
     name: articleSeason
     in: query
-    description: Filter results based on the defined season-name (SS14, FW14)
+    description: |
+      Filter results based on the defined season-code.
+      Season format is "20171" – 4 digits for year and 1 digit for season type.
     type: string
     default: 'current' # TODO: Current season, identifier
-    x-example: 'SS17'
+    x-example: '20171'
 
   # adidas API guidelines: Pagination
   offset:
