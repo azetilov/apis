@@ -461,7 +461,9 @@ parameters:
   areaCodeQuery:
     name: area_code
     in: query
-    description: Code of an area
+    description: | 
+      Code of an area
+      Mutually exclusive with `country`.
     required: false
     type: string
     x-example: 'A1'
@@ -470,7 +472,9 @@ parameters:
   regionCodeQuery:
     name: region_code
     in: query
-    description: Code of a region
+    description: |
+      Code of a region.
+      Mutually exclusive with `country`.
     required: false
     type: string
     x-example: '50'
@@ -479,7 +483,9 @@ parameters:
   countryCodeQuery:
     name: country
     in: query
-    description: Code of a country
+    description: |
+      Code of a country. 
+      Mutually exclusive with `region_code` and `area_code`.
     required: false
     type: string
     x-example: 'ch'
