@@ -16,10 +16,8 @@ info:
     The API affords the following top-level actions:
     - Retrieve all articles
     - Retrieve all articles for a particular market
-    - Retrieve all articles for a particular country (site)
     - Retrieve particular article information
     - Retrieve particular article information on a specific market
-    - Retrieve particular article information for a particular country (site)
     - Retrieve the catalogue information for a particular article
     - Retrieve the catalogue information for a particular model
     - Retrieve the catalogue information for a particular model and market
@@ -40,39 +38,17 @@ info:
     1. Article-specific
 
     ## Marketing Channels
-    Furthermore, there are three marketing channels:
+    The Product Service API (this API) doesn't provide any marketing channel 
+    -specific information. To retireve product information specifict ot a 
+    marketing channel refer to the respective marketing channel APIs 
 
-    1. eCommerce
-    1. Retail (HERO)
-    1. Wholesale (eCatalogue)
-
-    These are communicated by the optional `marketingChannel` query parameter.
-    When the parameter is omitted, the information common for "global" channel is returned.
-
-    > NOTE: Due to the Apiary limitations, marketing channels datamodels are not
-    rendered. To see a marketing channel model see the source OpenAPI Spec file.
-
-    ### Marketing Channel-specific Behavior
-    Due to nature of different marketing channels, a request for the same article
-    number might have different result in different channel. For example, 
-    
-    ```
-    GET /articles/CY1203
-    ```
-
-    Might return `200` response in a global channel, but a similar request in 
-    `ecom` channel: 
-
-    ```
-    GET /articles/CY1203?marketingChannel=ecom&country=ch
-    ```
-
-    Might result in a `404` response because the product is not in the current 
-    "range" for the given country.
+    1. [eCommerce](https://draftproductserviceglass.docs.apiary.io/#) (GLASS)
+    1. Retail (HERO) (planned)
+    1. Wholesale (eCatalogue) (planned)
 
     ## Season Information
     Where applicable, seasonal information might be retrieved using the optional
-    `articleSeason` parameter. When no `articleSeason` parameter is provided the current
+    `seasonName` parameter. When no `seasonName` parameter is provided the current
     season is returned.
 
     ## Language Variants
@@ -124,10 +100,12 @@ paths:
                   href: /articles/{article_id}
                 countryArticles:
                   href: /articles{?country}
+                # TODO: change URIs for market articles
+                # TODO: make clear separation between market article season and global season
                 marketArticles:
-                  href: /articles{?area_code,region_code}
+                  href: /market-articles{?area_code,region_code,season_code}
                 marketArticle:
-                  href: /articles/{article_id}{?area_code,region_code}
+                  href: /market-articles/{article_id}{?area_code,region_code,season_code} # TODO: make season code mandatory
                 modelCatalogue:
                   href: /models/{model_id}/catalogue
                 marketModelCatalogue:
@@ -151,8 +129,7 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `articleSeason`            |
-        | marketing channel | query              | `marketingChannel`         |
+        | season            | query              | `seasonName`               |
         | market            | query              | `region_code`, `area_code` |
         | site              | query              | `country`                  |
         | language          | header             | `Accept-Language`          |
@@ -164,7 +141,7 @@ paths:
       parameters:
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/limit'
-        - $ref: '#/parameters/season'
+        - $ref: '#/parameters/seasonName'
         - $ref: '#/parameters/marketingChannel'
         - $ref: '#/parameters/areaCodeQuery'
         - $ref: '#/parameters/regionCodeQuery'
@@ -198,14 +175,14 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `articleSeason`            |
+        | season            | query              | `seasonName`               |
         | marketing channel | query              | `marketingChannel`         |
         | market            | query              | `region_code`, `area_code` |
         | site              | query              | `country`                  |
         | language          | header             | `Accept-Language`          |
 
       parameters:
-        - $ref: '#/parameters/season'
+        - $ref: '#/parameters/seasonName'
         - $ref: '#/parameters/marketingChannel'
         - $ref: '#/parameters/areaCodeQuery'
         - $ref: '#/parameters/regionCodeQuery'
@@ -296,9 +273,9 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s) |
         |-------------------|--------------------|-------------------|
-        | season            | query              | `articleSeason`   |
+        | season            | query              | `seasonName`      |
       parameters:
-        - $ref: '#/parameters/season'
+        - $ref: '#/parameters/seasonName'
       responses:
         200:
           description: Prices for an Article
@@ -327,10 +304,10 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s) |
         |-------------------|--------------------|-------------------|
-        | season            | query              | `articleSeason`   |
+        | season            | query              | `seasonName`      |
         | language          | header             | `Accept-Language` |
       parameters:
-        - $ref: '#/parameters/season'
+        - $ref: '#/parameters/seasonName'
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
@@ -372,12 +349,12 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `articleSeason`            |
+        | season            | query              | `seasonName`               |
         | market            | query              | `region_code`, `area_code` |
         | language          | header             | `Accept-Language`          |
       parameters:
         - $ref: '#/parameters/acceptLanguageHeader'
-        - $ref: '#/parameters/season'
+        - $ref: '#/parameters/seasonName'
         - $ref: '#/parameters/areaCodeQuery'
         - $ref: '#/parameters/regionCodeQuery'
       responses:
@@ -408,11 +385,11 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `articleSeason`            |
+        | season            | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
       parameters:
         - $ref: '#/parameters/acceptLanguageHeader'
-        - $ref: '#/parameters/season'
+        - $ref: '#/parameters/seasonName'
       responses:
         200:
           description: Article Catalogue
@@ -505,15 +482,25 @@ parameters:
     default: 'global'
     x-example: 'ecom'
 
-  # Season filter
-  season:
-    name: articleSeason
+  # Season filters
+  # Season Name is the preffered way to filter for season
+  seasonName: 
+    name: seasonName
     in: query
     description: |
-      Filter results based on the defined season-code.
-      Season format is "20171" – 4 digits for year and 1 digit for season type.
+      Filter resutls based on the season name.
+      Season name format is 2 letters for season and 2 numbers for year (e.g., FW17)
     type: string
-    default: 'current' # TODO: Current season, identifier
+    x-example: 'FW17'
+
+  # Season Code
+  seasonCode:
+    name: seasonCode
+    in: query
+    description: |
+      Filter results based on the season code.
+      Season code format is "20171" – 4 digits for year and 1 digit for season type.
+    type: string
     x-example: '20171'
 
   # adidas API guidelines: Pagination
@@ -609,8 +596,14 @@ definitions:
         relatedArticles:
           - href: /articles/015111
           - href: /articles/015112
-      $ref: '#/definitions/articleSeasonal/example'
+        ecomArticle:
+          href: https://api.adidas.com/ecom/article/015110
+        availability:
+          href: https://private-483f4-eainventoryapi.apiary-mock.com/availability?articlesIds=015110
+      
+      _embedded:
 
+      $ref: '#/definitions/articleSeasonal/example'
   #
   # Article
   #
@@ -640,10 +633,18 @@ definitions:
           description:
             type: string
             description: Is it short description or long - both? English only
+      # TODO: put here the colors directly, remove the colors resource
+      colors:
+        type: object
+
+      # TODO: move season to a separate resource
       season:
         type: object
         description: Sesonal article attributes
         properties:
+          seasonName: # REMINDER: this is a new property
+            type: string
+
           carryOver:
             type: boolean
           retailIntroDate:
@@ -679,7 +680,7 @@ definitions:
   #
   # eCommerce Article
   #
-  ecomArticleSeasonal:
+  ecomArticleSeasonal: # TODO: Remove article seasonality
     type: object
     allOf:
       - $ref: '#/definitions/articleSeasonal'
@@ -963,6 +964,7 @@ definitions:
   #
   # Article Colors
   #
+  # TODO: Move under the article directly
   colorsHAL:
     type: object
     allOf:

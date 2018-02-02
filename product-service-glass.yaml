@@ -7,6 +7,10 @@ info:
     This API is [documented at Apiary](http://docs.demotemplate.apiary.io)
     and [stored on GitHub](https://github.com/adidas-group/demo-orders-api).
 
+    ## API Affordances
+    - Retrieve all articles for a particular country (site)
+    - Retrieve particular article information for a particular country (site)        
+
 produces:
   - application/hal+json      # Representation message format
   - application/problem+json  # Error message format
