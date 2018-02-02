@@ -1,8 +1,9 @@
 swagger: '2.0'
 info:
   version: '1.0.0'
-  title: "[Draft] Product Service API"
+  title: "[Draft] Product Service"
   description: |
+
     **FOR FURTHER DISCUSSION**
 
     ---
