@@ -39,9 +39,10 @@ info:
     1. Article-specific
 
     ## Marketing Channels
-    The Product Service API (this API) doesn't provide any marketing channel 
-    -specific information. To retireve product information specifict ot a 
-    marketing channel refer to the respective marketing channel APIs 
+    The Product Service API (this API) doesn't provide any marketing channel
+    (eCommerce, retail, wholesale, etc.) -specific information.
+    To retireve product information specifict ot a marketing channel refer to
+    the respective marketing channel's API.
 
     1. [eCommerce](https://draftproductserviceglass.docs.apiary.io/#) (GLASS)
     1. Retail (HERO) (planned)
@@ -49,8 +50,8 @@ info:
 
     ## Season Information
     Where applicable, seasonal information might be retrieved using the optional
-    `seasonName` parameter. When no `seasonName` parameter is provided the current
-    season is returned.
+    `seasonName` parameter. When no `seasonName` parameter is provided the
+    current season is assumed.
 
     ## Language Variants
     Where applicable, product information support standard [HTTP Language Variants
@@ -99,22 +100,24 @@ paths:
                   href: /articles
                 article:
                   href: /articles/{article_id}
-                countryArticles:
-                  href: /articles{?country}
-                # TODO: change URIs for market articles
-                # TODO: make clear separation between market article season and global season
-                marketArticles:
-                  href: /market-articles{?area_code,region_code,season_code}
-                marketArticle:
-                  href: /market-articles/{article_id}{?area_code,region_code,season_code} # TODO: make season code mandatory
-                modelCatalogue:
-                  href: /models/{model_id}/catalogue
-                marketModelCatalogue:
-                  href: /models/{model_id}/catalogue{?area_code,region_code}
+                  templated: true
                 articleCatalogue:
                   href: /articles/{article_id}/catalogue
+                  templated: true
                 markets:
-                  href: /markets
+                  href: /markets                  
+                marketArticles:
+                  href: /markets/{area_code}-{region_code}/{?season_code}
+                  templated: true
+                marketArticle:
+                  href: /markets/{area_code}-{region_code}/articles/{article_id}{?season_code}
+                  templated: true
+                marketModelCatalogue:
+                  href: /markets/{area_code}-{region_code}/model/{model_id}
+                  templated: true
+                modelCatalogue:
+                  href: /models/{model_id}/catalogue
+                  templated: true
 
   #
   # Article Information
@@ -131,8 +134,6 @@ paths:
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
         | season            | query              | `seasonName`               |
-        | market            | query              | `region_code`, `area_code` |
-        | site              | query              | `country`                  |
         | language          | header             | `Accept-Language`          |
 
         > NOTE: The embedded articles in the `_embedded` field might not represent
@@ -143,10 +144,6 @@ paths:
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/seasonName'
-        - $ref: '#/parameters/marketingChannel'
-        - $ref: '#/parameters/areaCodeQuery'
-        - $ref: '#/parameters/regionCodeQuery'
-        - $ref: '#/parameters/countryCodeQuery'
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
@@ -177,17 +174,10 @@ paths:
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
         | season            | query              | `seasonName`               |
-        | marketing channel | query              | `marketingChannel`         |
-        | market            | query              | `region_code`, `area_code` |
-        | site              | query              | `country`                  |
         | language          | header             | `Accept-Language`          |
 
       parameters:
         - $ref: '#/parameters/seasonName'
-        - $ref: '#/parameters/marketingChannel'
-        - $ref: '#/parameters/areaCodeQuery'
-        - $ref: '#/parameters/regionCodeQuery'
-        - $ref: '#/parameters/countryCodeQuery'
         - $ref: '#/parameters/fields'
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
@@ -275,6 +265,7 @@ paths:
         | Available Filters | Parameter Location | Parameter Name(s) |
         |-------------------|--------------------|-------------------|
         | season            | query              | `seasonName`      |
+
       parameters:
         - $ref: '#/parameters/seasonName'
       responses:
@@ -292,27 +283,28 @@ paths:
           schema:
             $ref: '#/definitions/articleNotFoundError'
 
-  /articles/{article_id}/colors:
-    x-summary: Article Colors
-    x-description: Article colors, language dependent (see Language Variants).
+  /articles/{article_id}/seasons:
+    x-summary: Article Seasons
+    x-description: Article seasonal information.
     parameters:
       - $ref: '#/parameters/articleId'
 
     get:
-      summary: Retrieve Article Colors
+      summary: Retrieve Article Seasonoal Information
       description: |
-        Retrieve available colors for a particular article.
+        Retrieve seasonal article information
 
         | Available Filters | Parameter Location | Parameter Name(s) |
         |-------------------|--------------------|-------------------|
         | season            | query              | `seasonName`      |
         | language          | header             | `Accept-Language` |
+
       parameters:
         - $ref: '#/parameters/seasonName'
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
-          description: Prices for an Article
+          description: Seasons for an Article
           headers:
             Content-Language:
               type: string
@@ -323,10 +315,10 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/colorsHAL'
+            $ref: '#/definitions/seasonsHAL'
 
         404:
-          description: Colors for the given article weren't found.
+          description: The given article was not found.
           headers:
             Content-Type:
               type: string
@@ -343,6 +335,8 @@ paths:
     parameters:
       - $ref: '#/parameters/modelId'
 
+    # TODO: Is model market-specific(only)?
+    
     get:
       summary: Retrieve Model Catalogue
       description: |
@@ -351,13 +345,10 @@ paths:
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
         | season            | query              | `seasonName`               |
-        | market            | query              | `region_code`, `area_code` |
         | language          | header             | `Accept-Language`          |
+
       parameters:
         - $ref: '#/parameters/acceptLanguageHeader'
-        - $ref: '#/parameters/seasonName'
-        - $ref: '#/parameters/areaCodeQuery'
-        - $ref: '#/parameters/regionCodeQuery'
       responses:
         200:
           description: Model Catalogue
@@ -388,6 +379,7 @@ paths:
         |-------------------|--------------------|----------------------------|
         | season            | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
+
       parameters:
         - $ref: '#/parameters/acceptLanguageHeader'
         - $ref: '#/parameters/seasonName'
@@ -404,7 +396,6 @@ paths:
     get:
       summary: Retrieve Markets
       description: Retrieve the List of Available Markets
-
       responses:
         200:
           description: |
@@ -412,6 +403,21 @@ paths:
             listings.
           schema:
             $ref: '#/definitions/marketsHAL'
+
+  /markets/{area_code}-{region_code}/articles:
+    x-summary: Market Articles
+    x-description: List of articles for the given market
+    parameters:
+      - $ref: '#/parameters/areaCodePath'
+      - $ref: '#/parameters/regionCodePath'
+    get: 
+      summary: Retrieve List of Market Articles
+      description: Retrieve List of Articles for a given Market
+      responses:
+        200:
+          description: List of market articles
+          schema:
+            $ref: '#/definitions/marketArticlesHAL'
 
 #
 # Parameters Definitions
@@ -436,62 +442,33 @@ parameters:
     x-example: '10034'
 
   # Market Area Code
-  areaCodeQuery:
+  areaCodePath:
     name: area_code
-    in: query
-    description: | 
-      Code of an area
-      Mutually exclusive with `country`.
-    required: false
+    in: path
+    description: Code of an area
+    required: true
     type: string
     x-example: 'A1'
 
   # Market Region Code
-  regionCodeQuery:
+  regionCodePath:
     name: region_code
-    in: query
-    description: |
-      Code of a region.
-      Mutually exclusive with `country`.
-    required: false
+    in: path
+    description: Code of a region.
+    required: true
     type: string
     x-example: '50'
 
-  # Country (site) Code
-  countryCodeQuery:
-    name: country
-    in: query
-    description: |
-      Code of a country. 
-      Mutually exclusive with `region_code` and `area_code`.
-    required: false
-    type: string
-    x-example: 'ch'
-
-  # Marketing Channel
-  marketingChannel:
-    name: marketingChannel
-    in: query
-    description: Requested marketing channel
-    required: false
-    type: string
-    enum:
-      - ecom
-      - retail
-      - wholesale
-      - global
-    default: 'global'
-    x-example: 'ecom'
-
   # Season filters
   # Season Name is the preffered way to filter for season
-  seasonName: 
+  seasonName:
     name: seasonName
     in: query
     description: |
       Filter resutls based on the season name.
       Season name format is 2 letters for season and 2 numbers for year (e.g., FW17)
     type: string
+    required: true
     x-example: 'FW17'
 
   # Season Code
@@ -538,7 +515,7 @@ parameters:
       - articleNumber
       - modelNumber
 
-  # adidas API guidelines:
+  # adidas API guidelines: Language negotiation
   acceptLanguageHeader:
     name: 'Accept-Language'
     in: header
@@ -575,6 +552,28 @@ definitions:
         article:
           - $ref: '#/definitions/articleHAL/example'
 
+  marketArticlesHAL:
+    type: object
+    allOf:
+      - $ref: '#/definitions/halResource'
+    properties:
+      articleCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /markets/50-A1/articles
+        next:
+          href: /markets/50-A1/articles?offset=5&limit=5
+        first:
+          href: /markets/50-A1/articles?offset=0&limit=5
+        last:
+          href: /markets/50-A1/articles?offset=40&limit=5
+      articleCount: 1
+      _embedded:
+        article:
+          - $ref: '#/definitions/articleHAL/example'
+
   articleHAL:
     type: object
     allOf:
@@ -590,20 +589,17 @@ definitions:
           href: /articles/015110/skus
         prices:
           href: /articles/015110/prices
-        colors:
-          href: /articles/015110/colors
+        seasons:
+          href: /articles/015110/seasons
         catalogue:
           href: /articles/015110/catalogue
         relatedArticles:
           - href: /articles/015111
           - href: /articles/015112
         ecomArticle:
-          href: https://api.adidas.com/ecom/article/015110
+          href: https://api.adidas.com/ecom/article/015110 # NOTE: This is just an example URI
         availability:
-          href: https://private-483f4-eainventoryapi.apiary-mock.com/availability?articlesIds=015110
-      
-      _embedded:
-
+          href: https://api.adidas.com/inventory/availability?articlesIds=015110 # NOTE: This is just an example URI
       $ref: '#/definitions/articleSeasonal/example'
   #
   # Article
@@ -633,27 +629,11 @@ definitions:
             type: string
           description:
             type: string
-            description: Is it short description or long - both? English only
-      # TODO: put here the colors directly, remove the colors resource
+            description: Is it short description or long - both? English only # TODO: Description
       colors:
-        type: object
-
-      # TODO: move season to a separate resource
-      season:
-        type: object
-        description: Sesonal article attributes
-        properties:
-          seasonName: # REMINDER: this is a new property
-            type: string
-
-          carryOver:
-            type: boolean
-          retailIntroDate:
-            type: string
-            format: date-time
-          retailExitDate:
-            type: string
-            format: date-time
+        type: array
+        items:
+          - $ref: '#/definitions/color'
     example:
       articleNumber: "015110"
       modelNumber: "10034"
@@ -673,35 +653,78 @@ definitions:
       colorway:
         name: "FTWR WHITE/BLACK"
         description: "BLABAS/GRAFIT/BLABAS"
-      season:
-        carryOver: false
-        retailIntroDate: "2017-06-01"
-        retailExitDate: "2017-11-30"
+      colors:
+        - $ref: '#/definitions/color/example'
 
   #
-  # eCommerce Article
+  # Season
   #
-  ecomArticleSeasonal: # TODO: Remove article seasonality
+  seasonsHAL:
     type: object
     allOf:
-      - $ref: '#/definitions/articleSeasonal'
+      - $ref: '#/definitions/halResource'
     properties:
-      preOrder:
+      seasonsCount:
+        type: number
+      seasons:
+        type: array
+        items:
+          - $ref: '#/definitions/season'
+    example:
+      _links:
+        self:
+          href: /articles/015110/seasons
+      assetCount: 1
+      assets:
+        - $ref: '#/definitions/season/example'
+
+  season:
+    type: object
+    description: Additional sesonal article attributes
+    properties:
+      seasonName:
+        type: string
+      carryOver:
         type: boolean
-      personalizable:
-        type: boolean
-      hypeProduct:
-        type: boolean
-      flashProduct:
-        type: boolean
-      soldOut:
-        type: boolean
-      onlineFrom:
+      retailIntroDate:
         type: string
         format: date-time
-      onlineTo:
+      retailExitDate:
         type: string
         format: date-time
+    example:
+      carryOver: false
+      retailIntroDate: "2017-06-01"
+      retailExitDate: "2017-11-30"
+
+  #
+  # Color
+  #
+  color:
+    type: object
+    description: Color descriptions are language-dependent
+    properties:
+      color1:
+        $ref: '#/definitions/codeDescriptionTuple'
+      color2:
+        $ref: '#/definitions/codeDescriptionTuple'
+      color3:
+        $ref: '#/definitions/codeDescriptionTuple'
+      color4:
+        $ref: '#/definitions/codeDescriptionTuple'
+    example:
+      color1:
+        code: "A0QM"
+        description: "core black"
+      color2:
+        code: "A98B"
+        description: "utility black"
+      color3:
+        code: "A0QM"
+        description: "core black"
+      color4:
+        code: "01F7"
+        description: "ftwr white"
 
   articleNotFoundError:
     type: object
@@ -886,22 +909,6 @@ definitions:
           saleSizeAbbr: "27"
 
   #
-  # eCommerce SKU
-  #
-  ecomSKU:
-    type: object
-    allOf:
-      - $ref: '#/definitions/articleSeasonal'
-    properties:
-      ecomDisplaySize:
-        type: string
-      ecomRetailInStock:
-        type: string
-        format: date-time
-      stockAvailability:
-        type: integer
-
-  #
   # Article Prices
   #
   pricesHAL:
@@ -961,58 +968,6 @@ definitions:
       validTo: "2017-12-31"
       priceValue: "74,98"
       countryCode: "AT"
-
-  #
-  # Article Colors
-  #
-  # TODO: Move under the article directly
-  colorsHAL:
-    type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
-    properties:
-      colorsCount:
-        type: number
-      colors:
-        type: array
-        items:
-          - $ref: '#/definitions/price'
-    example:
-      _links:
-        self:
-          href: /articles/015110/colors
-      colorsCount: 1
-      colors:
-        - $ref: '#/definitions/color/example'
-
-  #
-  # Color
-  #
-  color:
-    type: object
-    description: Color descriptions are language-dependent
-    properties:
-      color1:
-        $ref: '#/definitions/codeDescriptionTuple'
-      color2:
-        $ref: '#/definitions/codeDescriptionTuple'
-      color3:
-        $ref: '#/definitions/codeDescriptionTuple'
-      color4:
-        $ref: '#/definitions/codeDescriptionTuple'
-    example:
-      color1:
-        code: "A0QM"
-        description: "core black"
-      color2:
-        code: "A98B"
-        description: "utility black"
-      color3:
-        code: "A0QM"
-        description: "core black"
-      color4:
-        code: "01F7"
-        description: "ftwr white"
 
   #
   # Catalogue
@@ -1124,7 +1079,7 @@ definitions:
       b2bCopyShort: "Hurricanes Training Jersey as worn by the players when training with dynamic retro design inspired by the orginal Super jersey."
       materialComposition: "100% Organic Cotton"
       materialConstruction: "Single jersey"
-      bullets1: "materiál Climalite odvádí pot a udrží tě v suchu za všech okolností"
+      bullets1: "materiál Climalite odvádí pot a udrží tě vsuchu za všech okolností"
       bullets2: "Ribbet V-hals"
       bullets3: "Nackenband"
       bullets4: "Επένδυση προστασίας από τον άνεμο στο μπροστινό μέρος. Μανσέτες με ανοίγματα για τους αντίχειρες"
@@ -1142,10 +1097,11 @@ definitions:
     properties:
       marketsCount:
         type: number
-      markets:
-        type: array
-        items:
-          - $ref: '#/definitions/marketHAL'
+    # TODO: Issues with editor.swagger.com
+    #  markets:
+    #    type: array
+    #    items:
+    #      - $ref: '#/definitions/marketHAL'
     example:
       _links:
         self:
@@ -1219,8 +1175,16 @@ definitions:
         type: string
       templated:
         type: boolean
-      type:
-        type: string
+      #
+      # WARN: Some version of OAS parser can have problem with property being called "type"
+      # resulting in the error 'Schema "type" key must be a string'.
+      #
+      # For this reason we have commented out the "type" property of the link object.
+      # See https://tools.ietf.org/html/draft-kelly-json-hal-08#section-5.3 for the definiton of
+      # HAL's link object type property.
+      #
+      # type:
+      #  type: string
       deprecation:
         type: string
       name:
