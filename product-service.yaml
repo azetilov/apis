@@ -290,7 +290,7 @@ paths:
       - $ref: '#/parameters/articleId'
 
     get:
-      summary: Retrieve Article Seasonoal Information
+      summary: Retrieve Article Seasonal Information
       description: |
         Retrieve seasonal article information
 
