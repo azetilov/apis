@@ -437,8 +437,8 @@ paths:
             $ref: '#/definitions/marketArticlesHAL'
 
   /markets/{area_code}-{region_code}/articles/{article_id}:
-    x-summary: Article
-    x-description: Global article infromation.
+    x-summary: Market Article
+    x-description: Market article infromation.
     parameters:
       - $ref: '#/parameters/areaCodePath'
       - $ref: '#/parameters/regionCodePath'    
