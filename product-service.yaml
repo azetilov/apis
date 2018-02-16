@@ -13,17 +13,6 @@ info:
     To propose a change, head over to [GitHub repository](https://github.com/adidas-group/product-service-api),
     create a new branch with proposed change and open a [pull request](https://help.github.com/articles/about-pull-requests/).
 
-    ## Available Affordances
-    The API affords the following top-level actions:
-    - Retrieve all articles
-    - Retrieve all articles for a particular market
-    - Retrieve particular article information
-    - Retrieve particular article information on a specific market
-    - Retrieve the catalogue information for a particular article
-    - Retrieve the catalogue information for a particular model
-    - Retrieve the catalogue information for a particular model and market
-    - Retrieve all markets, and their area and region codes
-
     ## Article Information Levels
     Article information are provided on the following levels:
 
@@ -33,10 +22,18 @@ info:
     ## Catalogue Information Levels
     Catalogue information are provided on the following levels:
 
-    1. Model-specific
-        1. Global
-        2. Market-specific
-    1. Article-specific
+    1. Global (as in not market specific) Model-specific
+    1. Global Article-specific
+
+    ## Available Affordances
+    The API affords the following top-level actions:
+    - Retrieve all articles
+    - Retrieve all articles for a particular market
+    - Retrieve a particular article information
+    - Retrieve a particular article information on a specific market
+    - Retrieve the catalogue information for a particular article
+    - Retrieve the catalogue information for a particular model
+    - Retrieve all markets and their area and region codes    
 
     ## Marketing Channels
     The Product Service API (this API) doesn't provide any marketing channel
@@ -104,6 +101,9 @@ paths:
                 articleCatalogue:
                   href: /articles/{article_id}/catalogue
                   templated: true
+                modelCatalogue:
+                  href: /models/{model_id}/catalogue
+                  templated: true                  
                 markets:
                   href: /markets                  
                 marketArticles:
@@ -111,12 +111,6 @@ paths:
                   templated: true
                 marketArticle:
                   href: /markets/{area_code}-{region_code}/articles/{article_id}{?season_code}
-                  templated: true
-                marketModelCatalogue:
-                  href: /markets/{area_code}-{region_code}/model/{model_id}
-                  templated: true
-                modelCatalogue:
-                  href: /models/{model_id}/catalogue
                   templated: true
 
   #
@@ -179,6 +173,7 @@ paths:
       parameters:
         - $ref: '#/parameters/seasonName'
         - $ref: '#/parameters/fields'
+        - $ref: '#/parameters/embedded'
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
@@ -410,14 +405,83 @@ paths:
     parameters:
       - $ref: '#/parameters/areaCodePath'
       - $ref: '#/parameters/regionCodePath'
+
     get: 
       summary: Retrieve List of Market Articles
-      description: Retrieve List of Articles for a given Market
+      description: |
+        Retrieve List of Articles for a given Market
+
+        | Available Filters | Parameter Location | Parameter Name(s)          |
+        |-------------------|--------------------|----------------------------|
+        | season            | query              | `seasonName`               |
+        | language          | header             | `Accept-Language`          |
+
+      parameters:
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/seasonName'
+        - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
           description: List of market articles
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language          
           schema:
             $ref: '#/definitions/marketArticlesHAL'
+
+  /markets/{area_code}-{region_code}/articles/{article_id}:
+    x-summary: Article
+    x-description: Global article infromation.
+    parameters:
+      - $ref: '#/parameters/areaCodePath'
+      - $ref: '#/parameters/regionCodePath'    
+      - $ref: '#/parameters/articleId'
+
+    get:
+      summary: Retrieve Market Article
+      description: |
+        Retrieve one article for the given market
+
+        | Available Filters | Parameter Location | Parameter Name(s)          |
+        |-------------------|--------------------|----------------------------|
+        | season            | query              | `seasonName`               |
+        | language          | header             | `Accept-Language`          |
+
+      parameters:
+        - $ref: '#/parameters/seasonName'
+        - $ref: '#/parameters/fields'
+        - $ref: '#/parameters/embedded'
+        - $ref: '#/parameters/acceptLanguageHeader'
+      responses:
+        200:
+          description: One Article
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language
+          schema:
+            $ref: '#/definitions/articleHAL' #TODO: Change to Market Article
+
+        404:
+          description: The requested article wasn't found
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            $ref: '#/definitions/articleNotFoundError'
 
 #
 # Parameters Definitions
@@ -514,6 +578,20 @@ parameters:
     x-example:
       - articleNumber
       - modelNumber
+
+  # adidas API guidelines: Sparse fieldset
+  embedded:
+    name: embedded
+    in: query
+    description: Comma-separated list of resource (relations) to embed in the response
+    required: false
+    type: array
+    items:
+      type: string
+    collectionFormat: csv
+    x-example:
+      - prices
+      - assets
 
   # adidas API guidelines: Language negotiation
   acceptLanguageHeader:
