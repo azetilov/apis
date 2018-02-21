@@ -137,7 +137,7 @@ paths:
       parameters:
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/limit'
-        - $ref: '#/parameters/seasonName'
+        - $ref: '#/parameters/seasonNameOptional'
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
@@ -156,7 +156,11 @@ paths:
 
   /articles/{article_id}:
     x-summary: Article
-    x-description: Global article infromation.
+    x-description: | 
+      Global article infromation. This resource represents non-seasonal 
+      information, however its related resource `season` posess the 
+      season-specific article information.
+
     parameters:
       - $ref: '#/parameters/articleId'
 
@@ -167,11 +171,9 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
 
       parameters:
-        - $ref: '#/parameters/seasonName'
         - $ref: '#/parameters/fields'
         - $ref: '#/parameters/embedded'
         - $ref: '#/parameters/acceptLanguageHeader'
@@ -330,6 +332,7 @@ paths:
     parameters:
       - $ref: '#/parameters/modelId'
 
+    # TODO: Confirm the following is correct:
     # TODO: Is model market-specific(only)?
     
     get:
@@ -372,12 +375,15 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
 
       parameters:
         - $ref: '#/parameters/acceptLanguageHeader'
-        - $ref: '#/parameters/seasonName'
+        # TODO: Confirm the following is correct:
+        # TODO: Article catalogue information non-seasonal? 
+        # TODO: Remove season parameter
+
+        # - $ref: '#/parameters/seasonName'
       responses:
         200:
           description: Article Catalogue
@@ -399,12 +405,11 @@ paths:
           schema:
             $ref: '#/definitions/marketsHAL'
 
-  /markets/{area_code}-{region_code}/articles:
+  /markets/{area_code}/articles:
     x-summary: Market Articles
     x-description: List of articles for the given market
     parameters:
       - $ref: '#/parameters/areaCodePath'
-      - $ref: '#/parameters/regionCodePath'
 
     get: 
       summary: Retrieve List of Market Articles
@@ -436,12 +441,10 @@ paths:
           schema:
             $ref: '#/definitions/marketArticlesHAL'
 
-  /markets/{area_code}-{region_code}/articles/{article_id}:
+  /markets/{area_code}/articles/{article_id}:
     x-summary: Market Article
     x-description: Market article infromation.
     parameters:
-      - $ref: '#/parameters/areaCodePath'
-      - $ref: '#/parameters/regionCodePath'    
       - $ref: '#/parameters/articleId'
 
     get:
@@ -472,7 +475,20 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/articleHAL' #TODO: Change to Market Article
+            $ref: '#/definitions/articleHAL' 
+            #TODO: Change to Market Article
+            # Market Article
+            # Assets are global, same across markets
+            # Market SKUs are subset of global
+            # Prices are not global they are usuall market -specific
+            #   planned prices - for future
+            #   existing (actual) prices - they exist per sales org which corelates with market (care: there is 1:1 mapping between sales org and market)
+            #   remove the link between article and price (on a global level)
+            #
+            # Season
+            #   globally: an article is ranged for a season
+            #   market-season: article is ranged for a season on a market
+            # TODO: on a market level merge market article with season, on a global level leave season separated
 
         404:
           description: The requested article wasn't found
@@ -515,13 +531,14 @@ parameters:
     x-example: 'A1'
 
   # Market Region Code
-  regionCodePath:
-    name: region_code
-    in: path
-    description: Code of a region.
-    required: true
-    type: string
-    x-example: '50'
+  # TODO: Remove as this is no longer needed
+  # regionCodePath:
+  #  name: region_code
+  #  in: path
+  #  description: Code of a region.
+  #  required: true
+  #  type: string
+  #  x-example: '50'
 
   # Season filters
   # Season Name is the preffered way to filter for season
@@ -534,6 +551,10 @@ parameters:
     type: string
     required: true
     x-example: 'FW17'
+
+  seasonNameOptional:
+    $ref: '#/parameters/seasonName'
+    required: false
 
   # Season Code
   seasonCode:
@@ -756,6 +777,7 @@ definitions:
       assets:
         - $ref: '#/definitions/season/example'
 
+  # Global Season
   season:
     type: object
     description: Additional sesonal article attributes
@@ -771,9 +793,14 @@ definitions:
         type: string
         format: date-time
     example:
+      seasonName: FW17
       carryOver: false
       retailIntroDate: "2017-06-01"
       retailExitDate: "2017-11-30"
+
+
+  # Market Season
+  # same for now, might be additional in the future
 
   #
   # Color
@@ -968,6 +995,7 @@ definitions:
             properties:
               localSize:
                 type: string
+                description: This is always country specific
               saleSizeConvID:
                 type: string
               saleSizeScale:
@@ -1098,7 +1126,7 @@ definitions:
       shoePart:
         type: string
       # TODO: Is this needed with language negotiation?
-      #langaugeCode:
+      #languageCode:
       #  type: string
       featureName:
         type: string
