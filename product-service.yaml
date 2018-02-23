@@ -33,7 +33,7 @@ info:
     - Retrieve a particular article information on a specific market
     - Retrieve the catalogue information for a particular article
     - Retrieve the catalogue information for a particular model
-    - Retrieve all markets and their area and region codes    
+    - Retrieve all markets and their area and region codes
 
     ## Marketing Channels
     The Product Service API (this API) doesn't provide any marketing channel
@@ -103,14 +103,14 @@ paths:
                   templated: true
                 modelCatalogue:
                   href: /models/{model_id}/catalogue
-                  templated: true                  
+                  templated: true
                 markets:
-                  href: /markets                  
+                  href: /markets
                 marketArticles:
-                  href: /markets/{area_code}-{region_code}/{?season_code}
+                  href: /markets/{area_code}/{?season_code}
                   templated: true
                 marketArticle:
-                  href: /markets/{area_code}-{region_code}/articles/{article_id}{?season_code}
+                  href: /markets/{area_code}/articles/{article_id}{?season_code}
                   templated: true
 
   #
@@ -156,9 +156,9 @@ paths:
 
   /articles/{article_id}:
     x-summary: Article
-    x-description: | 
-      Global article infromation. This resource represents non-seasonal 
-      information, however its related resource `season` posess the 
+    x-description: |
+      Global article infromation. This resource represents non-seasonal
+      information, however its related resource `season` posess the
       season-specific article information.
 
     parameters:
@@ -334,7 +334,7 @@ paths:
 
     # TODO: Confirm the following is correct:
     # TODO: Is model market-specific(only)?
-    
+
     get:
       summary: Retrieve Model Catalogue
       description: |
@@ -380,7 +380,7 @@ paths:
       parameters:
         - $ref: '#/parameters/acceptLanguageHeader'
         # TODO: Confirm the following is correct:
-        # TODO: Article catalogue information non-seasonal? 
+        # TODO: Article catalogue information non-seasonal?
         # TODO: Remove season parameter
 
         # - $ref: '#/parameters/seasonName'
@@ -411,7 +411,7 @@ paths:
     parameters:
       - $ref: '#/parameters/areaCodePath'
 
-    get: 
+    get:
       summary: Retrieve List of Market Articles
       description: |
         Retrieve List of Articles for a given Market
@@ -437,7 +437,7 @@ paths:
             Vary:
               type: string
               default: Accept-Language
-              x-example: Accept-Language          
+              x-example: Accept-Language
           schema:
             $ref: '#/definitions/marketArticlesHAL'
 
@@ -445,6 +445,7 @@ paths:
     x-summary: Market Article
     x-description: Market article infromation.
     parameters:
+      - $ref: '#/parameters/areaCodePath'
       - $ref: '#/parameters/articleId'
 
     get:
@@ -475,7 +476,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/articleHAL' 
+            $ref: '#/definitions/articleHAL'
             #TODO: Change to Market Article
             # Market Article
             # Assets are global, same across markets
@@ -553,8 +554,14 @@ parameters:
     x-example: 'FW17'
 
   seasonNameOptional:
-    $ref: '#/parameters/seasonName'
+    name: seasonName
+    in: query
+    description: |
+      Filter resutls based on the season name.
+      Season name format is 2 letters for season and 2 numbers for year (e.g., FW17)
+    type: string
     required: false
+    x-example: 'FW17'
 
   # Season Code
   seasonCode:

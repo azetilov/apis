@@ -1,0 +1,20 @@
+$id: http://adidas.com/api/problem-detail
+
+title: Problem Details for HTTP APIs
+description: Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem detail 
+type: object
+
+properties:
+  type:
+    type: string
+  title:
+    type: string
+  status:
+    type: number
+  detail:
+    type: string
+  instance:
+    type: string
+required:
+  - title
+  - detail
