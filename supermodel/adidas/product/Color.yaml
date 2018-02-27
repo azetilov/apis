@@ -1,0 +1,29 @@
+$id: http://adidas.com/product/Color
+
+title: Color
+type: object
+description: Color descriptions are language-dependent
+
+properties:
+  color1:
+    $ref: utils/CodeDescription
+  color2:
+    $ref: utils/CodeDescription
+  color3:
+    $ref: utils/CodeDescription
+  color4:
+    $ref: utils/CodeDescription
+
+examples:
+  - color1:
+      code: "A0QM"
+      description: "core black"
+    color2:
+      code: "A98B"
+      description: "utility black"
+    color3:
+      code: "A0QM"
+      description: "core black"
+    color4:
+      code: "01F7"
+      description: "ftwr white"

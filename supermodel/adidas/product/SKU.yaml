@@ -1,0 +1,40 @@
+$id: http://adidas.com/product/SKU
+
+title: SKU
+type: object
+
+properties:
+  EAN:
+    type: string
+  UPC:
+    type: string
+  srcSizeCD3:
+    type: string
+  srcSizeScale:
+    type: string
+  srcSizeDescription:
+    type: string
+  conversionIDs:
+    type: array
+    items:
+      - type: object
+        properties:
+          localSize:
+            type: string
+          saleSizeConvID:
+            type: string
+          saleSizeScale:
+            type: string
+          saleSizeAbbr:
+            type: string
+          saleSizeDesc:
+            type: string
+examples:
+  - EAN: "4058026055128"
+    UPC: "885591427616"
+    srcSizeCD3: "380"
+    srcSizeScale: "T4"
+    conversionIDs:
+      - saleSizeConvID: D
+        saleSizeScale: 8C
+        saleSizeAbbr: "27"

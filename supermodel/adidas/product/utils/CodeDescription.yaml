@@ -1,0 +1,11 @@
+$id: http://adidas.com/product/utils/CodeDescription
+
+title: Code Description Tuple
+description: Helper data structure to hold any code - description pair
+type: object
+
+properties:
+  code:
+    type: string
+  description:
+    type: string

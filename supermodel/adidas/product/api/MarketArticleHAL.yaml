@@ -1,0 +1,5 @@
+$id: http://adidas.com/product/api/MarketArticleHAL
+
+title: Market Article
+type: object
+

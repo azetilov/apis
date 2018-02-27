@@ -1,0 +1,79 @@
+$id: http://adidas.com/product/Asset
+
+title: Asset
+description: Digital Asset
+type: object
+
+properties:
+  assetType:
+    type: string
+    enum:
+      - image
+      - video
+      - other
+  viewGroup:
+    type: string
+  view:
+    type: string
+  assetCategory:
+    type: string
+  usageTerms:
+    type: array
+    items:
+      type: string
+  assetHref:
+    type: string
+    format: uri
+  image:
+    type: object
+    properties:
+      style:
+        type: string
+      width:
+        type: integer
+      height:
+        type: integer
+      bgColor:
+        type: string
+      representation:
+        type: string
+  video:
+    type: object
+    properties:
+      fileSize:
+        type: integer
+  model:
+    type: object
+    properties:
+      waist:
+        type: string
+      chest:
+        type: string
+      height:
+        type: string
+      productSize:
+        type: string
+required:
+  - assetType
+  - viewGroup
+  - view
+  - assetCategory
+  - usageTerms
+  - assetHref
+
+examples:
+  - assetType: image
+    viewGroup: 3d
+    assetCategory: Photography
+    usageTerms: B2B Cataloguge
+    assetHref: http://domain.com/image.jpeg
+    image:
+      style: On Model
+      width: 2000
+      height: 2000
+      bgColor: transparent
+    model:
+      waist: 58
+      chest: 97
+      height: 197
+      productSize: 540

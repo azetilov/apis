@@ -1,0 +1,31 @@
+$id: http://adidas.com/product/api/ArticleHAL
+
+title: Article HAL Representation
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/HAL
+  - $ref: http://adidas.com/product/Article
+
+examples:
+  - _links:
+      self:
+        href: /articles/015110
+      assets:
+        href: /articles/015110/assets
+      skus:
+        href: /articles/015110/skus
+      prices:
+        href: /articles/015110/prices
+      seasons:
+        href: /articles/015110/seasons
+      catalogue:
+        href: /articles/015110/catalogue
+      relatedArticles:
+        - href: /articles/015111
+        - href: /articles/015112
+      ecomArticle:
+        href: https://api.adidas.com/ecom/article/015110
+      availability:
+        href: https://api.adidas.com/inventory/availability?articlesIds=015110
+

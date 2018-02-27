@@ -1,0 +1,25 @@
+$id: http://adidas.com/product/api/ArticlesHAL
+
+title: HAL Representation of Collections of Articles
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/HAL
+
+properties:
+  articleCount:
+    type: number
+
+examples:
+  - _links:
+      self:
+        href: /articles
+      next:
+        href: /articles?offset=5&limit=5
+      first:
+        href: /articles?offset=0&limit=5
+      last:
+        href: /articles?offset=40&limit=5
+    articleCount: 1
+    _embedded:
+      article: [{}]

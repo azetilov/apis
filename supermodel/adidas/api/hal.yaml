@@ -1,14 +1,13 @@
 $id: http://adidas.com/api/HAL
 
-title: JSON Hypertext Application Language
-description: Definition of [HAL message format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
+title: HAL
+description: JSON Hypertext Application Language. Definition of [HAL message format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
 type: object
 
 properties:
   _links:
     type: object
     additionalProperties:
-      # WARN: "anyOf" is not supported in OAS2
       anyOf:
       - $ref: '#/definitions/halLinkObject'
       - type: array
@@ -16,7 +15,6 @@ properties:
           - $ref: '#/definitions/halLinkObject'
     properties:
       curies:
-        # WARN: "anyOf" is not supported in OAS2
         anyOf:
           - $ref: '#/definitions/halCuriesLink'
           - type: array
@@ -24,13 +22,12 @@ properties:
               - $ref: '#/definitions/halCuriesLink'
   _embedded:
     type: object
-    # WARN: Apiary doesn't support circular references
     additionalProperties:
       anyOf:
-        - $ref: '#/definitions/hal_resource'
+        - $ref: '#/'
         - type: array
           items:
-            - $ref: '#/definitions/hal_resource'
+            - $ref: '#/'
 
 definitions:
   halLinkObject:
@@ -43,14 +40,9 @@ definitions:
         type: boolean
       #
       # WARN: Some version of OAS parser can have problem with property being called "type"
-      # resulting in the error 'Schema "type" key must be a string'.
-      #
-      # For this reason we have commented out the "type" property of the link object.
-      # See https://tools.ietf.org/html/draft-kelly-json-hal-08#section-5.3 for the definiton of
-      # HAL's link object type property.
-      #
-      # type:
-      #  type: string
+      # resulting in the error 'Schema "type" key must be a string'
+      type:
+       type: string
       deprecation:
         type: string
       name:
@@ -62,7 +54,7 @@ definitions:
       hreflang:
         type: string
     required:
-      - href        
+      - href
 
   halCuriesLink:
     title: HAL Curies Link

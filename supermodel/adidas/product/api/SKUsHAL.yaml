@@ -1,0 +1,22 @@
+$id: http://adidas.com/product/api/SKUsHAL
+
+title: HAL Representation of Collection of SKUs
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/HAL
+
+properties:
+  skuCount:
+    type: number
+  skus:
+    type: array
+    items:
+      $ref: http://adidas.com/product/SKU
+
+examples:
+  - _links:
+      self:
+        href: /articles/015110/skus
+    skuCount: 1
+    skus: [{}]

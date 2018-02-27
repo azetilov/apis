@@ -3,11 +3,6 @@ info:
   version: '1.0.0'
   title: "[Draft] Product Service"
   description: |
-
-    **FOR FURTHER DISCUSSION**
-
-    ---
-
     Draft of a new Poduct API for outbound integration.
 
     To propose a change, head over to [GitHub repository](https://github.com/adidas-group/product-service-api),
@@ -76,7 +71,7 @@ securityDefinitions:
 security:
   - "API Key": []
 
-paths:
+paths: 
   /:
     x-summary: Product Service API
 
@@ -88,7 +83,7 @@ paths:
           description: The root of the API
           schema:
             allOf:
-              - $ref: '#/definitions/halResource'
+              - $ref: '#/definitions/adidasComApiHAL'
             example:
               _links:
                 self:
@@ -112,10 +107,7 @@ paths:
                 marketArticle:
                   href: /markets/{area_code}/articles/{article_id}{?season_code}
                   templated: true
-
-  #
-  # Article Information
-  #
+                  
   /articles:
     x-summary: Articles
     x-description: Global articles information.
@@ -152,8 +144,8 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/articlesHAL'
-
+            $ref: '#/definitions/adidasComProductApiArticlesHAL'
+            
   /articles/{article_id}:
     x-summary: Article
     x-description: |
@@ -190,7 +182,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/articleHAL'
+            $ref: '#/definitions/adidasComProductApiArticleHAL'
 
         404:
           description: The requested article wasn't found
@@ -199,8 +191,8 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/articleNotFoundError'
-
+            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
+            
   /articles/{article_id}/assets:
     x-summary: Article Assets
     x-description: Global articles assets.
@@ -215,7 +207,7 @@ paths:
         200:
           description: Assets for an Article
           schema:
-            $ref: '#/definitions/assetsHAL'
+            $ref: '#/definitions/adidasComProductApiAssetsHAL'
 
         404:
           description: Assets for the given article weren't found
@@ -224,7 +216,7 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/articleNotFoundError'
+            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
 
   /articles/{article_id}/skus:
     x-summary: Article SKUs
@@ -237,7 +229,7 @@ paths:
         200:
           description: SKUs for an Article
           schema:
-            $ref: '#/definitions/skusHAL'
+            $ref: '#/definitions/adidasComProductApiSKUsHAL'
 
         404:
           description: SKUs for the given article weren't found.
@@ -246,7 +238,7 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/articleNotFoundError'
+            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
 
   /articles/{article_id}/prices:
     x-summary: Article Prices
@@ -269,7 +261,7 @@ paths:
         200:
           description: Prices for an Article
           schema:
-            $ref: '#/definitions/pricesHAL'
+            $ref: '#/definitions/adidasComProductApiPricesHAL'
 
         404:
           description: Prices for the given article weren't found
@@ -278,7 +270,7 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/articleNotFoundError'
+            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
 
   /articles/{article_id}/seasons:
     x-summary: Article Seasons
@@ -312,7 +304,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/seasonsHAL'
+            $ref: '#/definitions/adidasComProductApiArticleSeasonsHAL'
 
         404:
           description: The given article was not found.
@@ -321,7 +313,7 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/articleNotFoundError'
+            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
 
   #
   # Catalogue Information
@@ -360,7 +352,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/modelCatalogueHAL'
+            $ref: '#/definitions/adidasComProductApiModelCatalogHAL'
 
   /articles/{article_id}/catalogue:
     x-summary: Article Catalogue
@@ -388,7 +380,7 @@ paths:
         200:
           description: Article Catalogue
           schema:
-            $ref: '#/definitions/articleCatalogueHAL'
+            $ref: '#/definitions/adidasComProductApiArticleCatalogHAL'
 
   /markets:
     x-summary: Markets
@@ -403,7 +395,7 @@ paths:
             List of area-code region-code tuples toghether with their specific article
             listings.
           schema:
-            $ref: '#/definitions/marketsHAL'
+            $ref: '#/definitions/adidasComProductApiMarketsHAL'
 
   /markets/{area_code}/articles:
     x-summary: Market Articles
@@ -439,7 +431,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/marketArticlesHAL'
+            $ref: '#/definitions/adidasComProductApiMarketArticlesHAL'
 
   /markets/{area_code}/articles/{article_id}:
     x-summary: Market Article
@@ -476,7 +468,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/articleHAL'
+            $ref: '#/definitions/adidasComProductApiArticleHAL'
             #TODO: Change to Market Article
             # Market Article
             # Assets are global, same across markets
@@ -498,7 +490,7 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/articleNotFoundError'
+            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
 
 #
 # Parameters Definitions
@@ -630,87 +622,170 @@ parameters:
     x-example: en,en-US,fr;q=0.6
 
 #
-# Models Definitions
+# Data Model Definitions
 #
 definitions:
-  #
-  # Article
-  #
-  articlesHAL:
+  adidasComApiHALDefinitionsHalLinkObject:
+    title: HAL Link Object
     type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
     properties:
-      articleCount:
-        type: number
-    example:
-      _links:
-        self:
-          href: /articles
-        next:
-          href: /articles?offset=5&limit=5
-        first:
-          href: /articles?offset=0&limit=5
-        last:
-          href: /articles?offset=40&limit=5
-      articleCount: 1
-      _embedded:
-        article:
-          - $ref: '#/definitions/articleHAL/example'
-
-  marketArticlesHAL:
-    type: object
+      href:
+        type: string
+      templated:
+        type: boolean
+      type:
+        type: string
+      deprecation:
+        type: string
+      name:
+        type: string
+      profile:
+        type: string
+      title:
+        type: string
+      hreflang:
+        type: string
+    required:
+      - href
+  adidasComApiHALDefinitionsHalCuriesLink:
+    title: HAL Curies Link
     allOf:
-      - $ref: '#/definitions/halResource'
+      - type: object
+        properties:
+          templated:
+            enum:
+              - true
+        required:
+          - templated
+      - $ref: '#/definitions/adidasComApiHALDefinitionsHalLinkObject'
+  adidasComProductCatalogDefinitionsCatalogCopy:
+    title: Catalog Copy
+    type: object
     properties:
-      articleCount:
-        type: number
+      acsModelName:
+        type: string
+      b2cCopy:
+        type: string
+      b2cCopyShort:
+        type: string
+      b2bCopy:
+        type: string
+      b2bCopyShort:
+        type: string
+      materialComposition:
+        type: string
+      materialConstruction:
+        type: string
+      bullets1:
+        type: string
+      bullets2:
+        type: string
+      bullets3:
+        type: string
+      bullets4:
+        type: string
+      bullets5:
+        type: string
+      bullets6:
+        type: string
+      bulletMaterial:
+        type: string
     example:
-      _links:
-        self:
-          href: /markets/50-A1/articles
-        next:
-          href: /markets/50-A1/articles?offset=5&limit=5
-        first:
-          href: /markets/50-A1/articles?offset=0&limit=5
-        last:
-          href: /markets/50-A1/articles?offset=40&limit=5
-      articleCount: 1
-      _embedded:
-        article:
-          - $ref: '#/definitions/articleHAL/example'
-
-  articleHAL:
+      acsModelName: COPA MUNDIAL
+      b2cCopy: >-
+        De populairste voetbalschoen ooit, en terecht. De adidas Copa Mundial
+        heeft een bovenwerk van rijk leer en een loopzool met dubbele dichtheid
+        die al decennia lang de toon zet voor comfort en prestaties op het veld.
+      b2cCopyShort: >-
+        Entraîne-toi comme les pros avec ce haut de l'équipe de Belgique de
+        football.
+      b2bCopy: >-
+        Hurricanes Training Jersey as worn by the players when training with
+        dynamic retro design inspired by the original Super Jersey.Captured with
+        shock blue and black colors on climalite fabric with moisture wicking
+        properties.
+      b2bCopyShort: >-
+        Hurricanes Training Jersey as worn by the players when training with
+        dynamic retro design inspired by the orginal Super jersey.
+      materialComposition: 100% Organic Cotton
+      materialConstruction: Single jersey
+      bullets1: materiál Climalite odvádí pot a udrží tě vsuchu za všech okolností
+      bullets2: Ribbet V-hals
+      bullets3: Nackenband
+      bullets4: >-
+        Επένδυση προστασίας από τον άνεμο στο μπροστινό μέρος. Μανσέτες με
+        ανοίγματα για τους αντίχειρες
+      bullets5: Woven Belgium crest on chest
+      bullets6: >-
+        3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha del
+        pecho
+      bulletMaterial: Maille double 100 % polyester.
+  adidasComProductCatalogDefinitionsFeatureAndBenefit:
+    title: Feature and Benefit
     type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
-      - $ref: '#/definitions/articleSeasonal'
+    properties:
+      featureAndBenefitCode:
+        type: string
+      businessCode:
+        type: string
+      shoePart:
+        type: string
+      featureName:
+        type: string
+      featureDescription:
+        type: string
+      logoName:
+        type: string
+      logoHref:
+        type: string
+        format: uri
     example:
+      featureAndBenefitCode: '68465468'
+      businessCode: BU Young Athlete
+      shoePart: Upper
+      featureName: Costura à maquina
+      featureDescription: >-
+        construction nylon/TPU pour un bon toucher de balle et une bonne
+        résistance à l'usure.
+      logoName: ECO_OrthoLiteLogo
+      logoHref: 'http://domain.com/logo.jpeg'
+  adidasComApiHAL:
+    title: HAL
+    description: >-
+      JSON Hypertext Application Language. Definition of [HAL message
+      format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
+    type: object
+    properties:
       _links:
-        self:
-          href: /articles/015110
-        assets:
-          href: /articles/015110/assets
-        skus:
-          href: /articles/015110/skus
-        prices:
-          href: /articles/015110/prices
-        seasons:
-          href: /articles/015110/seasons
-        catalogue:
-          href: /articles/015110/catalogue
-        relatedArticles:
-          - href: /articles/015111
-          - href: /articles/015112
-        ecomArticle:
-          href: https://api.adidas.com/ecom/article/015110 # NOTE: This is just an example URI
-        availability:
-          href: https://api.adidas.com/inventory/availability?articlesIds=015110 # NOTE: This is just an example URI
-      $ref: '#/definitions/articleSeasonal/example'
-  #
-  # Article
-  #
-  articleSeasonal:
+        type: object
+        additionalProperties: {}
+        properties:
+          curies: {}
+      _embedded:
+        type: object
+        additionalProperties: {}
+  adidasComApiProblemDetail:
+    title: Problem Details for HTTP APIs
+    description: >-
+      Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
+      detail
+    type: object
+    properties:
+      type:
+        type: string
+      title:
+        type: string
+      status:
+        type: number
+      detail:
+        type: string
+      instance:
+        type: string
+    required:
+      - title
+      - detail
+  adidasComProductArticle:
+    title: Article
     type: object
     properties:
       articleNumber:
@@ -719,15 +794,14 @@ definitions:
         type: string
       articleDescription:
         type: string
-        description: Always in english
       gender:
-        $ref: '#/definitions/codeDescriptionTuple'
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
       brand:
-        $ref: '#/definitions/codeDescriptionTuple'
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
       productType:
-        $ref: '#/definitions/codeDescriptionTuple'
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
       ageGroup:
-        $ref: '#/definitions/codeDescriptionTuple'
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
       colorway:
         type: object
         properties:
@@ -735,59 +809,35 @@ definitions:
             type: string
           description:
             type: string
-            description: Is it short description or long - both? English only # TODO: Description
       colors:
         type: array
         items:
-          - $ref: '#/definitions/color'
+          $ref: '#/definitions/adidasComProductColor'
     example:
-      articleNumber: "015110"
-      modelNumber: "10034"
-      articleDescription: "COPA MUNDIAL"
+      articleNumber: '015110'
+      modelNumber: '10034'
+      articleDescription: COPA MUNDIAL
       gender:
-        code: "M"
-        description: "MALE"
+        code: M
+        description: MALE
       brand:
-        code: "11"
-        description: "ADIDAS"
+        code: '11'
+        description: ADIDAS
       productType:
-        code: "104"
-        description: "FOOTBALL SHOES (FIRM GROUND)"
+        code: '104'
+        description: FOOTBALL SHOES (FIRM GROUND)
       ageGroup:
-        code: "A"
-        description: "ADULT"
+        code: A
+        description: ADULT
       colorway:
-        name: "FTWR WHITE/BLACK"
-        description: "BLABAS/GRAFIT/BLABAS"
+        name: FTWR WHITE/BLACK
+        description: BLABAS/GRAFIT/BLABAS
       colors:
-        - $ref: '#/definitions/color/example'
-
-  #
-  # Season
-  #
-  seasonsHAL:
+        - {}
+  adidasComProductArticleSeason:
+    title: Article Season
+    description: Seasonal information about article
     type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
-    properties:
-      seasonsCount:
-        type: number
-      seasons:
-        type: array
-        items:
-          - $ref: '#/definitions/season'
-    example:
-      _links:
-        self:
-          href: /articles/015110/seasons
-      assetCount: 1
-      assets:
-        - $ref: '#/definitions/season/example'
-
-  # Global Season
-  season:
-    type: object
-    description: Additional sesonal article attributes
     properties:
       seasonName:
         type: string
@@ -802,111 +852,37 @@ definitions:
     example:
       seasonName: FW17
       carryOver: false
-      retailIntroDate: "2017-06-01"
-      retailExitDate: "2017-11-30"
-
-
-  # Market Season
-  # same for now, might be additional in the future
-
-  #
-  # Color
-  #
-  color:
-    type: object
-    description: Color descriptions are language-dependent
-    properties:
-      color1:
-        $ref: '#/definitions/codeDescriptionTuple'
-      color2:
-        $ref: '#/definitions/codeDescriptionTuple'
-      color3:
-        $ref: '#/definitions/codeDescriptionTuple'
-      color4:
-        $ref: '#/definitions/codeDescriptionTuple'
-    example:
-      color1:
-        code: "A0QM"
-        description: "core black"
-      color2:
-        code: "A98B"
-        description: "utility black"
-      color3:
-        code: "A0QM"
-        description: "core black"
-      color4:
-        code: "01F7"
-        description: "ftwr white"
-
-  articleNotFoundError:
-    type: object
-    allOf:
-      - $ref: '#/definitions/problemDetail'
-    example:
-      title: 'Not Found'
-      detail: 'Cannot find the requested article'
-      status: 404
-      instance: '/articles/1234'
-
-  #
-  # Article Assets
-  #
-  assetsHAL:
-    type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
-    properties:
-      assetCount:
-        type: number
-      assets:
-        type: array
-        items:
-          - $ref: '#/definitions/asset'
-    example:
-      _links:
-        self:
-          href: /articles/015110/assets
-      assetCount: 1
-      assets:
-        - $ref: '#/definitions/asset/example'
-
-  #
-  # Asset
-  #
-  asset:
+      retailIntroDate: '2017-06-01'
+      retailExitDate: '2017-11-30'
+  adidasComProductAsset:
+    title: Asset
+    description: Digital Asset
     type: object
     properties:
       assetType:
         type: string
-        description: Available in the 1st iteration
         enum:
           - image
           - video
           - other
       viewGroup:
         type: string
-        description: Available in the 1st iteration
       view:
         type: string
-        description: Available in the 1st iteration
       assetCategory:
         type: string
-        description: Available in the 1st iteration
       usageTerms:
         type: array
-        description: Available in the 1st iteration
         items:
-          - type: string
+          type: string
       assetHref:
         type: string
-        description: Available in the 1st iteration
         format: uri
       image:
         type: object
         properties:
           style:
             type: string
-            description: Available in the 1st iteration
           width:
             type: integer
           height:
@@ -943,7 +919,7 @@ definitions:
       viewGroup: 3d
       assetCategory: Photography
       usageTerms: B2B Cataloguge
-      assetHref: http://domain.com/image.jpeg
+      assetHref: 'http://domain.com/image.jpeg'
       image:
         style: On Model
         width: 2000
@@ -954,99 +930,48 @@ definitions:
         chest: 97
         height: 197
         productSize: 540
-
-  #
-  # Article SKUs
-  #
-  skusHAL:
-    type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
-    properties:
-      skuCount:
-        type: number
-      skus:
-        type: array
-        items:
-          - $ref: '#/definitions/sku'
-    example:
-      _links:
-        self:
-          href: /articles/015110/skus
-      skuCount: 1
-      skus:
-        - $ref: '#/definitions/sku/example'
-
-  #
-  # SKU
-  #
-  sku:
+  adidasComProductCatalog:
+    title: Catalog
     type: object
     properties:
-      EAN:
-        type: string
-        description: Available in the 1st iteration
-      UPC:
-        type: string
-        description: Available in the 1st iteration
-      srcSizeCD3:
-        type: string
-      srcSizeScale:
-        type: string
-      srcSizeDescription:
-        type: string
-      conversionIDs:
+      catalogueCopy:
+        $ref: '#/definitions/adidasComProductCatalogDefinitionsCatalogCopy'
+      featureAndBenefits:
         type: array
         items:
-          - type: object
-            properties:
-              localSize:
-                type: string
-                description: This is always country specific
-              saleSizeConvID:
-                type: string
-              saleSizeScale:
-                type: string
-              saleSizeAbbr:
-                type: string
-              saleSizeDesc:
-                type: string
+          $ref: '#/definitions/adidasComProductCatalogDefinitionsFeatureAndBenefit'
     example:
-      EAN: "4058026055128"
-      UPC: "885591427616"
-      srcSizeCD3: "380"
-      srcSizeScale: "T4"
-      conversionIDs:
-        - saleSizeConvID: D
-          saleSizeScale: 8C
-          saleSizeAbbr: "27"
-
-  #
-  # Article Prices
-  #
-  pricesHAL:
+      catalogueCopy: {}
+      featureAndBenefits:
+        - {}
+  adidasComProductColor:
+    title: Color
     type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
+    description: Color descriptions are language-dependent
     properties:
-      priceCount:
-        type: number
-      prices:
-        type: array
-        items:
-          - $ref: '#/definitions/price'
+      color1:
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+      color2:
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+      color3:
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+      color4:
+        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
     example:
-      _links:
-        self:
-          href: /articles/015110/prices
-      priceCount: 1
-      prices:
-        - $ref: '#/definitions/price/example'
-
-  #
-  # Price
-  #
-  price:
+      color1:
+        code: A0QM
+        description: core black
+      color2:
+        code: A98B
+        description: utility black
+      color3:
+        code: A0QM
+        description: core black
+      color4:
+        code: 01F7
+        description: ftwr white
+  adidasComProductPrice:
+    title: Price
     type: object
     properties:
       timePeriodCode:
@@ -1064,7 +989,7 @@ definitions:
         format: date-time
       validTo:
         type: string
-        format: date-time"
+        format: date-time
       priceValue:
         type: string
       priceUnit:
@@ -1072,161 +997,190 @@ definitions:
       countryCode:
         type: string
     example:
-      timePeriodCode: "71"
-      salesOrg: "0681"
-      distChannel: "01"
-      priceType: "Act_SalesPrice"
-      currency: "EUR"
-      validFrom: "2017-01-01"
-      validTo: "2017-12-31"
-      priceValue: "74,98"
-      countryCode: "AT"
-
-  #
-  # Catalogue
-  #
-  modelCatalogueHAL:
+      timePeriodCode: '71'
+      salesOrg: 0681
+      distChannel: '01'
+      priceType: Act_SalesPrice
+      currency: EUR
+      validFrom: '2017-01-01'
+      validTo: '2017-12-31'
+      priceValue: '74,98'
+      countryCode: AT
+  adidasComProductSKU:
+    title: SKU
     type: object
-    allOf:
-      - $ref: '#/definitions/halResource'
-      - $ref: '#/definitions/catalogue'
+    properties:
+      EAN:
+        type: string
+      UPC:
+        type: string
+      srcSizeCD3:
+        type: string
+      srcSizeScale:
+        type: string
+      srcSizeDescription:
+        type: string
+      conversionIDs:
+        type: array
+        items:
+          - type: object
+            properties:
+              localSize:
+                type: string
+              saleSizeConvID:
+                type: string
+              saleSizeScale:
+                type: string
+              saleSizeAbbr:
+                type: string
+              saleSizeDesc:
+                type: string
     example:
-      _links:
-        self:
-          href: /models/10034/catalogue
-      $ref: '#/definitions/catalogue/example'
-
-  articleCatalogueHAL:
+      EAN: '4058026055128'
+      UPC: '885591427616'
+      srcSizeCD3: '380'
+      srcSizeScale: T4
+      conversionIDs:
+        - saleSizeConvID: D
+          saleSizeScale: 8C
+          saleSizeAbbr: '27'
+  adidasComProductApiArticleCatalogHAL:
+    title: Article Catalog HAL Representation
     type: object
     allOf:
-      - $ref: '#/definitions/halResource'
-      - $ref: '#/definitions/catalogue'
+      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/adidasComProductCatalog'
     example:
       _links:
         self:
           href: /articles/015110/catalogue
-      $ref: '#/definitions/catalogue/example'
-
-  catalogue:
-    type: object
-    properties:
-      catalogueCopy:
-        type: object
-        $ref: '#/definitions/catalogueCopy'
-      featureAndBenefits:
-        type: array
-        items:
-          - $ref: '#/definitions/featureAndBenefit'
-    example:
-      catalogueCopy:
-        $ref: '#/definitions/catalogueCopy/example'
-      featureAndBenefits:
-        - $ref: '#/definitions/featureAndBenefit/example'
-
-  featureAndBenefit:
-    type: object
-    properties:
-      featureAndBenefitCode:
-        type: string
-      businessCode:
-        type: string
-      shoePart:
-        type: string
-      # TODO: Is this needed with language negotiation?
-      #languageCode:
-      #  type: string
-      featureName:
-        type: string
-      featureDescription:
-        type: string
-      logoName:
-        type: string
-      logoHref:
-        type: string
-        format: uri
-    example:
-      featureAndBenefitCode: "68465468"
-      businessCode: "BU Young Athlete"
-      shoePart: "Upper"
-      featureName: "Costura à maquina"
-      featureDescription: "construction nylon/TPU pour un bon toucher de balle et une bonne résistance à l'usure."
-      logoName: "ECO_OrthoLiteLogo"
-      logoHref: "http://domain.com/logo.jpeg"
-
-  catalogueCopy:
-    type: object
-    properties:
-      acsModelName:
-        type: string
-      b2cCopy:
-        type: string
-      b2cCopyShort:
-        type: string
-      b2bCopy:
-        type: string
-      b2bCopyShort:
-        type: string
-      materialComposition:
-        type: string
-      materialConstruction:
-        type: string
-      bullets1:
-        type: string
-      bullets2:
-        type: string
-      bullets3:
-        type: string
-      bullets4:
-        type: string
-      bullets5:
-        type: string
-      bullets6:
-        type: string
-      bulletMaterial:
-        type: string
-    example:
-      acsModelName: "COPA MUNDIAL"
-      b2cCopy: "De populairste voetbalschoen ooit, en terecht. De adidas Copa Mundial heeft een bovenwerk van rijk leer en een loopzool met dubbele dichtheid die al decennia lang de toon zet voor comfort en prestaties op het veld."
-      b2cCopyShort: "Entraîne-toi comme les pros avec ce haut de l'équipe de Belgique de football."
-      b2bCopy: "Hurricanes Training Jersey as worn by the players when training with dynamic retro design inspired by the original Super Jersey.Captured with shock blue and black colors on climalite fabric with moisture wicking properties."
-      b2bCopyShort: "Hurricanes Training Jersey as worn by the players when training with dynamic retro design inspired by the orginal Super jersey."
-      materialComposition: "100% Organic Cotton"
-      materialConstruction: "Single jersey"
-      bullets1: "materiál Climalite odvádí pot a udrží tě vsuchu za všech okolností"
-      bullets2: "Ribbet V-hals"
-      bullets3: "Nackenband"
-      bullets4: "Επένδυση προστασίας από τον άνεμο στο μπροστινό μέρος. Μανσέτες με ανοίγματα για τους αντίχειρες"
-      bullets5: "Woven Belgium crest on chest"
-      bullets6: "3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha del pecho"
-      bulletMaterial: "Maille double 100 % polyester."
-
-  #
-  # Market
-  #
-  marketsHAL:
+  adidasComProductApiArticleHAL:
+    title: Article HAL Representation
     type: object
     allOf:
-      - $ref: '#/definitions/halResource'
-    properties:
-      marketsCount:
-        type: number
-    # TODO: Issues with editor.swagger.com
-    #  markets:
-    #    type: array
-    #    items:
-    #      - $ref: '#/definitions/marketHAL'
+      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/adidasComProductArticle'
     example:
       _links:
         self:
-          href: /markets
-      marketsCount: 1
-      markets:
-        - $ref: '#/definitions/marketHAL/example'
-
-  marketHAL:
+          href: /articles/015110
+        assets:
+          href: /articles/015110/assets
+        skus:
+          href: /articles/015110/skus
+        prices:
+          href: /articles/015110/prices
+        seasons:
+          href: /articles/015110/seasons
+        catalogue:
+          href: /articles/015110/catalogue
+        relatedArticles:
+          - href: /articles/015111
+          - href: /articles/015112
+        ecomArticle:
+          href: 'https://api.adidas.com/ecom/article/015110'
+        availability:
+          href: 'https://api.adidas.com/inventory/availability?articlesIds=015110'
+  adidasComProductApiArticleNotFoundProblemDetail:
+    title: Article Not Found Problem
     type: object
     allOf:
-      - $ref: '#/definitions/halResource'
+      - $ref: '#/definitions/adidasComApiProblemDetail'
+    example:
+      title: Not Found
+      detail: Cannot find the requested article
+      status: 404
+      instance: /articles/1234
+  adidasComProductApiArticleSeasonsHAL:
+    title: HAL Representation of Collection of Seasons
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      seasonsCount:
+        type: number
+      seasons:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductArticleSeason'
+    example:
+      _links:
+        self:
+          href: /articles/015110/seasons
+      seasonsCount: 1
+      seasons:
+        - {}
+  adidasComProductApiArticlesHAL:
+    title: HAL Representation of Collections of Articles
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      articleCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /articles
+        next:
+          href: /articles?offset=5&limit=5
+        first:
+          href: /articles?offset=0&limit=5
+        last:
+          href: /articles?offset=40&limit=5
+      articleCount: 1
+      _embedded:
+        article:
+          - {}
+  adidasComProductApiAssetsHAL:
+    title: HAL Representation of Collection of Assets
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      assetCount:
+        type: number
+      assets:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductAsset'
+    example:
+      _links:
+        self:
+          href: /articles/015110/assets
+      assetCount: 1
+      assets:
+        - {}
+  adidasComProductApiMarketArticleHAL:
+    title: Market Article
+    type: object
+  adidasComProductApiMarketArticlesHAL:
+    title: HAL Representation of Collection of Market Articles
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      articleCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /markets/50-A1/articles
+        next:
+          href: /markets/50-A1/articles?offset=5&limit=5
+        first:
+          href: /markets/50-A1/articles?offset=0&limit=5
+        last:
+          href: /markets/50-A1/articles?offset=40&limit=5
+      _embedded:
+        article:
+          - {}
+      articleCount: 1
+  adidasComProductApiMarketHAL:
+    title: Market HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
     properties:
       areaCode:
         type: string
@@ -1234,15 +1188,77 @@ definitions:
         type: string
     example:
       _links:
-        marketArticles:
+        articles:
           href: /articles?area_code=A1&region_code=50
-      areaCode: 'A1'
+      areaCode: A1
       regionCode: '50'
-
-  #
-  # General Purpuse Data Structures
-  #
-  codeDescriptionTuple:
+  adidasComProductApiMarketsHAL:
+    title: HAL Representation of Collection of Markets
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      marketsCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /markets
+      marketsCount: 1
+      _embedded:
+        market:
+          - {}
+  adidasComProductApiModelCatalogHAL:
+    title: Model Catalog HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/adidasComProductCatalog'
+    example:
+      _links:
+        self:
+          href: /models/10034/catalog
+  adidasComProductApiPricesHAL:
+    title: HAL Representation of Collection of Prices
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      priceCount:
+        type: number
+      prices:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductPrice'
+    example:
+      _links:
+        self:
+          href: /articles/015110/prices
+      priceCount: 1
+      prices:
+        - {}
+  adidasComProductApiSKUsHAL:
+    title: HAL Representation of Collection of SKUs
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      skuCount:
+        type: number
+      skus:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductSKU'
+    example:
+      _links:
+        self:
+          href: /articles/015110/skus
+      skuCount: 1
+      skus:
+        - {}
+  adidasComProductUtilsCodeDescription:
+    title: Code Description Tuple
+    description: Helper data structure to hold any code - description pair
     type: object
     properties:
       code:
@@ -1250,105 +1266,3 @@ definitions:
       description:
         type: string
 
-  #
-  # -- DO NOT EDIT BEYOND THIS POINT --
-  #
-
-  # Media Types Definitions
-
-  #
-  # application/problem+json
-  #
-  problemDetail:
-    type: object
-    properties:
-      type:
-        type: string
-      title:
-        type: string
-      status:
-        type: number
-      detail:
-        type: string
-      instance:
-        type: string
-    required:
-      - title
-      - detail
-
-  #
-  # application/hal+json defintion
-  #
-  halLinkObject:
-    type: object
-    required:
-      - href
-    properties:
-      href:
-        type: string
-      templated:
-        type: boolean
-      #
-      # WARN: Some version of OAS parser can have problem with property being called "type"
-      # resulting in the error 'Schema "type" key must be a string'.
-      #
-      # For this reason we have commented out the "type" property of the link object.
-      # See https://tools.ietf.org/html/draft-kelly-json-hal-08#section-5.3 for the definiton of
-      # HAL's link object type property.
-      #
-      # type:
-      #  type: string
-      deprecation:
-        type: string
-      name:
-        type: string
-      profile:
-        type: string
-      title:
-        type: string
-      hreflang:
-        type: string
-
-  halCuriesLink:
-    title: HAL Curies Link
-    allOf:
-      - type: object
-        properties:
-          templated:
-            enum:
-              - true
-        required:
-          - templated
-      - $ref: '#/definitions/halLinkObject'
-
-  halResource:
-    title: HAL Resource Object
-    type: object
-    properties:
-      _links:
-        type: object
-        additionalProperties:
-          # WARN: Should be "anyOf" but "anyOf" isn't supported in Swagger 2.0
-          allOf:
-            - $ref: '#/definitions/halLinkObject'
-            - type: array
-              items:
-                - $ref: '#/definitions/halLinkObject'
-        properties:
-          curies:
-            # WARN: Should be "anyOf" but "anyOf" isn't supported in Swagger 2.0
-            allOf:
-              - $ref: '#/definitions/halCuriesLink'
-              - type: array
-                items:
-                  - $ref: '#/definitions/halCuriesLink'
-      _embedded:
-        type: object
-        additionalProperties: true
-        # WARN: Apiary doesn't support circular references
-        # additionalProperties:
-        #   anyOf:
-        #     - $ref: '#/definitions/hal_resource'
-        #     - type: array
-        #       items:
-        #         - $ref: '#/definitions/hal_resource'

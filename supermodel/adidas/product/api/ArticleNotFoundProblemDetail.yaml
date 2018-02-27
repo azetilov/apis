@@ -1,0 +1,13 @@
+$id: http://adidas.com/product/api/ArticleNotFoundProblemDetail
+
+title: Article Not Found Problem
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/ProblemDetail
+
+examples:
+  - title: Not Found
+    detail: Cannot find the requested article
+    status: 404
+    instance: /articles/1234

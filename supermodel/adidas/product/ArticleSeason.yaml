@@ -1,0 +1,23 @@
+$id: http://adidas.com/product/ArticleSeason
+
+title: Article Season
+description: Seasonal information about article
+type: object
+
+properties:
+  seasonName:
+    type: string
+  carryOver:
+    type: boolean
+  retailIntroDate:
+    type: string
+    format: date-time
+  retailExitDate:
+    type: string
+    format: date-time
+
+examples:
+  - seasonName: FW17
+    carryOver: false
+    retailIntroDate: "2017-06-01"
+    retailExitDate: "2017-11-30"

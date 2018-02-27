@@ -1,0 +1,20 @@
+$id: http://adidas.com/product/api/MarketHAL
+
+title: Market HAL Representation
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/HAL
+
+properties:
+  areaCode:
+    type: string
+  regionCode:
+    type: string
+
+examples:
+  - _links:
+      articles:
+        href: /articles?area_code=A1&region_code=50
+    areaCode: 'A1'
+    regionCode: '50'

@@ -1,0 +1,52 @@
+$id: http://adidas.com/product/Article
+
+title: Article
+type: object
+
+properties:
+  articleNumber:
+    type: string
+  modelNumber:
+    type: string
+  articleDescription:
+    type: string
+  gender:
+    $ref: utils/CodeDescription
+  brand:
+    $ref: utils/CodeDescription
+  productType:
+    $ref: utils/CodeDescription
+  ageGroup:
+    $ref: utils/CodeDescription
+  colorway:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+  colors:
+    type: array
+    items:
+      $ref: Color
+
+examples:
+  - articleNumber: '015110'
+    modelNumber: '10034'
+    articleDescription: 'COPA MUNDIAL'
+    gender:
+      code: 'M'
+      description: 'MALE'
+    brand:
+      code: '11'
+      description: 'ADIDAS'
+    productType:
+      code: '104'
+      description: 'FOOTBALL SHOES (FIRM GROUND)'
+    ageGroup:
+      code: 'A'
+      description: 'ADULT'
+    colorway:
+      name: 'FTWR WHITE/BLACK'
+      description: 'BLABAS/GRAFIT/BLABAS'
+    colors: [{}]

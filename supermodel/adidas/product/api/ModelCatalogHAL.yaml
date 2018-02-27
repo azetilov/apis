@@ -1,0 +1,14 @@
+$id: http://adidas.com/product/api/ModelCatalogHAL
+
+title: Model Catalog HAL Representation
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/HAL
+  - $ref: http://adidas.com/product/Catalog
+
+examples:
+  - _links:
+      self:
+        href: /models/10034/catalog
+  

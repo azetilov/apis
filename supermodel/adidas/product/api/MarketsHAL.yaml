@@ -1,0 +1,19 @@
+$id: http://adidas.com/product/api/MarketsHAL
+
+title: HAL Representation of Collection of Markets
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/HAL
+
+properties:
+  marketsCount:
+    type: number
+
+examples:
+  - _links:
+      self:
+        href: /markets
+    marketsCount: 1
+    _embedded:
+      market: [{}]
