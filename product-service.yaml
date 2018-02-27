@@ -623,6 +623,7 @@ parameters:
 
 #
 # Data Model Definitions
+#   this section is generated from a supermodel data model
 #
 definitions:
   adidasComApiHALDefinitionsHalLinkObject:
