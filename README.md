@@ -7,7 +7,7 @@ Proposal of a Future Product Service API.
 To compile the JSON Schema data model into OAS2 install the supermodel cli tool
 
 ```
-$ npm i -g supermodel
+$ npm i -g supermodel-cli
 ```
 
 Then run:
