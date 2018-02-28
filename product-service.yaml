@@ -2,11 +2,10 @@ swagger: '2.0'
 info:
   version: '1.0.0'
   title: "[Draft] Product Service"
-  description: |
+  description: >-
     Draft of a new Poduct API for outbound integration.
 
-    To propose a change, head over to [GitHub repository](https://github.com/adidas-group/product-service-api),
-    create a new branch with proposed change and open a [pull request](https://help.github.com/articles/about-pull-requests/).
+    To propose a change, head over to [GitHub repository](https://github.com/adidas-group/product-service-api), create a new branch with proposed change and open a [pull request](https://help.github.com/articles/about-pull-requests/).
 
     ## Article Information Levels
     Article information are provided on the following levels:
@@ -28,32 +27,27 @@ info:
     - Retrieve a particular article information on a specific market
     - Retrieve the catalogue information for a particular article
     - Retrieve the catalogue information for a particular model
-    - Retrieve all markets and their area and region codes
+    - Retrieve all markets, their area and region codes
 
     ## Marketing Channels
-    The Product Service API (this API) doesn't provide any marketing channel
-    (eCommerce, retail, wholesale, etc.) -specific information.
-    To retireve product information specifict ot a marketing channel refer to
-    the respective marketing channel's API.
+    The Product Service API (this API) does not provide any marketing channel (eCommerce, retail, wholesale, etc.) -specific information. To retireve product information specific to a marketing channel refer to the respective marketing channel's API.
 
     1. [eCommerce](https://draftproductserviceglass.docs.apiary.io/#) (GLASS)
     1. Retail (HERO) (planned)
     1. Wholesale (eCatalogue) (planned)
 
     ## Season Information
-    Where applicable, seasonal information might be retrieved using the optional
-    `seasonName` parameter. When no `seasonName` parameter is provided the
-    current season is assumed.
+    Where applicable, seasonal information might be retrieved using the optional `seasonName` parameter. When no `seasonName` parameter is provided the current season is assumed.
 
     ## Language Variants
-    Where applicable, product information support standard [HTTP Language Variants
-    negotiation](https://adidas-group.gitbooks.io/api-guidelines/content/execution/localization.html)
-    using the `Accept-Language` HTTP Header.
+    Where applicable, product information support standard [HTTP Language Variants negotiation](https://adidas-group.gitbooks.io/api-guidelines/content/execution/localization.html) using the `Accept-Language` HTTP Header.
 
     ## Embedding Related Resoruces
-    For the performance reasons over HTTP/1.1 the article-related resources will
-    be embeded under `_embedded` field as specified in [HAL](http://stateless.co/hal_specification.html)
-     representation format.
+    For the performance reasons over HTTP/1.1 the article-related resources will be embeded under `_embedded` field as specified in [HAL](http://stateless.co/hal_specification.html) representation format.
+
+    > NOTE: The embedded articles in the `_embedded` field might not represent
+    > the latest information, nor be complete. To retireve the full up-to-date
+    > representation of an article exercise its `self` relation.     
 
 produces:
   - application/hal+json      # Representation message format
@@ -102,10 +96,10 @@ paths:
                 markets:
                   href: /markets
                 marketArticles:
-                  href: /markets/{area_code}/{?season_code}
+                  href: /markets/{area_code}/{?season_name}
                   templated: true
                 marketArticle:
-                  href: /markets/{area_code}/articles/{article_id}{?season_code}
+                  href: /markets/{area_code}/articles/{article_id}{?season_name}
                   templated: true
                   
   /articles:
@@ -114,7 +108,7 @@ paths:
 
     get:
       summary: Retrieve List of Articles
-      description: |
+      description: >-
         Retrieve list of all articles.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -122,9 +116,8 @@ paths:
         | season            | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
 
-        > NOTE: The embedded articles in the `_embedded` field might not represent
-        > the latest information, nor be complete. To retireve the full up-to-date
-        > representation of an article exercise its `self` relation.
+        The information about the articles are non-seasonal, however each non-seasonal article carries a link to related seasonal article information.
+        If the season filter is applied, only thos non-seasonal articles information that have seasonal article in the given season are returned.
 
       parameters:
         - $ref: '#/parameters/offset'
@@ -148,17 +141,14 @@ paths:
             
   /articles/{article_id}:
     x-summary: Article
-    x-description: |
-      Global article infromation. This resource represents non-seasonal
-      information, however its related resource `season` posess the
-      season-specific article information.
-
+    x-description: >-
+      Global article infromation. This resource carry non-seasonal article information, however its related resource `season` posess the season-specific article information.
     parameters:
       - $ref: '#/parameters/articleId'
 
     get:
       summary: Retrieve Article
-      description: |
+      description: >-
         Retrieve a particular article by its id.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -171,7 +161,7 @@ paths:
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
-          description: One Article
+          description: Non-seasonal article information.
           headers:
             Content-Language:
               type: string
@@ -185,7 +175,7 @@ paths:
             $ref: '#/definitions/adidasComProductApiArticleHAL'
 
         404:
-          description: The requested article wasn't found
+          description: The requested article wasn't found.
           headers:
             Content-Type:
               type: string
@@ -201,8 +191,7 @@ paths:
 
     get:
       summary: Retrieve Article Assets
-      description: |
-        Retrieve all assets for a particular article.
+      description: Retrieve all assets for a particular article.
       responses:
         200:
           description: Assets for an Article
@@ -227,44 +216,12 @@ paths:
       summary: Retrieve Article SKUs
       responses:
         200:
-          description: SKUs for an Article
+          description: SKUs for an Article.
           schema:
             $ref: '#/definitions/adidasComProductApiSKUsHAL'
 
         404:
           description: SKUs for the given article weren't found.
-          headers:
-            Content-Type:
-              type: string
-              default: application/problem+json
-          schema:
-            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
-
-  /articles/{article_id}/prices:
-    x-summary: Article Prices
-    x-description: Article prices.
-    parameters:
-      - $ref: '#/parameters/articleId'
-
-    get:
-      summary: Retrieve Article Prices
-      description: |
-        Retrieve prices for a particular article.
-
-        | Available Filters | Parameter Location | Parameter Name(s) |
-        |-------------------|--------------------|-------------------|
-        | season            | query              | `seasonName`      |
-
-      parameters:
-        - $ref: '#/parameters/seasonName'
-      responses:
-        200:
-          description: Prices for an Article
-          schema:
-            $ref: '#/definitions/adidasComProductApiPricesHAL'
-
-        404:
-          description: Prices for the given article weren't found
           headers:
             Content-Type:
               type: string
@@ -280,7 +237,7 @@ paths:
 
     get:
       summary: Retrieve Article Seasonal Information
-      description: |
+      description: >-
         Retrieve seasonal article information
 
         | Available Filters | Parameter Location | Parameter Name(s) |
@@ -318,23 +275,21 @@ paths:
   #
   # Catalogue Information
   #
+  # TODO: Confirm to provide only global model and article catalog information
+  # TODO: Confirm to remove season filter model and article catalog information  
   /models/{model_id}/catalogue:
     x-summary: Model Catalogue
     x-description: Global model catalogue information.
     parameters:
       - $ref: '#/parameters/modelId'
 
-    # TODO: Confirm the following is correct:
-    # TODO: Is model market-specific(only)?
-
     get:
       summary: Retrieve Model Catalogue
-      description: |
+      description: >-
         Get a particular model's catalogue by model number.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
 
       parameters:
@@ -362,7 +317,7 @@ paths:
 
     get:
       summary: Retrieve Article Catalogue
-      description: |
+      description: >-
         Retrieve a particular article's catalogue.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -371,11 +326,6 @@ paths:
 
       parameters:
         - $ref: '#/parameters/acceptLanguageHeader'
-        # TODO: Confirm the following is correct:
-        # TODO: Article catalogue information non-seasonal?
-        # TODO: Remove season parameter
-
-        # - $ref: '#/parameters/seasonName'
       responses:
         200:
           description: Article Catalogue
@@ -388,12 +338,11 @@ paths:
 
     get:
       summary: Retrieve Markets
-      description: Retrieve the List of Available Markets
+      description: Retrieve the list of available markets.
       responses:
         200:
-          description: |
-            List of area-code region-code tuples toghether with their specific article
-            listings.
+          description: >-
+            List of area-code : region-code tuples toghether with their specific article listings.
           schema:
             $ref: '#/definitions/adidasComProductApiMarketsHAL'
 
@@ -405,18 +354,18 @@ paths:
 
     get:
       summary: Retrieve List of Market Articles
-      description: |
+      description: >-
         Retrieve List of Articles for a given Market
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `seasonName`               |
+        | season (required) | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
 
       parameters:
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/limit'
-        - $ref: '#/parameters/seasonName'
+        - $ref: '#/parameters/seasonName' # NOTE: Unlike on the global level, on a market level season is always required
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
@@ -435,19 +384,19 @@ paths:
 
   /markets/{area_code}/articles/{article_id}:
     x-summary: Market Article
-    x-description: Market article infromation.
+    x-description: Market article infromation. These information are always seasonal.
     parameters:
       - $ref: '#/parameters/areaCodePath'
       - $ref: '#/parameters/articleId'
 
     get:
       summary: Retrieve Market Article
-      description: |
-        Retrieve one article for the given market
+      description: >-
+        Retrieve a particular article by its id for the given market.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `seasonName`               |
+        | season (required) | query              | `seasonName`               |
         | language          | header             | `Accept-Language`          |
 
       parameters:
@@ -457,7 +406,7 @@ paths:
         - $ref: '#/parameters/acceptLanguageHeader'
       responses:
         200:
-          description: One Article
+          description: Market specific, seasonal article information.
           headers:
             Content-Language:
               type: string
@@ -483,8 +432,33 @@ paths:
             #   market-season: article is ranged for a season on a market
             # TODO: on a market level merge market article with season, on a global level leave season separated
 
+  # TODO: add market article assets, prices and SKUs
+  # TODO: Prices are always market-specific
+  /markets/{area_code}/articles/{article_id}/prices:
+    x-summary: Article Prices
+    x-description: Article prices.
+    parameters:
+      - $ref: '#/parameters/articleId'
+
+    get:
+      summary: Retrieve Article Prices
+      description: |
+        Retrieve prices for a particular article.
+
+        | Available Filters | Parameter Location | Parameter Name(s) |
+        |-------------------|--------------------|-------------------|
+        | season            | query              | `seasonName`      |
+
+      parameters:
+        - $ref: '#/parameters/seasonName'
+      responses:
+        200:
+          description: Prices for an Article
+          schema:
+            $ref: '#/definitions/adidasComProductApiPricesHAL'
+
         404:
-          description: The requested article wasn't found
+          description: Prices for the given article weren't found
           headers:
             Content-Type:
               type: string
@@ -536,7 +510,7 @@ parameters:
   # Season filters
   # Season Name is the preffered way to filter for season
   seasonName:
-    name: seasonName
+    name: season_name
     in: query
     description: |
       Filter resutls based on the season name.
@@ -546,7 +520,7 @@ parameters:
     x-example: 'FW17'
 
   seasonNameOptional:
-    name: seasonName
+    name: season_name
     in: query
     description: |
       Filter resutls based on the season name.
