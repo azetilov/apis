@@ -784,6 +784,18 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/adidasComProductColor'
+      seasons:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductArticleSeason'
+      skus:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductSKU'
+      assets:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductAsset'
     example:
       articleNumber: '015110'
       modelNumber: '10034'
@@ -804,6 +816,12 @@ definitions:
         name: FTWR WHITE/BLACK
         description: BLABAS/GRAFIT/BLABAS
       colors:
+        - {}
+      seasons:
+        - {}
+      skus:
+        - {}
+      assets:
         - {}
   adidasComProductArticleSeason:
     title: Article Season
@@ -941,6 +959,17 @@ definitions:
       color4:
         code: 01F7
         description: ftwr white
+  adidasComProductMarketArticle:
+    title: Market Article
+    description: Market-specific Article Information
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComProductArticle'
+    properties:
+      prices:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductPrice'
   adidasComProductPrice:
     title: Price
     type: object
@@ -1030,7 +1059,11 @@ definitions:
     type: object
     allOf:
       - $ref: '#/definitions/adidasComApiHAL'
-      - $ref: '#/definitions/adidasComProductArticle'
+    properties:
+      '0':
+        $ref: '#/definitions/adidasComProductArticlePropertiesArticleNumber'
+      '1':
+        $ref: '#/definitions/adidasComProductArticlePropertiesModelNumber'
     example:
       _links:
         self:
@@ -1125,7 +1158,7 @@ definitions:
     type: object
     allOf:
       - $ref: '#/definitions/adidasComApiHAL'
-      - $ref: '#/definitions/adidasComProductArticle'
+      - $ref: '#/definitions/adidasComProductMarketArticle'
     example:
       _links:
         self:
@@ -1231,36 +1264,3 @@ definitions:
     example:
       _links:
         self:
-          href: /markets/A1/articles/015110/prices?season_name=FW17
-      priceCount: 1
-      prices:
-        - {}
-  adidasComProductApiSKUsHAL:
-    title: HAL Representation of Collection of SKUs
-    type: object
-    allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
-    properties:
-      skuCount:
-        type: number
-      skus:
-        type: array
-        items:
-          $ref: '#/definitions/adidasComProductSKU'
-    example:
-      _links:
-        self:
-          href: /articles/015110/skus
-      skuCount: 1
-      skus:
-        - {}
-  adidasComProductUtilsCodeDescription:
-    title: Code Description Tuple
-    description: Helper data structure to hold any code - description pair
-    type: object
-    properties:
-      code:
-        type: string
-      description:
-        type: string
-

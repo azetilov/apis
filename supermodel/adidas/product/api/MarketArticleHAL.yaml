@@ -5,7 +5,7 @@ type: object
 
 allOf:
   - $ref: http://adidas.com/api/HAL
-  - $ref: http://adidas.com/product/Article # TODO: Change
+  - $ref: http://adidas.com/product/MarketArticle
 
 examples:
   - _links:

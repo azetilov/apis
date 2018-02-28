@@ -1,0 +1,14 @@
+$id: http://adidas.com/product/MarketArticle
+
+title: Market Article
+description: Market-specific Article Information
+type: object
+
+allOf:
+  - $ref: Article
+
+properties:
+  prices:
+    type: array
+    items:
+      $ref: Price

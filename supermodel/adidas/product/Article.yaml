@@ -29,6 +29,18 @@ properties:
     type: array
     items:
       $ref: Color
+  seasons:
+    type: array
+    items:
+      $ref: ArticleSeason
+  skus:
+    type: array
+    items:
+      $ref: SKU
+  assets:
+    type: array
+    items:
+      $ref: Asset
 
 examples:
   - articleNumber: '015110'
@@ -50,3 +62,7 @@ examples:
       name: 'FTWR WHITE/BLACK'
       description: 'BLABAS/GRAFIT/BLABAS'
     colors: [{}]
+    seasons: [{}]
+    skus: [{}]
+    assets: [{}]
+
