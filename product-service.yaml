@@ -37,7 +37,7 @@ info:
     1. Wholesale (eCatalogue) (planned)
 
     ## Season Information
-    Where applicable, seasonal information might be retrieved using the optional `seasonName` parameter. When no `seasonName` parameter is provided the current season is assumed.
+    Where applicable, seasonal information might be retrieved using the optional `season_name` parameter. When no `season_name` parameter is provided the current season is assumed.
 
     ## Language Variants
     Where applicable, product information support standard [HTTP Language Variants negotiation](https://adidas-group.gitbooks.io/api-guidelines/content/execution/localization.html) using the `Accept-Language` HTTP Header.
@@ -96,7 +96,7 @@ paths:
                 markets:
                   href: /markets
                 marketArticles:
-                  href: /markets/{area_code}/{?season_name}
+                  href: /markets/{area_code}{?season_name}
                   templated: true
                 marketArticle:
                   href: /markets/{area_code}/articles/{article_id}{?season_name}
@@ -113,7 +113,7 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season            | query              | `seasonName`               |
+        | season            | query              | `season_name`              |
         | language          | header             | `Accept-Language`          |
 
         The information about the articles are non-seasonal, however each non-seasonal article carries a link to related seasonal article information.
@@ -198,15 +198,6 @@ paths:
           schema:
             $ref: '#/definitions/adidasComProductApiAssetsHAL'
 
-        404:
-          description: Assets for the given article weren't found
-          headers:
-            Content-Type:
-              type: string
-              default: application/problem+json
-          schema:
-            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
-
   /articles/{article_id}/skus:
     x-summary: Article SKUs
     x-description: Global articles SKUs.
@@ -219,15 +210,6 @@ paths:
           description: SKUs for an Article.
           schema:
             $ref: '#/definitions/adidasComProductApiSKUsHAL'
-
-        404:
-          description: SKUs for the given article weren't found.
-          headers:
-            Content-Type:
-              type: string
-              default: application/problem+json
-          schema:
-            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
 
   /articles/{article_id}/seasons:
     x-summary: Article Seasons
@@ -242,7 +224,7 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s) |
         |-------------------|--------------------|-------------------|
-        | season            | query              | `seasonName`      |
+        | season            | query              | `season_name`     |
         | language          | header             | `Accept-Language` |
 
       parameters:
@@ -359,7 +341,7 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season (required) | query              | `seasonName`               |
+        | season (required) | query              | `season_name`              |
         | language          | header             | `Accept-Language`          |
 
       parameters:
@@ -396,7 +378,7 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
-        | season (required) | query              | `seasonName`               |
+        | season (required) | query              | `season_name`              |
         | language          | header             | `Accept-Language`          |
 
       parameters:
@@ -420,11 +402,11 @@ paths:
             $ref: '#/definitions/adidasComProductApiArticleHAL'
             #TODO: Change to Market Article
             # Market Article
-            # Assets are global, same across markets
-            # Market SKUs are subset of global
-            # Prices are not global they are usuall market -specific
-            #   planned prices - for future
-            #   existing (actual) prices - they exist per sales org which corelates with market (care: there is 1:1 mapping between sales org and market)
+            # - [x] Assets are global, same across markets
+            # - [x] Market SKUs are subset of global
+            # - [x] Prices are not global they are usuall market -specific
+            #       planned prices - for future
+            #       existing (actual) prices - they exist per sales org which corelates with market (care: there is 1:1 mapping between sales org and market)
             #   remove the link between article and price (on a global level)
             #
             # Season
@@ -432,22 +414,20 @@ paths:
             #   market-season: article is ranged for a season on a market
             # TODO: on a market level merge market article with season, on a global level leave season separated
 
-  # TODO: add market article assets, prices and SKUs
-  # TODO: Prices are always market-specific
   /markets/{area_code}/articles/{article_id}/prices:
-    x-summary: Article Prices
-    x-description: Article prices.
+    x-summary: Market Article Prices
+    x-description: Prices for an article on a given market.
     parameters:
       - $ref: '#/parameters/articleId'
 
     get:
       summary: Retrieve Article Prices
-      description: |
-        Retrieve prices for a particular article.
+      description: >-
+        Retrieve prices for the particular article on the given market
 
         | Available Filters | Parameter Location | Parameter Name(s) |
         |-------------------|--------------------|-------------------|
-        | season            | query              | `seasonName`      |
+        | season (required) | query              | `season_name`     |
 
       parameters:
         - $ref: '#/parameters/seasonName'
@@ -457,14 +437,30 @@ paths:
           schema:
             $ref: '#/definitions/adidasComProductApiPricesHAL'
 
-        404:
-          description: Prices for the given article weren't found
-          headers:
-            Content-Type:
-              type: string
-              default: application/problem+json
+  /markets/{area_code}/articles/{article_id}/skus:
+    x-summary: Market Article SKUs
+    x-description: Market-level article SKUs.
+    parameters:
+      - $ref: '#/parameters/articleId'
+    get:
+      summary: Retrieve Market Article SKUs
+      description: >-
+        Retrieve SKUs for the particular article on the given market
+
+        | Available Filters | Parameter Location | Parameter Name(s) |
+        |-------------------|--------------------|-------------------|
+        | season (required) | query              | `season_name`     |
+      
+      responses:
+        200:
+          description: SKUs for an Market Article.
           schema:
-            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
+            $ref: '#/definitions/adidasComProductApiSKUsHAL'
+
+  # NOTE: The resource 'market article assets'
+  # /markets/{area_code}/articles/{article_id}/assets:
+  # Is not modeled as separate resource since the market and global assets are the same.
+  # Instead /articles/{article_id}/assets is referenced via assets relation.
 
 #
 # Parameters Definitions
@@ -1043,8 +1039,6 @@ definitions:
           href: /articles/015110/assets
         skus:
           href: /articles/015110/skus
-        prices:
-          href: /articles/015110/prices
         seasons:
           href: /articles/015110/seasons
         catalogue:
@@ -1129,6 +1123,22 @@ definitions:
   adidasComProductApiMarketArticleHAL:
     title: Market Article
     type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/adidasComProductArticle'
+    example:
+      _links:
+        self:
+          href: /markets/A1/articles/015110?season_name=FW17
+        skus:
+          href: /markets/A1/articles/015110/skus?season_name=FW17
+        relatedArticles:
+          - href: /markets/A1/articles/015111?season_name=FW17
+          - href: /markets/A1/articles/015112?season_name=FW17
+        assets:
+          href: /articles/015110/assets
+        catalogue:
+          href: /articles/015110/catalogue
   adidasComProductApiMarketArticlesHAL:
     title: HAL Representation of Collection of Market Articles
     type: object
@@ -1140,13 +1150,13 @@ definitions:
     example:
       _links:
         self:
-          href: /markets/50-A1/articles
+          href: /markets/A1/articles?season_name=FW17
         next:
-          href: /markets/50-A1/articles?offset=5&limit=5
+          href: /markets/A1/articles?season_name=FW17&offset=5&limit=5
         first:
-          href: /markets/50-A1/articles?offset=0&limit=5
+          href: /markets/A1/articles?season_name=FW17&offset=0&limit=5
         last:
-          href: /markets/50-A1/articles?offset=40&limit=5
+          href: /markets/A1/articles?season_name=FW17&offset=40&limit=5
       _embedded:
         article:
           - {}
@@ -1164,9 +1174,22 @@ definitions:
     example:
       _links:
         articles:
-          href: /articles?area_code=A1&region_code=50
+          href: /markets/A1/articles?season_name=FW17
       areaCode: A1
       regionCode: '50'
+  adidasComProductApiMarketSKUsHAL:
+    title: HAL Representation of Collection of SKUs
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/adidasComProductApiMarketSKUsHAL'
+    example:
+      _links:
+        self:
+          href: /markets/A1/articles/015110/skus?season_name=FW17
+      skuCount: 1
+      skus:
+        - {}
   adidasComProductApiMarketsHAL:
     title: HAL Representation of Collection of Markets
     type: object
@@ -1208,7 +1231,7 @@ definitions:
     example:
       _links:
         self:
-          href: /articles/015110/prices
+          href: /markets/A1/articles/015110/prices?season_name=FW17
       priceCount: 1
       prices:
         - {}

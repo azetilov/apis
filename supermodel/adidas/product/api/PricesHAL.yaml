@@ -17,6 +17,6 @@ properties:
 examples:
   - _links:
       self:
-        href: /articles/015110/prices
+        href: /markets/A1/articles/015110/prices?season_name=FW17
     priceCount: 1
     prices: [{}]

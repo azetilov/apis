@@ -15,6 +15,6 @@ properties:
 examples:
   - _links:
       articles:
-        href: /articles?area_code=A1&region_code=50
+        href: /markets/A1/articles?season_name=FW17
     areaCode: 'A1'
     regionCode: '50'

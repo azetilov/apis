@@ -1,0 +1,15 @@
+$id: http://adidas.com/product/api/MarketSKUsHAL
+
+title: HAL Representation of Collection of SKUs
+type: object
+
+allOf:
+  - $ref: http://adidas.com/api/HAL
+  - $ref: http://adidas.com/product/api/MarketSKUsHAL
+
+examples:
+  - _links:
+      self:
+        href: /markets/A1/articles/015110/skus?season_name=FW17
+    skuCount: 1
+    skus: [{}]

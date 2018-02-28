@@ -13,13 +13,13 @@ properties:
 examples:
   - _links:
       self:
-        href: /markets/50-A1/articles
+        href: /markets/A1/articles?season_name=FW17
       next:
-        href: /markets/50-A1/articles?offset=5&limit=5
+        href: /markets/A1/articles?season_name=FW17&offset=5&limit=5
       first:
-        href: /markets/50-A1/articles?offset=0&limit=5
+        href: /markets/A1/articles?season_name=FW17&offset=0&limit=5
       last:
-        href: /markets/50-A1/articles?offset=40&limit=5
+        href: /markets/A1/articles?season_name=FW17&offset=40&limit=5
     _embedded:
       article: [{}]
     articleCount: 1      

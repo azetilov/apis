@@ -3,3 +3,21 @@ $id: http://adidas.com/product/api/MarketArticleHAL
 title: Market Article
 type: object
 
+allOf:
+  - $ref: http://adidas.com/api/HAL
+  - $ref: http://adidas.com/product/Article # TODO: Change
+
+examples:
+  - _links:
+      self:
+        href: /markets/A1/articles/015110?season_name=FW17
+      skus:
+        href: /markets/A1/articles/015110/skus?season_name=FW17
+      relatedArticles:
+        - href: /markets/A1/articles/015111?season_name=FW17
+        - href: /markets/A1/articles/015112?season_name=FW17
+      assets:
+        href: /articles/015110/assets
+      catalogue:
+        href: /articles/015110/catalogue
+
