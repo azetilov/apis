@@ -8,18 +8,21 @@ info:
     To propose a change, head over to [GitHub repository](https://github.com/adidas-group/product-service-api), create a new branch with proposed change and open a [pull request](https://help.github.com/articles/about-pull-requests/).
 
     ## Article Information Levels
+
     Article information are provided on the following levels:
 
     1. Global
     1. Market-specific
 
     ## Catalogue Information Levels
+
     Catalogue information are provided on the following levels:
 
     1. Global (as in not market specific) Model-specific
     1. Global Article-specific
 
     ## Available Affordances
+
     The API affords the following top-level actions:
     - Retrieve all articles
     - Retrieve all articles for a particular market
@@ -30,6 +33,7 @@ info:
     - Retrieve all markets, their area and region codes
 
     ## Marketing Channels
+
     The Product Service API (this API) does not provide any marketing channel (eCommerce, retail, wholesale, etc.) -specific information. To retireve product information specific to a marketing channel refer to the respective marketing channel's API.
 
     1. [eCommerce](https://draftproductserviceglass.docs.apiary.io/#) (GLASS)
@@ -37,12 +41,15 @@ info:
     1. Wholesale (eCatalogue) (planned)
 
     ## Season Information
+
     Where applicable, seasonal information might be retrieved using the optional `season_name` parameter. When no `season_name` parameter is provided the current season is assumed.
 
     ## Language Variants
+
     Where applicable, product information support standard [HTTP Language Variants negotiation](https://adidas-group.gitbooks.io/api-guidelines/content/execution/localization.html) using the `Accept-Language` HTTP Header.
 
     ## Embedding Related Resoruces
+
     For the performance reasons over HTTP/1.1 the article-related resources will be embeded under `_embedded` field as specified in [HAL](http://stateless.co/hal_specification.html) representation format.
 
     > NOTE: The embedded articles in the `_embedded` field might not represent
