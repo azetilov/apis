@@ -7,8 +7,12 @@ allOf:
   - $ref: http://adidas.com/api/HAL
 
 properties:
-  - $ref: http://adidas.com/product/Article#/properties/articleNumber
-  - $ref: http://adidas.com/product/Article#/properties/modelNumber
+  # TODO: Pull other properties from the core model
+  articleNumber:
+    $ref: http://adidas.com/product/Article#/properties/articleNumber
+  
+  modelNumber:
+    $ref: http://adidas.com/product/Article#/properties/modelNumber
 
 examples:
   - _links:

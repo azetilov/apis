@@ -418,6 +418,7 @@ paths:
     x-summary: Market Article Prices
     x-description: Prices for an article on a given market.
     parameters:
+      - $ref: '#/parameters/areaCodePath'
       - $ref: '#/parameters/articleId'
 
     get:
@@ -441,6 +442,7 @@ paths:
     x-summary: Market Article SKUs
     x-description: Market-level article SKUs.
     parameters:
+      - $ref: '#/parameters/areaCodePath'
       - $ref: '#/parameters/articleId'
     get:
       summary: Retrieve Market Article SKUs
@@ -1060,10 +1062,10 @@ definitions:
     allOf:
       - $ref: '#/definitions/adidasComApiHAL'
     properties:
-      '0':
-        $ref: '#/definitions/adidasComProductArticlePropertiesArticleNumber'
-      '1':
-        $ref: '#/definitions/adidasComProductArticlePropertiesModelNumber'
+      articleNumber:
+        $ref: '#/definitions/adidasComProductArticle/properties/articleNumber'
+      modelNumber:
+        $ref: '#/definitions/adidasComProductArticle/properties/modelNumber'
     example:
       _links:
         self:
@@ -1215,7 +1217,7 @@ definitions:
     type: object
     allOf:
       - $ref: '#/definitions/adidasComApiHAL'
-      - $ref: '#/definitions/adidasComProductApiMarketSKUsHAL'
+      - $ref: '#/definitions/adidasComProductApiSKUsHAL'
     example:
       _links:
         self:
@@ -1264,3 +1266,35 @@ definitions:
     example:
       _links:
         self:
+          href: /markets/A1/articles/015110/prices?season_name=FW17
+      priceCount: 1
+      prices:
+        - {}
+  adidasComProductApiSKUsHAL:
+    title: HAL Representation of Collection of SKUs
+    type: object
+    allOf:
+      - $ref: '#/definitions/adidasComApiHAL'
+    properties:
+      skuCount:
+        type: number
+      skus:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductSKU'
+    example:
+      _links:
+        self:
+          href: /articles/015110/skus
+      skuCount: 1
+      skus:
+        - {}
+  adidasComProductUtilsCodeDescription:
+    title: Code Description Tuple
+    description: Helper data structure to hold any code - description pair
+    type: object
+    properties:
+      code:
+        type: string
+      description:
+        type: string
