@@ -2,28 +2,26 @@ swagger: '2.0'
 info:
   version: '1.0.0'
   title: "[Draft] Product Service"
-  description: >-
+  description: |
     Draft of a new Poduct API for outbound integration.
 
     To propose a change, head over to [GitHub repository](https://github.com/adidas-group/product-service-api), create a new branch with proposed change and open a [pull request](https://help.github.com/articles/about-pull-requests/).
 
     ## Article Information Levels
-
     Article information are provided on the following levels:
 
     1. Global
     1. Market-specific
 
     ## Catalogue Information Levels
-
     Catalogue information are provided on the following levels:
 
     1. Global (as in not market specific) Model-specific
     1. Global Article-specific
 
     ## Available Affordances
-
     The API affords the following top-level actions:
+
     - Retrieve all articles
     - Retrieve all articles for a particular market
     - Retrieve a particular article information
@@ -33,7 +31,6 @@ info:
     - Retrieve all markets, their area and region codes
 
     ## Marketing Channels
-
     The Product Service API (this API) does not provide any marketing channel (eCommerce, retail, wholesale, etc.) -specific information. To retireve product information specific to a marketing channel refer to the respective marketing channel's API.
 
     1. [eCommerce](https://draftproductserviceglass.docs.apiary.io/#) (GLASS)
@@ -41,15 +38,12 @@ info:
     1. Wholesale (eCatalogue) (planned)
 
     ## Season Information
-
     Where applicable, seasonal information might be retrieved using the optional `season_name` parameter. When no `season_name` parameter is provided the current season is assumed.
 
     ## Language Variants
-
     Where applicable, product information support standard [HTTP Language Variants negotiation](https://adidas-group.gitbooks.io/api-guidelines/content/execution/localization.html) using the `Accept-Language` HTTP Header.
 
     ## Embedding Related Resoruces
-
     For the performance reasons over HTTP/1.1 the article-related resources will be embeded under `_embedded` field as specified in [HAL](http://stateless.co/hal_specification.html) representation format.
 
     > NOTE: The embedded articles in the `_embedded` field might not represent
@@ -115,7 +109,7 @@ paths:
 
     get:
       summary: Retrieve List of Articles
-      description: >-
+      description: |
         Retrieve list of all articles.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -148,14 +142,14 @@ paths:
             
   /articles/{article_id}:
     x-summary: Article
-    x-description: >-
+    x-description: |
       Global article infromation. This resource carry non-seasonal article information, however its related resource `season` posess the season-specific article information.
     parameters:
       - $ref: '#/parameters/articleId'
 
     get:
       summary: Retrieve Article
-      description: >-
+      description: |
         Retrieve a particular article by its id.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -226,7 +220,7 @@ paths:
 
     get:
       summary: Retrieve Article Seasonal Information
-      description: >-
+      description: |
         Retrieve seasonal article information
 
         | Available Filters | Parameter Location | Parameter Name(s) |
@@ -274,7 +268,7 @@ paths:
 
     get:
       summary: Retrieve Model Catalogue
-      description: >-
+      description: |
         Get a particular model's catalogue by model number.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -306,7 +300,7 @@ paths:
 
     get:
       summary: Retrieve Article Catalogue
-      description: >-
+      description: |
         Retrieve a particular article's catalogue.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -330,7 +324,7 @@ paths:
       description: Retrieve the list of available markets.
       responses:
         200:
-          description: >-
+          description: |
             List of area-code : region-code tuples toghether with their specific article listings.
           schema:
             $ref: '#/definitions/adidasComProductApiMarketsHAL'
@@ -343,7 +337,7 @@ paths:
 
     get:
       summary: Retrieve List of Market Articles
-      description: >-
+      description: |
         Retrieve List of Articles for a given Market
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -380,7 +374,7 @@ paths:
 
     get:
       summary: Retrieve Market Article
-      description: >-
+      description: |
         Retrieve a particular article by its id for the given market.
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
@@ -430,7 +424,7 @@ paths:
 
     get:
       summary: Retrieve Article Prices
-      description: >-
+      description: |
         Retrieve prices for the particular article on the given market
 
         | Available Filters | Parameter Location | Parameter Name(s) |
@@ -453,7 +447,7 @@ paths:
       - $ref: '#/parameters/articleId'
     get:
       summary: Retrieve Market Article SKUs
-      description: >-
+      description: |
         Retrieve SKUs for the particular article on the given market
 
         | Available Filters | Parameter Location | Parameter Name(s) |
@@ -672,19 +666,19 @@ definitions:
         type: string
     example:
       acsModelName: COPA MUNDIAL
-      b2cCopy: >-
+      b2cCopy: |
         De populairste voetbalschoen ooit, en terecht. De adidas Copa Mundial
         heeft een bovenwerk van rijk leer en een loopzool met dubbele dichtheid
         die al decennia lang de toon zet voor comfort en prestaties op het veld.
-      b2cCopyShort: >-
+      b2cCopyShort: |
         Entraîne-toi comme les pros avec ce haut de l'équipe de Belgique de
         football.
-      b2bCopy: >-
+      b2bCopy: |
         Hurricanes Training Jersey as worn by the players when training with
         dynamic retro design inspired by the original Super Jersey.Captured with
         shock blue and black colors on climalite fabric with moisture wicking
         properties.
-      b2bCopyShort: >-
+      b2bCopyShort: |
         Hurricanes Training Jersey as worn by the players when training with
         dynamic retro design inspired by the orginal Super jersey.
       materialComposition: 100% Organic Cotton
@@ -692,11 +686,11 @@ definitions:
       bullets1: materiál Climalite odvádí pot a udrží tě vsuchu za všech okolností
       bullets2: Ribbet V-hals
       bullets3: Nackenband
-      bullets4: >-
+      bullets4: |
         Επένδυση προστασίας από τον άνεμο στο μπροστινό μέρος. Μανσέτες με
         ανοίγματα για τους αντίχειρες
       bullets5: Woven Belgium crest on chest
-      bullets6: >-
+      bullets6: |
         3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha del
         pecho
       bulletMaterial: Maille double 100 % polyester.
@@ -724,14 +718,14 @@ definitions:
       businessCode: BU Young Athlete
       shoePart: Upper
       featureName: Costura à maquina
-      featureDescription: >-
+      featureDescription: |
         construction nylon/TPU pour un bon toucher de balle et une bonne
         résistance à l'usure.
       logoName: ECO_OrthoLiteLogo
       logoHref: 'http://domain.com/logo.jpeg'
   adidasComApiHAL:
     title: HAL
-    description: >-
+    description: |
       JSON Hypertext Application Language. Definition of [HAL message
       format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
     type: object
@@ -746,7 +740,7 @@ definitions:
         additionalProperties: {}
   adidasComApiProblemDetail:
     title: Problem Details for HTTP APIs
-    description: >-
+    description: |
       Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
       detail
     type: object
