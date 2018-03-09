@@ -1,0 +1,218 @@
+# Simple GraphQL Schema for potential adidas Product GraphQL API
+#   
+#   author: Zdenek Z Nemec (z@goodapi.co)
+# 
+# The data models, names, attributes and actions (top-level queries) are the same as in the planned adidas Product REST API and are devised from the produt supermodel
+# See https://github.com/adidas-group/product-service-api for details.
+#
+# NOTE: This schema currently does not include pagination, language variants and other production-worthy features.
+#
+
+type Query {
+  # Retrieve listing of markets
+  markets: [Market]
+
+  # Retrive all Articles on a market, seasonal
+  marketArticles(areaCode: String!, seasonName: String!): [MarketArticle]
+
+  # Retrive a particular article on a market, seasonal
+	marketArticle(areaCode: String!, seasonName: String!, articleNumber: String!): MarketArticle
+
+  # Retrieve model catalog
+  modelCatalog(modelNumber: String!): Catalog
+
+  # Retrieve article catalog
+	articleCatalog(articleNumber: String!): Catalog
+
+  # Retrive a particular article
+  article(articleNumber: String!): Article
+
+  # Retrieve all articles
+  articles: [Article]
+}
+
+#
+# Market
+#
+type Market {
+  areaCode: String
+  regionCode: String
+  articles: [MarketArticle]
+}
+
+#
+# Market Article
+#
+type MarketArticle {
+  articleNumber: String
+  modelNumber: String
+  articleDescription: String
+  gender: String
+  brand: String
+  productType: String
+  ageGroup: String
+  colorway: Colorway
+  colors: [Color]
+  skus: [SKU]
+  assets: [Asset]
+  catalog: Catalog
+  related: [MarketArticle]
+  seasonName: String
+  carryOver: Boolean
+  retailIntroDate: String
+  retailExitDate: String
+  prices: [Price]
+}
+
+#
+# Market Article Price
+# 
+type Price {
+	timePeriodCode: String
+  salesOrg: String
+  distChannel: String
+  priceType: String
+  currency: String
+  validFrom: String
+  validTo: String
+  priceValue: String
+  countryCode: String 
+}
+
+
+#
+# Article
+#
+type Article {
+  articleNumber: String
+  modelNumber: String
+  articleDescription: String
+  gender: String
+  brand: String
+  productType: String
+  ageGroup: String
+  colorway: Colorway
+  colors: [Color]
+  skus: [SKU]
+  assets: [Asset]
+  catalog: Catalog
+  related: [Article]  
+}
+
+# 
+# Seasonal Article Information
+#
+type ArticleSeason {
+	seasonName: String
+  carryOver: Boolean
+  retailIntroDate: String
+  retailExitDate: String
+}
+
+#
+#	Color
+#
+type Color {
+  color1: String
+  color2: String
+  color3: String
+  color4: String
+}
+
+type Colorway {
+  name: String
+  description: String
+}
+
+#
+# SKU
+#
+type SKU {
+  EAN: String
+  UPC: String
+  srcSizeCD3: String
+  srcSizeScale: String
+  srcSizeDescription: String
+  conversionIDs: [ConversionId]
+}
+
+type ConversionId {
+  localSize: String
+  saleSizeConvID: String
+  saleSizeScale: String
+  saleSizeAbbr: String
+  saleSizeDesc: String  
+}
+
+#
+# Asset
+#
+enum AssetType {
+	IMAGE
+	VIDEO
+	OTHER  
+}
+
+type Asset {
+	assetType: AssetType!
+  viewGroup: String!
+  assetCategory: String!
+  usageTerms: String!
+  assetHref: String!
+  image: AssetImage
+  video: AssetVideo
+  model: AssetModel
+}
+
+type AssetImage {
+  style: String
+  width: Int
+  height: Int
+  bgColor: String
+}
+
+type AssetVideo {
+  fileSize: Int
+}
+
+type AssetModel {
+  waist: String
+  chest: String
+  height: String
+  productSize: String
+}
+
+#
+# Catalog
+#
+type Catalog {
+  catalogueCopy: CatalogCopy
+  featureAndBenefits: [FeatureAndBenefit]
+}
+
+type CatalogCopy {
+  acsModelName: String
+  b2cCopy: String
+  b2cCopyShort: String
+  b2bCopy: String
+  b2bCopyShort: String
+  materialComposition: String
+  materialConstruction: String
+  bullets1: String
+  bullets2: String
+  bullets3: String
+  bullets4: String
+  bullets5: String
+  bullets6: String
+  bulletMaterial: String  
+}
+
+type FeatureAndBenefit {
+  featureAndBenefitCode: String
+  businessCode: String
+  shoePart: String
+  featureName: String
+  featureDescription: String
+  logoName: String
+  logoHref: String
+}
