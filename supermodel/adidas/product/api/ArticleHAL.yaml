@@ -7,12 +7,24 @@ allOf:
   - $ref: http://adidas.com/api/HAL
 
 properties:
-  # TODO: Pull other properties from the core model
   articleNumber:
     $ref: http://adidas.com/product/Article#/properties/articleNumber
-  
   modelNumber:
     $ref: http://adidas.com/product/Article#/properties/modelNumber
+  articleDescription:
+    $ref: http://adidas.com/product/Article#/properties/articleDescription
+  gender:
+      $ref: http://adidas.com/product/Article#/properties/gender
+  brand:
+    $ref: http://adidas.com/product/Article#/properties/brand
+  productType:
+    $ref: http://adidas.com/product/Article#/properties/productType
+  ageGroup:
+    $ref: http://adidas.com/product/Article#/properties/ageGroup
+  colorway:
+    $ref: http://adidas.com/product/Article#/properties/colorway
+  colors:
+    $ref: http://adidas.com/product/Article#/properties/colors
 
 examples:
   - _links:
@@ -33,4 +45,35 @@ examples:
         href: https://api.adidas.com/ecom/article/015110
       availability:
         href: https://api.adidas.com/inventory/availability?articlesIds=015110
+    articleNumber: '015110'
+    modelNumber: '10034'
+    articleDescription: 'COPA MUNDIAL'
+    gender:
+      code: 'M'
+      description: 'MALE'
+    brand:
+      code: '11'
+      description: 'ADIDAS'
+    productType:
+      code: '104'
+      description: 'FOOTBALL SHOES (FIRM GROUND)'
+    ageGroup:
+      code: 'A'
+      description: 'ADULT'
+    colorway:
+      name: 'FTWR WHITE/BLACK'
+      description: 'BLABAS/GRAFIT/BLABAS'
+    colors:
+      - color1:
+          code: "A0QM"
+          description: "core black"
+        color2:
+          code: "A98B"
+          description: "utility black"
+        color3:
+          code: "A0QM"
+          description: "core black"
+        color4:
+          code: "01F7"
+          description: "ftwr white"
 

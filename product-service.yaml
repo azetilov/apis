@@ -400,20 +400,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/adidasComProductApiArticleHAL'
-            #TODO: Change to Market Article
-            # Market Article
-            # - [x] Assets are global, same across markets
-            # - [x] Market SKUs are subset of global
-            # - [x] Prices are not global they are usuall market -specific
-            #       planned prices - for future
-            #       existing (actual) prices - they exist per sales org which corelates with market (care: there is 1:1 mapping between sales org and market)
-            #   remove the link between article and price (on a global level)
-            #
-            # Season
-            #   globally: an article is ranged for a season
-            #   market-season: article is ranged for a season on a market
-            # TODO: on a market level merge market article with season, on a global level leave season separated
+            $ref: '#/definitions/adidasComProductApiMarketArticleHAL'
 
   /markets/{area_code}/articles/{article_id}/prices:
     x-summary: Market Article Prices
@@ -458,7 +445,7 @@ paths:
         200:
           description: SKUs for an Market Article.
           schema:
-            $ref: '#/definitions/adidasComProductApiSKUsHAL'
+            $ref: '#/definitions/adidasComProductApiMarketSKUsHAL'
 
   # NOTE: The resource 'market article assets'
   # /markets/{area_code}/articles/{article_id}/assets:
@@ -666,19 +653,19 @@ definitions:
         type: string
     example:
       acsModelName: COPA MUNDIAL
-      b2cCopy: |
+      b2cCopy: >-
         De populairste voetbalschoen ooit, en terecht. De adidas Copa Mundial
         heeft een bovenwerk van rijk leer en een loopzool met dubbele dichtheid
         die al decennia lang de toon zet voor comfort en prestaties op het veld.
-      b2cCopyShort: |
+      b2cCopyShort: >-
         Entraîne-toi comme les pros avec ce haut de l'équipe de Belgique de
         football.
-      b2bCopy: |
+      b2bCopy: >-
         Hurricanes Training Jersey as worn by the players when training with
         dynamic retro design inspired by the original Super Jersey.Captured with
         shock blue and black colors on climalite fabric with moisture wicking
         properties.
-      b2bCopyShort: |
+      b2bCopyShort: >-
         Hurricanes Training Jersey as worn by the players when training with
         dynamic retro design inspired by the orginal Super jersey.
       materialComposition: 100% Organic Cotton
@@ -686,11 +673,11 @@ definitions:
       bullets1: materiál Climalite odvádí pot a udrží tě vsuchu za všech okolností
       bullets2: Ribbet V-hals
       bullets3: Nackenband
-      bullets4: |
+      bullets4: >-
         Επένδυση προστασίας από τον άνεμο στο μπροστινό μέρος. Μανσέτες με
         ανοίγματα για τους αντίχειρες
       bullets5: Woven Belgium crest on chest
-      bullets6: |
+      bullets6: >-
         3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha del
         pecho
       bulletMaterial: Maille double 100 % polyester.
@@ -718,14 +705,14 @@ definitions:
       businessCode: BU Young Athlete
       shoePart: Upper
       featureName: Costura à maquina
-      featureDescription: |
+      featureDescription: >-
         construction nylon/TPU pour un bon toucher de balle et une bonne
         résistance à l'usure.
       logoName: ECO_OrthoLiteLogo
       logoHref: 'http://domain.com/logo.jpeg'
   adidasComApiHAL:
     title: HAL
-    description: |
+    description: >-
       JSON Hypertext Application Language. Definition of [HAL message
       format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
     type: object
@@ -740,7 +727,7 @@ definitions:
         additionalProperties: {}
   adidasComApiProblemDetail:
     title: Problem Details for HTTP APIs
-    description: |
+    description: >-
       Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
       detail
     type: object
@@ -799,6 +786,12 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/adidasComProductAsset'
+      catalog:
+        $ref: '#/definitions/adidasComProductCatalog'
+      related:
+        type: array
+        items:
+          $ref: '#/definitions/adidasComProductArticle'
     example:
       articleNumber: '015110'
       modelNumber: '10034'
@@ -826,6 +819,7 @@ definitions:
         - {}
       assets:
         - {}
+      catalog: {}
   adidasComProductArticleSeason:
     title: Article Season
     description: Seasonal information about article
@@ -966,9 +960,41 @@ definitions:
     title: Market Article
     description: Market-specific Article Information
     type: object
-    allOf:
-      - $ref: '#/definitions/adidasComProductArticle'
     properties:
+      articleNumber:
+        $ref: '#/definitions/adidasComProductArticle/properties/articleNumber'
+      modelNumber:
+        $ref: '#/definitions/adidasComProductArticle/properties/modelNumber'
+      articleDescription:
+        $ref: '#/definitions/adidasComProductArticle/properties/articleDescription'
+      gender:
+        $ref: '#/definitions/adidasComProductArticle/properties/gender'
+      brand:
+        $ref: '#/definitions/adidasComProductArticle/properties/brand'
+      productType:
+        $ref: '#/definitions/adidasComProductArticle/properties/productType'
+      ageGroup:
+        $ref: '#/definitions/adidasComProductArticle/properties/ageGroup'
+      colorway:
+        $ref: '#/definitions/adidasComProductArticle/properties/colorway'
+      colors:
+        $ref: '#/definitions/adidasComProductArticle/properties/colors'
+      skus:
+        $ref: '#/definitions/adidasComProductArticle/properties/skus'
+      assets:
+        $ref: '#/definitions/adidasComProductArticle/properties/assets'
+      catalog:
+        $ref: '#/definitions/adidasComProductArticle/properties/catalog'
+      related:
+        $ref: '#/definitions/adidasComProductArticle/properties/related'
+      seasonName:
+        $ref: '#/definitions/adidasComProductArticleSeason/properties/seasonName'
+      carryOver:
+        $ref: '#/definitions/adidasComProductArticleSeason/properties/carryOver'
+      retailIntroDate:
+        $ref: '#/definitions/adidasComProductArticleSeason/properties/retailIntroDate'
+      retailExitDate:
+        $ref: '#/definitions/adidasComProductArticleSeason/properties/retailExitDate'
       prices:
         type: array
         items:
@@ -1067,6 +1093,20 @@ definitions:
         $ref: '#/definitions/adidasComProductArticle/properties/articleNumber'
       modelNumber:
         $ref: '#/definitions/adidasComProductArticle/properties/modelNumber'
+      articleDescription:
+        $ref: '#/definitions/adidasComProductArticle/properties/articleDescription'
+      gender:
+        $ref: '#/definitions/adidasComProductArticle/properties/gender'
+      brand:
+        $ref: '#/definitions/adidasComProductArticle/properties/brand'
+      productType:
+        $ref: '#/definitions/adidasComProductArticle/properties/productType'
+      ageGroup:
+        $ref: '#/definitions/adidasComProductArticle/properties/ageGroup'
+      colorway:
+        $ref: '#/definitions/adidasComProductArticle/properties/colorway'
+      colors:
+        $ref: '#/definitions/adidasComProductArticle/properties/colors'
     example:
       _links:
         self:
@@ -1086,6 +1126,37 @@ definitions:
           href: 'https://api.adidas.com/ecom/article/015110'
         availability:
           href: 'https://api.adidas.com/inventory/availability?articlesIds=015110'
+      articleNumber: '015110'
+      modelNumber: '10034'
+      articleDescription: COPA MUNDIAL
+      gender:
+        code: M
+        description: MALE
+      brand:
+        code: '11'
+        description: ADIDAS
+      productType:
+        code: '104'
+        description: FOOTBALL SHOES (FIRM GROUND)
+      ageGroup:
+        code: A
+        description: ADULT
+      colorway:
+        name: FTWR WHITE/BLACK
+        description: BLABAS/GRAFIT/BLABAS
+      colors:
+        - color1:
+            code: A0QM
+            description: core black
+          color2:
+            code: A98B
+            description: utility black
+          color3:
+            code: A0QM
+            description: core black
+          color4:
+            code: 01F7
+            description: ftwr white
   adidasComProductApiArticleNotFoundProblemDetail:
     title: Article Not Found Problem
     type: object
@@ -1161,7 +1232,28 @@ definitions:
     type: object
     allOf:
       - $ref: '#/definitions/adidasComApiHAL'
-      - $ref: '#/definitions/adidasComProductMarketArticle'
+    properties:
+      articleNumber:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/articleNumber'
+      modelNumber:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/modelNumber'
+      articleDescription:
+        $ref: >-
+          #/definitions/adidasComProductMarketArticle/properties/articleDescription
+      gender:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/gender'
+      brand:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/brand'
+      productType:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/productType'
+      ageGroup:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/ageGroup'
+      colorway:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/colorway'
+      colors:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/colors'
+      seasonName:
+        $ref: '#/definitions/adidasComProductMarketArticle/properties/seasonName'
     example:
       _links:
         self:
@@ -1171,10 +1263,47 @@ definitions:
         relatedArticles:
           - href: /markets/A1/articles/015111?season_name=FW17
           - href: /markets/A1/articles/015112?season_name=FW17
+        prices:
+          href: /markets/A1/articles/015111/prices?season_name=FW17
         assets:
           href: /articles/015110/assets
         catalogue:
           href: /articles/015110/catalogue
+      articleNumber: '015110'
+      modelNumber: '10034'
+      articleDescription: COPA MUNDIAL
+      gender:
+        code: M
+        description: MALE
+      brand:
+        code: '11'
+        description: ADIDAS
+      productType:
+        code: '104'
+        description: FOOTBALL SHOES (FIRM GROUND)
+      ageGroup:
+        code: A
+        description: ADULT
+      colorway:
+        name: FTWR WHITE/BLACK
+        description: BLABAS/GRAFIT/BLABAS
+      colors:
+        - color1:
+            code: A0QM
+            description: core black
+          color2:
+            code: A98B
+            description: utility black
+          color3:
+            code: A0QM
+            description: core black
+          color4:
+            code: 01F7
+            description: ftwr white
+      seasonName: FW17
+      carryOver: false
+      retailIntroDate: '2017-06-01'
+      retailExitDate: '2017-11-30'
   adidasComProductApiMarketArticlesHAL:
     title: HAL Representation of Collection of Market Articles
     type: object
@@ -1299,3 +1428,4 @@ definitions:
         type: string
       description:
         type: string
+

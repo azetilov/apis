@@ -5,7 +5,28 @@ type: object
 
 allOf:
   - $ref: http://adidas.com/api/HAL
-  - $ref: http://adidas.com/product/MarketArticle
+
+properties:
+  articleNumber:
+    $ref: http://adidas.com/product/MarketArticle#/properties/articleNumber
+  modelNumber:
+    $ref: http://adidas.com/product/MarketArticle#/properties/modelNumber
+  articleDescription:
+    $ref: http://adidas.com/product/MarketArticle#/properties/articleDescription
+  gender:
+      $ref: http://adidas.com/product/MarketArticle#/properties/gender
+  brand:
+    $ref: http://adidas.com/product/MarketArticle#/properties/brand
+  productType:
+    $ref: http://adidas.com/product/MarketArticle#/properties/productType
+  ageGroup:
+    $ref: http://adidas.com/product/MarketArticle#/properties/ageGroup
+  colorway:
+    $ref: http://adidas.com/product/MarketArticle#/properties/colorway
+  colors:
+    $ref: http://adidas.com/product/MarketArticle#/properties/colors
+  seasonName:
+    $ref: http://adidas.com/product/MarketArticle#/properties/seasonName
 
 examples:
   - _links:
@@ -16,8 +37,45 @@ examples:
       relatedArticles:
         - href: /markets/A1/articles/015111?season_name=FW17
         - href: /markets/A1/articles/015112?season_name=FW17
+      prices:
+        href: /markets/A1/articles/015111/prices?season_name=FW17        
       assets:
         href: /articles/015110/assets
       catalogue:
         href: /articles/015110/catalogue
+    articleNumber: '015110'
+    modelNumber: '10034'
+    articleDescription: 'COPA MUNDIAL'
+    gender:
+      code: 'M'
+      description: 'MALE'
+    brand:
+      code: '11'
+      description: 'ADIDAS'
+    productType:
+      code: '104'
+      description: 'FOOTBALL SHOES (FIRM GROUND)'
+    ageGroup:
+      code: 'A'
+      description: 'ADULT'
+    colorway:
+      name: 'FTWR WHITE/BLACK'
+      description: 'BLABAS/GRAFIT/BLABAS'
+    colors:
+      - color1:
+          code: "A0QM"
+          description: "core black"
+        color2:
+          code: "A98B"
+          description: "utility black"
+        color3:
+          code: "A0QM"
+          description: "core black"
+        color4:
+          code: "01F7"
+          description: "ftwr white"
+    seasonName: FW17
+    carryOver: false
+    retailIntroDate: "2017-06-01"
+    retailExitDate: "2017-11-30"
 

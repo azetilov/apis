@@ -41,6 +41,12 @@ properties:
     type: array
     items:
       $ref: Asset
+  catalog:
+    $ref: Catalog
+  related:
+    type: array
+    items:
+      $ref: Article
 
 examples:
   - articleNumber: '015110'
@@ -65,4 +71,5 @@ examples:
     seasons: [{}]
     skus: [{}]
     assets: [{}]
+    catalog: {}
 

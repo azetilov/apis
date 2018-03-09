@@ -4,10 +4,41 @@ title: Market Article
 description: Market-specific Article Information
 type: object
 
-allOf:
-  - $ref: Article
-
 properties:
+  articleNumber:
+    $ref: http://adidas.com/product/Article#/properties/articleNumber
+  modelNumber:
+    $ref: http://adidas.com/product/Article#/properties/modelNumber
+  articleDescription:
+    $ref: http://adidas.com/product/Article#/properties/articleDescription
+  gender:
+      $ref: http://adidas.com/product/Article#/properties/gender
+  brand:
+    $ref: http://adidas.com/product/Article#/properties/brand
+  productType:
+    $ref: http://adidas.com/product/Article#/properties/productType
+  ageGroup:
+    $ref: http://adidas.com/product/Article#/properties/ageGroup
+  colorway:
+    $ref: http://adidas.com/product/Article#/properties/colorway
+  colors:
+    $ref: http://adidas.com/product/Article#/properties/colors
+  skus:
+    $ref: http://adidas.com/product/Article#/properties/skus
+  assets:
+    $ref: http://adidas.com/product/Article#/properties/assets
+  catalog:
+    $ref: http://adidas.com/product/Article#/properties/catalog
+  related:
+    $ref: http://adidas.com/product/Article#/properties/related
+  seasonName:
+    $ref: http://adidas.com/product/ArticleSeason#/properties/seasonName
+  carryOver:
+    $ref: http://adidas.com/product/ArticleSeason#/properties/carryOver
+  retailIntroDate:
+    $ref: http://adidas.com/product/ArticleSeason#/properties/retailIntroDate
+  retailExitDate:
+    $ref: http://adidas.com/product/ArticleSeason#/properties/retailExitDate
   prices:
     type: array
     items:
