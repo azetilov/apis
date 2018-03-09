@@ -16,13 +16,13 @@ type Query {
   marketArticles(areaCode: String!, seasonName: String!): [MarketArticle]
 
   # Retrive a particular article on a market, seasonal
-	marketArticle(areaCode: String!, seasonName: String!, articleNumber: String!): MarketArticle
+  marketArticle(areaCode: String!, seasonName: String!, articleNumber: String!): MarketArticle
 
   # Retrieve model catalog
   modelCatalog(modelNumber: String!): Catalog
 
   # Retrieve article catalog
-	articleCatalog(articleNumber: String!): Catalog
+  articleCatalog(articleNumber: String!): Catalog
 
   # Retrive a particular article
   article(articleNumber: String!): Article
@@ -68,7 +68,7 @@ type MarketArticle {
 # Market Article Price
 # 
 type Price {
-	timePeriodCode: String
+  timePeriodCode: String
   salesOrg: String
   distChannel: String
   priceType: String
@@ -103,7 +103,7 @@ type Article {
 # Seasonal Article Information
 #
 type ArticleSeason {
-	seasonName: String
+  seasonName: String
   carryOver: Boolean
   retailIntroDate: String
   retailExitDate: String
@@ -148,13 +148,13 @@ type ConversionId {
 # Asset
 #
 enum AssetType {
-	IMAGE
-	VIDEO
-	OTHER  
+  IMAGE
+  VIDEO
+  OTHER  
 }
 
 type Asset {
-	assetType: AssetType!
+  assetType: AssetType!
   viewGroup: String!
   assetCategory: String!
   usageTerms: String!
