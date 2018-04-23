@@ -3,18 +3,20 @@ Proposal of a Future Product Service API.
 
 ![diagram](state-diagram.jpg)
 
-## Compile Data Model
-To compile the JSON Schema data model into OAS2 install the supermodel cli tool
+## Supermodel Data Model
+The data model of the adidas product domain and this API is defined using
+Supermodel Model that is a JSON Schema in YAML representation. These models are
+defined in the `supermodel/adidas` directory.
+
+To compile the data model for use in OpenAPI Spec 2.0, install the Supermodel
+CLI tool:
 
 ```
 $ npm i -g supermodel-cli
 ```
 
-Then run:
+and then run:
 
 ```
-$ cd supermodel
-$ supermodel compile-schema adidas/ > compiled.yaml && supermodel oas2 compiled.yaml > oas2.yaml
+$ supermodel schema oas2 supermodel/adidas -o product-service.yaml
 ```
-
-The result file is the `definitions` sections of the OAS2. 
