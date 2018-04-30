@@ -1,10 +1,10 @@
-$id: http://adidas.com/product/api/PricesHAL
+$id: http://supermodel.io/adidas/product/api/PricesHAL
 
 title: HAL Representation of Collection of Prices
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/HAL
+  - $ref: http://supermodel.io/adidas/api/HAL
 
 properties:
   priceCount:
@@ -12,7 +12,7 @@ properties:
   prices:
     type: array
     items:
-      $ref: http://adidas.com/product/Price
+      $ref: http://supermodel.io/adidas/product/Price
 
 examples:
   - _links:

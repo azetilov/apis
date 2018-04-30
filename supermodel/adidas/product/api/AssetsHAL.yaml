@@ -1,10 +1,10 @@
-$id: http://adidas.com/product/api/AssetsHAL
+$id: http://supermodel.io/adidas/product/api/AssetsHAL
 
 title: HAL Representation of Collection of Assets
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/HAL
+  - $ref: http://supermodel.io/adidas/api/HAL
 
 properties:
   assetCount:
@@ -12,7 +12,7 @@ properties:
   assets:
     type: array
     items:
-      $ref: http://adidas.com/product/Asset
+      $ref: http://supermodel.io/adidas/product/Asset
 
 examples:
   - _links:

@@ -1,4 +1,4 @@
-$id: http://adidas.com/api/HAL
+$id: http://supermodel.io/adidas/api/HAL
 
 title: HAL
 description: JSON Hypertext Application Language. Definition of [HAL message format](https://tools.ietf.org/html/draft-kelly-json-hal-08)

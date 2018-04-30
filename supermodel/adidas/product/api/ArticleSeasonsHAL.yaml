@@ -1,10 +1,10 @@
-$id: http://adidas.com/product/api/ArticleSeasonsHAL
+$id: http://supermodel.io/adidas/product/api/ArticleSeasonsHAL
 
 title: HAL Representation of Collection of Seasons
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/HAL
+  - $ref: http://supermodel.io/adidas/api/HAL
 
 properties:
   seasonsCount:
@@ -12,7 +12,7 @@ properties:
   seasons:
     type: array
     items:
-      $ref: http://adidas.com/product/ArticleSeason
+      $ref: http://supermodel.io/adidas/product/ArticleSeason
 
 examples:
   - _links:

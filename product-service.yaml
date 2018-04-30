@@ -78,7 +78,7 @@ paths:
           description: The root of the API
           schema:
             allOf:
-              - $ref: '#/definitions/adidasComApiHAL'
+              - $ref: '#/definitions/supermodelIoAdidasApiHAL'
             example:
               _links:
                 self:
@@ -138,7 +138,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/adidasComProductApiArticlesHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticlesHAL'
 
   /articles/{article_id}:
     x-summary: Article
@@ -173,7 +173,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/adidasComProductApiArticleHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleHAL'
 
         404:
           description: The requested article wasn't found.
@@ -182,7 +182,7 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleNotFoundProblemDetail'
 
   /articles/{article_id}/assets:
     x-summary: Article Assets
@@ -197,7 +197,7 @@ paths:
         200:
           description: Assets for an Article
           schema:
-            $ref: '#/definitions/adidasComProductApiAssetsHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiAssetsHAL'
 
   /articles/{article_id}/skus:
     x-summary: Article SKUs
@@ -210,7 +210,7 @@ paths:
         200:
           description: SKUs for an Article.
           schema:
-            $ref: '#/definitions/adidasComProductApiSKUsHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiSKUsHAL'
 
   /articles/{article_id}/seasons:
     x-summary: Article Seasons
@@ -244,7 +244,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/adidasComProductApiArticleSeasonsHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleSeasonsHAL'
 
         404:
           description: The given article was not found.
@@ -253,7 +253,7 @@ paths:
               type: string
               default: application/problem+json
           schema:
-            $ref: '#/definitions/adidasComProductApiArticleNotFoundProblemDetail'
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleNotFoundProblemDetail'
 
   #
   # Catalogue Information
@@ -290,7 +290,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/adidasComProductApiModelCatalogHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiModelCatalogHAL'
 
   /articles/{article_id}/catalogue:
     x-summary: Article Catalogue
@@ -313,7 +313,7 @@ paths:
         200:
           description: Article Catalogue
           schema:
-            $ref: '#/definitions/adidasComProductApiArticleCatalogHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleCatalogHAL'
 
   /markets:
     x-summary: Markets
@@ -327,7 +327,7 @@ paths:
           description: |
             List of area-code : region-code tuples toghether with their specific article listings.
           schema:
-            $ref: '#/definitions/adidasComProductApiMarketsHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiMarketsHAL'
 
   /markets/{area_code}/articles:
     x-summary: Market Articles
@@ -363,7 +363,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/adidasComProductApiMarketArticlesHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiMarketArticlesHAL'
 
   /markets/{area_code}/articles/{article_id}:
     x-summary: Market Article
@@ -400,7 +400,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/adidasComProductApiMarketArticleHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiMarketArticleHAL'
 
   /markets/{area_code}/articles/{article_id}/prices:
     x-summary: Market Article Prices
@@ -424,7 +424,7 @@ paths:
         200:
           description: Prices for an Article
           schema:
-            $ref: '#/definitions/adidasComProductApiPricesHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiPricesHAL'
 
   /markets/{area_code}/articles/{article_id}/skus:
     x-summary: Market Article SKUs
@@ -445,7 +445,7 @@ paths:
         200:
           description: SKUs for an Market Article.
           schema:
-            $ref: '#/definitions/adidasComProductApiMarketSKUsHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiMarketSKUsHAL'
 
   # NOTE: The resource 'market article assets'
   # /markets/{area_code}/articles/{article_id}/assets:
@@ -587,7 +587,7 @@ parameters:
 # http://supermodel.io
 # https://github.com/supermodel/supermodel-cli
 definitions:
-  adidasComApiHALDefinitionsHalLinkObject:
+  supermodelIoAdidasApiHALDefinitionsHalLinkObject:
     title: HAL Link Object
     type: object
     properties:
@@ -609,7 +609,7 @@ definitions:
         type: string
     required:
       - href
-  adidasComApiHALDefinitionsHalCuriesLink:
+  supermodelIoAdidasApiHALDefinitionsHalCuriesLink:
     title: HAL Curies Link
     allOf:
       - type: object
@@ -619,8 +619,8 @@ definitions:
               - true
         required:
           - templated
-      - $ref: '#/definitions/adidasComApiHALDefinitionsHalLinkObject'
-  adidasComProductCatalogDefinitionsCatalogCopy:
+      - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+  supermodelIoAdidasProductCatalogDefinitionsCatalogCopy:
     title: Catalog Copy
     type: object
     properties:
@@ -682,7 +682,7 @@ definitions:
         3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha del
         pecho
       bulletMaterial: Maille double 100 % polyester.
-  adidasComProductCatalogDefinitionsFeatureAndBenefit:
+  supermodelIoAdidasProductCatalogDefinitionsFeatureAndBenefit:
     title: Feature and Benefit
     type: object
     properties:
@@ -711,7 +711,7 @@ definitions:
         résistance à l'usure.
       logoName: ECO_OrthoLiteLogo
       logoHref: 'http://domain.com/logo.jpeg'
-  adidasComApiHAL:
+  supermodelIoAdidasApiHAL:
     title: HAL
     description: >-
       JSON Hypertext Application Language. Definition of [HAL message
@@ -726,7 +726,7 @@ definitions:
       _embedded:
         type: object
         additionalProperties: {}
-  adidasComApiProblemDetail:
+  supermodelIoAdidasApiProblemDetail:
     title: Problem Details for HTTP APIs
     description: >-
       Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
@@ -746,7 +746,7 @@ definitions:
     required:
       - title
       - detail
-  adidasComProductArticle:
+  supermodelIoAdidasProductArticle:
     title: Article
     type: object
     properties:
@@ -757,13 +757,13 @@ definitions:
       articleDescription:
         type: string
       gender:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       brand:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       productType:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       ageGroup:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       colorway:
         type: object
         properties:
@@ -774,25 +774,25 @@ definitions:
       colors:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductColor'
+          $ref: '#/definitions/supermodelIoAdidasProductColor'
       seasons:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductArticleSeason'
+          $ref: '#/definitions/supermodelIoAdidasProductArticleSeason'
       skus:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductSKU'
+          $ref: '#/definitions/supermodelIoAdidasProductSKU'
       assets:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductAsset'
+          $ref: '#/definitions/supermodelIoAdidasProductAsset'
       catalog:
-        $ref: '#/definitions/adidasComProductCatalog'
+        $ref: '#/definitions/supermodelIoAdidasProductCatalog'
       related:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductArticle'
+          $ref: '#/definitions/supermodelIoAdidasProductArticle'
     example:
       articleNumber: '015110'
       modelNumber: '10034'
@@ -821,7 +821,7 @@ definitions:
       assets:
         - {}
       catalog: {}
-  adidasComProductArticleSeason:
+  supermodelIoAdidasProductArticleSeason:
     title: Article Season
     description: Seasonal information about article
     type: object
@@ -841,7 +841,7 @@ definitions:
       carryOver: false
       retailIntroDate: '2017-06-01'
       retailExitDate: '2017-11-30'
-  adidasComProductAsset:
+  supermodelIoAdidasProductAsset:
     title: Asset
     description: Digital Asset
     type: object
@@ -917,33 +917,34 @@ definitions:
         chest: 97
         height: 197
         productSize: 540
-  adidasComProductCatalog:
+  supermodelIoAdidasProductCatalog:
     title: Catalog
     type: object
     properties:
       catalogueCopy:
-        $ref: '#/definitions/adidasComProductCatalogDefinitionsCatalogCopy'
+        $ref: '#/definitions/supermodelIoAdidasProductCatalogDefinitionsCatalogCopy'
       featureAndBenefits:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductCatalogDefinitionsFeatureAndBenefit'
+          $ref: >-
+            #/definitions/supermodelIoAdidasProductCatalogDefinitionsFeatureAndBenefit
     example:
       catalogueCopy: {}
       featureAndBenefits:
         - {}
-  adidasComProductColor:
+  supermodelIoAdidasProductColor:
     title: Color
     type: object
     description: Color descriptions are language-dependent
     properties:
       color1:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       color2:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       color3:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       color4:
-        $ref: '#/definitions/adidasComProductUtilsCodeDescription'
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
     example:
       color1:
         code: A0QM
@@ -957,50 +958,56 @@ definitions:
       color4:
         code: 01F7
         description: ftwr white
-  adidasComProductMarketArticle:
+  supermodelIoAdidasProductMarketArticle:
     title: Market Article
     description: Market-specific Article Information
     type: object
     properties:
       articleNumber:
-        $ref: '#/definitions/adidasComProductArticle/properties/articleNumber'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticle/properties/articleNumber
       modelNumber:
-        $ref: '#/definitions/adidasComProductArticle/properties/modelNumber'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/modelNumber'
       articleDescription:
-        $ref: '#/definitions/adidasComProductArticle/properties/articleDescription'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticle/properties/articleDescription
       gender:
-        $ref: '#/definitions/adidasComProductArticle/properties/gender'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/gender'
       brand:
-        $ref: '#/definitions/adidasComProductArticle/properties/brand'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/brand'
       productType:
-        $ref: '#/definitions/adidasComProductArticle/properties/productType'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/productType'
       ageGroup:
-        $ref: '#/definitions/adidasComProductArticle/properties/ageGroup'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/ageGroup'
       colorway:
-        $ref: '#/definitions/adidasComProductArticle/properties/colorway'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colorway'
       colors:
-        $ref: '#/definitions/adidasComProductArticle/properties/colors'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colors'
       skus:
-        $ref: '#/definitions/adidasComProductArticle/properties/skus'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/skus'
       assets:
-        $ref: '#/definitions/adidasComProductArticle/properties/assets'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/assets'
       catalog:
-        $ref: '#/definitions/adidasComProductArticle/properties/catalog'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/catalog'
       related:
-        $ref: '#/definitions/adidasComProductArticle/properties/related'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/related'
       seasonName:
-        $ref: '#/definitions/adidasComProductArticleSeason/properties/seasonName'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticleSeason/properties/seasonName
       carryOver:
-        $ref: '#/definitions/adidasComProductArticleSeason/properties/carryOver'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticleSeason/properties/carryOver
       retailIntroDate:
-        $ref: '#/definitions/adidasComProductArticleSeason/properties/retailIntroDate'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticleSeason/properties/retailIntroDate
       retailExitDate:
-        $ref: '#/definitions/adidasComProductArticleSeason/properties/retailExitDate'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticleSeason/properties/retailExitDate
       prices:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductPrice'
-  adidasComProductPrice:
+          $ref: '#/definitions/supermodelIoAdidasProductPrice'
+  supermodelIoAdidasProductPrice:
     title: Price
     type: object
     properties:
@@ -1036,7 +1043,7 @@ definitions:
       validTo: '2017-12-31'
       priceValue: '74,98'
       countryCode: AT
-  adidasComProductSKU:
+  supermodelIoAdidasProductSKU:
     title: SKU
     type: object
     properties:
@@ -1074,40 +1081,42 @@ definitions:
         - saleSizeConvID: D
           saleSizeScale: 8C
           saleSizeAbbr: '27'
-  adidasComProductApiArticleCatalogHAL:
+  supermodelIoAdidasProductApiArticleCatalogHAL:
     title: Article Catalog HAL Representation
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
-      - $ref: '#/definitions/adidasComProductCatalog'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasProductCatalog'
     example:
       _links:
         self:
           href: /articles/015110/catalogue
-  adidasComProductApiArticleHAL:
+  supermodelIoAdidasProductApiArticleHAL:
     title: Article HAL Representation
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       articleNumber:
-        $ref: '#/definitions/adidasComProductArticle/properties/articleNumber'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticle/properties/articleNumber
       modelNumber:
-        $ref: '#/definitions/adidasComProductArticle/properties/modelNumber'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/modelNumber'
       articleDescription:
-        $ref: '#/definitions/adidasComProductArticle/properties/articleDescription'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductArticle/properties/articleDescription
       gender:
-        $ref: '#/definitions/adidasComProductArticle/properties/gender'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/gender'
       brand:
-        $ref: '#/definitions/adidasComProductArticle/properties/brand'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/brand'
       productType:
-        $ref: '#/definitions/adidasComProductArticle/properties/productType'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/productType'
       ageGroup:
-        $ref: '#/definitions/adidasComProductArticle/properties/ageGroup'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/ageGroup'
       colorway:
-        $ref: '#/definitions/adidasComProductArticle/properties/colorway'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colorway'
       colors:
-        $ref: '#/definitions/adidasComProductArticle/properties/colors'
+        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colors'
     example:
       _links:
         self:
@@ -1158,28 +1167,28 @@ definitions:
           color4:
             code: 01F7
             description: ftwr white
-  adidasComProductApiArticleNotFoundProblemDetail:
+  supermodelIoAdidasProductApiArticleNotFoundProblemDetail:
     title: Article Not Found Problem
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiProblemDetail'
+      - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
     example:
       title: Not Found
       detail: Cannot find the requested article
       status: 404
       instance: /articles/1234
-  adidasComProductApiArticleSeasonsHAL:
+  supermodelIoAdidasProductApiArticleSeasonsHAL:
     title: HAL Representation of Collection of Seasons
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       seasonsCount:
         type: number
       seasons:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductArticleSeason'
+          $ref: '#/definitions/supermodelIoAdidasProductArticleSeason'
     example:
       _links:
         self:
@@ -1187,11 +1196,11 @@ definitions:
       seasonsCount: 1
       seasons:
         - {}
-  adidasComProductApiArticlesHAL:
+  supermodelIoAdidasProductApiArticlesHAL:
     title: HAL Representation of Collections of Articles
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       articleCount:
         type: number
@@ -1209,18 +1218,18 @@ definitions:
       _embedded:
         article:
           - {}
-  adidasComProductApiAssetsHAL:
+  supermodelIoAdidasProductApiAssetsHAL:
     title: HAL Representation of Collection of Assets
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       assetCount:
         type: number
       assets:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductAsset'
+          $ref: '#/definitions/supermodelIoAdidasProductAsset'
     example:
       _links:
         self:
@@ -1228,33 +1237,39 @@ definitions:
       assetCount: 1
       assets:
         - {}
-  adidasComProductApiMarketArticleHAL:
+  supermodelIoAdidasProductApiMarketArticleHAL:
     title: Market Article
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       articleNumber:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/articleNumber'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductMarketArticle/properties/articleNumber
       modelNumber:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/modelNumber'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductMarketArticle/properties/modelNumber
       articleDescription:
         $ref: >-
-          #/definitions/adidasComProductMarketArticle/properties/articleDescription
+          #/definitions/supermodelIoAdidasProductMarketArticle/properties/articleDescription
       gender:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/gender'
+        $ref: '#/definitions/supermodelIoAdidasProductMarketArticle/properties/gender'
       brand:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/brand'
+        $ref: '#/definitions/supermodelIoAdidasProductMarketArticle/properties/brand'
       productType:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/productType'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductMarketArticle/properties/productType
       ageGroup:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/ageGroup'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductMarketArticle/properties/ageGroup
       colorway:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/colorway'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductMarketArticle/properties/colorway
       colors:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/colors'
+        $ref: '#/definitions/supermodelIoAdidasProductMarketArticle/properties/colors'
       seasonName:
-        $ref: '#/definitions/adidasComProductMarketArticle/properties/seasonName'
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductMarketArticle/properties/seasonName
     example:
       _links:
         self:
@@ -1305,11 +1320,11 @@ definitions:
       carryOver: false
       retailIntroDate: '2017-06-01'
       retailExitDate: '2017-11-30'
-  adidasComProductApiMarketArticlesHAL:
+  supermodelIoAdidasProductApiMarketArticlesHAL:
     title: HAL Representation of Collection of Market Articles
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       articleCount:
         type: number
@@ -1327,11 +1342,11 @@ definitions:
         article:
           - {}
       articleCount: 1
-  adidasComProductApiMarketHAL:
+  supermodelIoAdidasProductApiMarketHAL:
     title: Market HAL Representation
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       areaCode:
         type: string
@@ -1343,12 +1358,12 @@ definitions:
           href: /markets/A1/articles?season_name=FW17
       areaCode: A1
       regionCode: '50'
-  adidasComProductApiMarketSKUsHAL:
+  supermodelIoAdidasProductApiMarketSKUsHAL:
     title: HAL Representation of Collection of SKUs
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
-      - $ref: '#/definitions/adidasComProductApiSKUsHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasProductApiSKUsHAL'
     example:
       _links:
         self:
@@ -1356,11 +1371,11 @@ definitions:
       skuCount: 1
       skus:
         - {}
-  adidasComProductApiMarketsHAL:
+  supermodelIoAdidasProductApiMarketsHAL:
     title: HAL Representation of Collection of Markets
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       marketsCount:
         type: number
@@ -1372,28 +1387,28 @@ definitions:
       _embedded:
         market:
           - {}
-  adidasComProductApiModelCatalogHAL:
+  supermodelIoAdidasProductApiModelCatalogHAL:
     title: Model Catalog HAL Representation
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
-      - $ref: '#/definitions/adidasComProductCatalog'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasProductCatalog'
     example:
       _links:
         self:
           href: /models/10034/catalog
-  adidasComProductApiPricesHAL:
+  supermodelIoAdidasProductApiPricesHAL:
     title: HAL Representation of Collection of Prices
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       priceCount:
         type: number
       prices:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductPrice'
+          $ref: '#/definitions/supermodelIoAdidasProductPrice'
     example:
       _links:
         self:
@@ -1401,18 +1416,18 @@ definitions:
       priceCount: 1
       prices:
         - {}
-  adidasComProductApiSKUsHAL:
+  supermodelIoAdidasProductApiSKUsHAL:
     title: HAL Representation of Collection of SKUs
     type: object
     allOf:
-      - $ref: '#/definitions/adidasComApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
       skuCount:
         type: number
       skus:
         type: array
         items:
-          $ref: '#/definitions/adidasComProductSKU'
+          $ref: '#/definitions/supermodelIoAdidasProductSKU'
     example:
       _links:
         self:
@@ -1420,7 +1435,7 @@ definitions:
       skuCount: 1
       skus:
         - {}
-  adidasComProductUtilsCodeDescription:
+  supermodelIoAdidasProductUtilsCodeDescription:
     title: Code Description Tuple
     description: Helper data structure to hold any code - description pair
     type: object

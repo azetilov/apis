@@ -1,11 +1,11 @@
-$id: http://adidas.com/product/api/ModelCatalogHAL
+$id: http://supermodel.io/adidas/product/api/ModelCatalogHAL
 
 title: Model Catalog HAL Representation
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/HAL
-  - $ref: http://adidas.com/product/Catalog
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/product/Catalog
 
 examples:
   - _links:

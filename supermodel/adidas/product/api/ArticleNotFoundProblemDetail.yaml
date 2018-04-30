@@ -1,10 +1,10 @@
-$id: http://adidas.com/product/api/ArticleNotFoundProblemDetail
+$id: http://supermodel.io/adidas/product/api/ArticleNotFoundProblemDetail
 
 title: Article Not Found Problem
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/ProblemDetail
+  - $ref: http://supermodel.io/adidas/api/ProblemDetail
 
 examples:
   - title: Not Found

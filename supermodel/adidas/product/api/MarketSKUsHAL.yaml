@@ -1,11 +1,11 @@
-$id: http://adidas.com/product/api/MarketSKUsHAL
+$id: http://supermodel.io/adidas/product/api/MarketSKUsHAL
 
 title: HAL Representation of Collection of SKUs
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/HAL
-  - $ref: http://adidas.com/product/api/SKUsHAL
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/product/api/SKUsHAL
 
 examples:
   - _links:

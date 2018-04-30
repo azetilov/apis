@@ -1,32 +1,32 @@
-$id: http://adidas.com/product/api/MarketArticleHAL
+$id: http://supermodel.io/adidas/product/api/MarketArticleHAL
 
 title: Market Article
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/HAL
+  - $ref: http://supermodel.io/adidas/api/HAL
 
 properties:
   articleNumber:
-    $ref: http://adidas.com/product/MarketArticle#/properties/articleNumber
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/articleNumber
   modelNumber:
-    $ref: http://adidas.com/product/MarketArticle#/properties/modelNumber
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/modelNumber
   articleDescription:
-    $ref: http://adidas.com/product/MarketArticle#/properties/articleDescription
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/articleDescription
   gender:
-      $ref: http://adidas.com/product/MarketArticle#/properties/gender
+      $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/gender
   brand:
-    $ref: http://adidas.com/product/MarketArticle#/properties/brand
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/brand
   productType:
-    $ref: http://adidas.com/product/MarketArticle#/properties/productType
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/productType
   ageGroup:
-    $ref: http://adidas.com/product/MarketArticle#/properties/ageGroup
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/ageGroup
   colorway:
-    $ref: http://adidas.com/product/MarketArticle#/properties/colorway
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/colorway
   colors:
-    $ref: http://adidas.com/product/MarketArticle#/properties/colors
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/colors
   seasonName:
-    $ref: http://adidas.com/product/MarketArticle#/properties/seasonName
+    $ref: http://supermodel.io/adidas/product/MarketArticle#/properties/seasonName
 
 examples:
   - _links:

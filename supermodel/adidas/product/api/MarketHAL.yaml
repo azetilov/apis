@@ -1,10 +1,10 @@
-$id: http://adidas.com/product/api/MarketHAL
+$id: http://supermodel.io/adidas/product/api/MarketHAL
 
 title: Market HAL Representation
 type: object
 
 allOf:
-  - $ref: http://adidas.com/api/HAL
+  - $ref: http://supermodel.io/adidas/api/HAL
 
 properties:
   areaCode:
