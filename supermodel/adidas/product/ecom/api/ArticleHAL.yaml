@@ -6,12 +6,52 @@ type: object
 
 allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
-  - $ref: http://supermodel.io/adidas/product/ecom/Article
+
+properties:
+  articleNumber:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/articleNumber
+  modelNumber:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/modelNumber
+  name:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/name
+  articleDescription:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/articleDescription
+  gender:
+      $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/gender
+  brand:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/brand
+  productType:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productType
+  price:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/price
+  badge:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/badge
+  assets:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/assets
+  defaultColor:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/defaultColor
 
 examples:
   - _links:
       self:
         href: /articles/AH2171?site=cz
+    
+    articleNumber: 'AH2171'
+    modelNumber: 'EFN23'
+    name: 'Obuv F/22 Primeknit'
+    articleDescription: 'Obuv, která spojuje outdoorovou funkčnost a streetový styl.'
+    gender: 
+      code: 'M'
+    brand: 
+      code: 'Originals'
+    productType: 'Tenisky'
+    price:
+      standardPrice: 3799
+    badge:
+      style: new
+      description: Nové
+    assets: []
+    defaultColor: {}
 
     _embedded:
       colorvariant:

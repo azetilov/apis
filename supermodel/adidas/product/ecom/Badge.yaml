@@ -1,0 +1,23 @@
+$id: http://supermodel.io/adidas/product/ecom/Badge
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Badge
+type: object
+
+properties:
+  style:
+    type: string
+    enum:
+      - new
+      - preview
+      - preorder
+      - sales
+      - customizable
+      - soldout
+    examples:
+    - new
+
+  description:
+    type: string
+    examples:
+    - Nové

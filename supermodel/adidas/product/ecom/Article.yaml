@@ -17,3 +17,38 @@ properties:
     $ref: http://supermodel.io/adidas/product/Article#/properties/brand
   productType:
     $ref: http://supermodel.io/adidas/product/Article#/properties/productType
+
+  name:
+    type: string
+    examples:
+    - Obuv F/22 Primeknit
+
+  price:
+    $ref: Price
+
+  badge:
+    $ref: Badge
+    
+  assets:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/product/Asset
+
+  defaultColor:
+    $ref: http://supermodel.io/adidas/product/Color
+
+  colorVariants:
+    type: array
+    items:
+      - $ref: '#/'
+
+  miadidas:
+    type: array
+    items:
+      - $ref: '#/'
+
+  completeLook:
+    type: array
+    items:
+      - $ref: '#/'
+    

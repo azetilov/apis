@@ -1053,16 +1053,117 @@ definitions:
         $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/brand'
       productType:
         $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/productType'
+      name:
+        type: string
+        example: Obuv F/22 Primeknit
+      price:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomPrice'
+      badge:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomBadge'
+      assets:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductAsset'
+      defaultColor:
+        $ref: '#/definitions/supermodelIoAdidasProductColor'
+      colorVariants:
+        type: array
+        items:
+          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+      miadidas:
+        type: array
+        items:
+          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+      completeLook:
+        type: array
+        items:
+          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+  supermodelIoAdidasProductEcomBadge:
+    title: Badge
+    type: object
+    properties:
+      style:
+        type: string
+        enum:
+          - new
+          - preview
+          - preorder
+          - sales
+          - customizable
+          - soldout
+        example: new
+      description:
+        type: string
+        example: Nové
+  supermodelIoAdidasProductEcomPrice:
+    title: Price
+    description: Price model description
+    type: object
+    properties:
+      standardPrice:
+        type: number
+        example: 3799
+      standardPriceWithoutVAT:
+        type: number
+        example: 3139.67
+      currentPrice:
+        type: number
+        example: 3799
+      salesPrice:
+        type: number
   supermodelIoAdidasProductEcomApiArticleHAL:
     title: eCom Article HAL Representation
     type: object
     allOf:
       - $ref: '#/definitions/supermodelIoAdidasApiHAL'
-      - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+    properties:
+      articleNumber:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/articleNumber
+      modelNumber:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/modelNumber
+      name:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/name'
+      articleDescription:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/articleDescription
+      gender:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/gender'
+      brand:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/brand'
+      productType:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productType
+      price:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/price'
+      badge:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/badge'
+      assets:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/assets'
+      defaultColor:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/defaultColor
     example:
       _links:
         self:
           href: /articles/AH2171?site=cz
+      articleNumber: AH2171
+      modelNumber: EFN23
+      name: Obuv F/22 Primeknit
+      articleDescription: 'Obuv, která spojuje outdoorovou funkčnost a streetový styl.'
+      gender:
+        code: M
+      brand:
+        code: Originals
+      productType: Tenisky
+      price:
+        standardPrice: 3799
+      badge:
+        style: new
+        description: Nové
+      assets: []
+      defaultColor: {}
       _embedded:
         colorvariant:
           - _links:
