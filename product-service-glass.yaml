@@ -92,7 +92,7 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+            $ref: '#/definitions/supermodelIoAdidasProductEcomApiArticleHAL'
 
         404:
           description: The requested article wasn't found.
@@ -1059,6 +1059,18 @@ definitions:
     allOf:
       - $ref: '#/definitions/supermodelIoAdidasApiHAL'
       - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+    example:
+      _links:
+        self:
+          href: /articles/AH2171?site=cz
+      _embedded:
+        colorvariant:
+          - _links:
+              self:
+                href: /articles/AH2172?site=cz
+          - _links:
+              self:
+                href: /articles/CQ3025?site=cz
   supermodelIoAdidasProductUtilsCodeDescription:
     title: Code Description Tuple
     description: Helper data structure to hold any code - description pair

@@ -8,8 +8,7 @@ allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
   - $ref: http://supermodel.io/adidas/product/ecom/Article
 
-
-example:
+examples:
   - _links:
       self:
         href: /articles/AH2171?site=cz
