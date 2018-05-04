@@ -75,7 +75,7 @@ paths:
         | language          | header             | `Accept-Language`          |
 
       parameters:
-        - $ref: '#/parameters/siteQuery'
+        - $ref: '#/parameters/site'
         - $ref: '#/parameters/acceptLanguageHeader'
       
       responses:
