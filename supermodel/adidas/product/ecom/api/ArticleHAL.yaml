@@ -1,0 +1,9 @@
+$id: http://supermodel.io/adidas/product/ecom/api/ArticleHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: eCom Article HAL Representation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref:  http://supermodel.io/adidas/product/ecom/Article

@@ -1,0 +1,19 @@
+$id: http://supermodel.io/adidas/product/ecom/Article
+$schema: http://json-schema.org/draft-07/schema#
+
+title: eCom Article
+type: object 
+
+properties:
+  articleNumber:
+    $ref: http://supermodel.io/adidas/product/Article#/properties/articleNumber
+  modelNumber:
+    $ref: http://supermodel.io/adidas/product/Article#/properties/modelNumber
+  articleDescription:
+    $ref: http://supermodel.io/adidas/product/Article#/properties/articleDescription
+  gender:
+      $ref: http://supermodel.io/adidas/product/Article#/properties/gender
+  brand:
+    $ref: http://supermodel.io/adidas/product/Article#/properties/brand
+  productType:
+    $ref: http://supermodel.io/adidas/product/Article#/properties/productType
