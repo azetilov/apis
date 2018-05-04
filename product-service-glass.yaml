@@ -72,6 +72,7 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s)          |
         |-------------------|--------------------|----------------------------|
+        | country code      | query              | `site`                     |
         | language          | header             | `Accept-Language`          |
 
       parameters:
@@ -85,7 +86,7 @@ paths:
             Content-Language:
               type: string
               default: en
-              x-example: en
+              x-example: cs
             Vary:
               type: string
               default: Accept-Language
@@ -122,7 +123,7 @@ parameters:
     description: eCom country code denoting the desired site 
     required: true
     type: string
-    x-example: 'de'    
+    x-example: 'cz'    
 
   # adidas API guidelines: Pagination
   offset:

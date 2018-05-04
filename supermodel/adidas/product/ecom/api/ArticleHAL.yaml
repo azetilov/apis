@@ -6,4 +6,21 @@ type: object
 
 allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
-  - $ref:  http://supermodel.io/adidas/product/ecom/Article
+  - $ref: http://supermodel.io/adidas/product/ecom/Article
+
+
+example:
+  - _links:
+      self:
+        href: /articles/AH2171?site=cz
+
+    _embedded:
+      colorvariant:
+        - _links:
+            self:
+              href: /articles/AH2172?site=cz              
+      
+        - _links:
+            self:
+              href: /articles/CQ3025?site=cz
+
