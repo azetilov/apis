@@ -1039,6 +1039,97 @@ definitions:
     title: eCom Article
     type: object
     properties:
+      athlete:
+        type: string
+      clearance:
+        type: boolean
+      comingSoonSignup:
+        type: number
+      customizable:
+        type: boolean
+      age:
+        type: string
+        example: Infant &amp; Toddler
+      brand:
+        type: string
+        example: Performance
+      campaign:
+        type: string
+        example: >-
+          Black Friday;Cyber Monday;After Christmas Sale;End of Season
+          Sale;Friends Family;Presidents Day Sale;MLK Jr Day Sale
+      color:
+        type: string
+        example: White
+      defaultColor:
+        type: string
+        example: Copper Metalic / White Chalk / Cardboard
+      gender:
+        type: string
+        example: K
+      genderSub:
+        type: string
+        example: KB
+      hastag:
+        type: string
+      maxQuantity:
+        type: string
+      productDivision:
+        type: string
+        example: Accessories
+      productLine:
+        type: string
+        example: Tiro
+      productType:
+        type: string
+      price:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomPrice'
+      sport:
+        type: string
+        example: Running
+      fitbarPosition:
+        type: string
+      care:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomCare'
+      onlineFrom:
+        type: string
+        description: ISO 8601 Date
+        example: '2017-06-21T14:07:17Z'
+      onlineTo:
+        type: string
+        description: ISO 8601 Date
+        example: '2017-06-21T14:07:17Z'
+      previewTo:
+        type: string
+        description: ISO 8601 Date
+        example: '2017-06-21T14:07:17Z'
+      pdp:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomPDP'
+      flashProduct:
+        type: boolean
+      hypeProduct:
+        type: boolean
+      personalizable:
+        type: boolean
+      preorder:
+        type: boolean
+      soldout:
+        type: boolean
+      productFamily:
+        type: string
+      productFilter:
+        type: string
+      prodcutLine:
+        type: string
+      sizeChart:
+        type: string
+      teams:
+        type: string
+      template:
+        type: string
+        description: >-
+          The 'Template' is used to identify if the inline or miadidas PDP
+          template should be applied in the ecommerce frontend.
       articleNumber:
         $ref: >-
           #/definitions/supermodelIoAdidasProductArticle/properties/articleNumber
@@ -1047,25 +1138,15 @@ definitions:
       articleDescription:
         $ref: >-
           #/definitions/supermodelIoAdidasProductArticle/properties/articleDescription
-      gender:
-        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/gender'
-      brand:
-        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/brand'
-      productType:
-        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/productType'
       name:
         type: string
         example: Obuv F/22 Primeknit
-      price:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomPrice'
       badge:
         $ref: '#/definitions/supermodelIoAdidasProductEcomBadge'
       assets:
         type: array
         items:
           $ref: '#/definitions/supermodelIoAdidasProductAsset'
-      defaultColor:
-        $ref: '#/definitions/supermodelIoAdidasProductColor'
       colorVariants:
         type: array
         items:
@@ -1095,6 +1176,32 @@ definitions:
       description:
         type: string
         example: Nové
+  supermodelIoAdidasProductEcomCare:
+    title: Care
+    description: Care model description
+    type: object
+    properties:
+      bleachingInstruction:
+        type: string
+      ironInstruction:
+        type: string
+      dryCleanInstruction:
+        type: string
+      dryInstruction:
+        type: string
+      extraCareInstruction:
+        type: string
+  supermodelIoAdidasProductEcomPDP:
+    title: PDP
+    description: PDP model description
+    type: object
+    properties:
+      callout:
+        type: string
+      content:
+        type: string
+      model:
+        type: string
   supermodelIoAdidasProductEcomPrice:
     title: Price
     description: Price model description
@@ -1117,53 +1224,114 @@ definitions:
     allOf:
       - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
+      age:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/age'
+      articleDescription:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/articleDescription
       articleNumber:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/articleNumber
+      assets:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/assets'
+      athlete:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/athlete'
+      badge:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/badge'
+      brand:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/brand'
+      campaign:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/campaign'
+      care:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/care'
+      clearance:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/clearance
+      color:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/color'
+      comingSoonSignup:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/comingSoonSignup
+      customizable:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/customizable
+      defaultColor:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/defaultColor
+      fitbarPosition:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/fitbarPosition
+      flashProduct:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/flashProduct
+      gender:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/gender'
+      genderSub:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/genderSub
+      hastag:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/hastag'
+      hypeProduct:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/hypeProduct
+      maxQuantity:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/maxQuantity
       modelNumber:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/modelNumber
       name:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/name'
-      articleDescription:
+      onlineFrom:
         $ref: >-
-          #/definitions/supermodelIoAdidasProductEcomArticle/properties/articleDescription
-      gender:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/gender'
-      brand:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/brand'
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/onlineFrom
+      onlineTo:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/onlineTo'
+      pdp:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/pdp'
+      personalizable:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/personalizable
+      preorder:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/preorder'
+      previewTo:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/previewTo
+      price:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/price'
+      prodcutLine:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/prodcutLine
+      productDivision:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productDivision
+      productFamily:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productFamily
+      productFilter:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productFilter
+      productLine:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productLine
       productType:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/productType
-      price:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/price'
-      badge:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/badge'
-      assets:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/assets'
-      defaultColor:
+      sizeChart:
         $ref: >-
-          #/definitions/supermodelIoAdidasProductEcomArticle/properties/defaultColor
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/sizeChart
+      soldout:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/soldout'
+      sport:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/sport'
+      teams:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/teams'
+      template:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/template'
     example:
       _links:
         self:
           href: /articles/AH2171?site=cz
-      articleNumber: AH2171
-      modelNumber: EFN23
-      name: Obuv F/22 Primeknit
-      articleDescription: 'Obuv, která spojuje outdoorovou funkčnost a streetový styl.'
-      gender:
-        code: M
-      brand:
-        code: Originals
-      productType: Tenisky
-      price:
-        standardPrice: 3799
-      badge:
-        style: new
-        description: Nové
-      assets: []
-      defaultColor: {}
       _embedded:
         colorvariant:
           - _links:
@@ -1172,6 +1340,78 @@ definitions:
           - _links:
               self:
                 href: /articles/CQ3025?site=cz
+      age: Infant &amp; Toddler
+      articleDescription: string
+      articleNumber: string
+      assets:
+        - assetType: image
+          viewGroup: 3d
+          assetCategory: Photography
+          usageTerms: B2B Cataloguge
+          assetHref: 'http://domain.com/image.jpeg'
+          image:
+            style: On Model
+            width: 2000
+            height: 2000
+            bgColor: transparent
+          model:
+            waist: 58
+            chest: 97
+            height: 197
+            productSize: 540
+      athlete: string
+      badge:
+        style: new
+        description: Nové
+      brand: Performance
+      campaign: >-
+        Black Friday;Cyber Monday;After Christmas Sale;End of Season
+        Sale;Friends Family;Presidents Day Sale;MLK Jr Day Sale
+      care:
+        bleachingInstruction: string
+        ironInstruction: string
+        dryCleanInstruction: string
+        dryInstruction: string
+        extraCareInstruction: string
+      clearance: true
+      color: White
+      comingSoonSignup: 0
+      customizable: true
+      defaultColor: Copper Metalic / White Chalk / Cardboard
+      fitbarPosition: string
+      flashProduct: true
+      gender: K
+      genderSub: KB
+      hastag: string
+      hypeProduct: true
+      maxQuantity: string
+      modelNumber: string
+      name: Obuv F/22 Primeknit
+      onlineFrom: '2017-06-21T14:07:17Z'
+      onlineTo: '2017-06-21T14:07:17Z'
+      pdp:
+        callout: string
+        content: string
+        model: string
+      personalizable: true
+      preorder: true
+      previewTo: '2017-06-21T14:07:17Z'
+      price:
+        standardPrice: 3799
+        standardPriceWithoutVAT: 3139.67
+        currentPrice: 3799
+        salesPrice: 0
+      prodcutLine: string
+      productDivision: Accessories
+      productFamily: string
+      productFilter: string
+      productLine: Tiro
+      productType: string
+      sizeChart: string
+      soldout: true
+      sport: Running
+      teams: string
+      template: string
   supermodelIoAdidasProductUtilsCodeDescription:
     title: Code Description Tuple
     description: Helper data structure to hold any code - description pair

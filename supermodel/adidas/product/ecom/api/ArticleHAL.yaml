@@ -8,50 +8,133 @@ allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
 
 properties:
-  articleNumber:
-    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/articleNumber
-  modelNumber:
-    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/modelNumber
-  name:
-    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/name
+  age:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/age
+
   articleDescription:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/articleDescription
-  gender:
-      $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/gender
-  brand:
-    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/brand
-  productType:
-    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productType
-  price:
-    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/price
-  badge:
-    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/badge
+
+  articleNumber:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/articleNumber
+
   assets:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/assets
+
+  athlete:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/athlete
+
+  badge:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/badge
+
+  brand:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/brand
+
+  campaign:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/campaign
+
+  care:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/care
+
+  clearance:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/clearance
+
+  color:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/color
+
+  comingSoonSignup:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/comingSoonSignup
+
+  customizable:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/customizable
+
   defaultColor:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/defaultColor
+
+  fitbarPosition:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/fitbarPosition
+
+  flashProduct:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/flashProduct
+
+  gender:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/gender
+
+  genderSub:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/genderSub
+
+  hastag:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/hastag
+
+  hypeProduct:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/hypeProduct
+
+  maxQuantity:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/maxQuantity
+
+  modelNumber:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/modelNumber
+
+  name:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/name
+
+  onlineFrom:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/onlineFrom
+
+  onlineTo:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/onlineTo
+
+  pdp:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/pdp
+
+  personalizable:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/personalizable
+
+  preorder:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/preorder
+
+  previewTo:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/previewTo
+
+  price:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/price
+
+  prodcutLine:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/prodcutLine
+
+  productDivision:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productDivision
+
+  productFamily:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productFamily
+
+  productFilter:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productFilter
+
+  productLine:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productLine
+
+  productType:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productType
+
+  sizeChart:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/sizeChart
+
+  soldout:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/soldout
+
+  sport:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/sport
+
+  teams:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/teams
+
+  template:
+    $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/template
 
 examples:
   - _links:
       self:
         href: /articles/AH2171?site=cz
-    
-    articleNumber: 'AH2171'
-    modelNumber: 'EFN23'
-    name: 'Obuv F/22 Primeknit'
-    articleDescription: 'Obuv, která spojuje outdoorovou funkčnost a streetový styl.'
-    gender: 
-      code: 'M'
-    brand: 
-      code: 'Originals'
-    productType: 'Tenisky'
-    price:
-      standardPrice: 3799
-    badge:
-      style: new
-      description: Nové
-    assets: []
-    defaultColor: {}
 
     _embedded:
       colorvariant:
@@ -63,3 +146,74 @@ examples:
             self:
               href: /articles/CQ3025?site=cz
 
+    age: Infant &amp; Toddler
+    articleDescription: string
+    articleNumber: string
+    assets:
+    - assetType: image
+      viewGroup: 3d
+      assetCategory: Photography
+      usageTerms: B2B Cataloguge
+      assetHref: http://domain.com/image.jpeg
+      image:
+        style: On Model
+        width: 2000
+        height: 2000
+        bgColor: transparent
+      model:
+        waist: 58
+        chest: 97
+        height: 197
+        productSize: 540
+    athlete: string
+    badge:
+      style: new
+      description: Nové
+    brand: Performance
+    campaign: Black Friday;Cyber Monday;After Christmas Sale;End of Season Sale;Friends
+      Family;Presidents Day Sale;MLK Jr Day Sale
+    care:
+      bleachingInstruction: string
+      ironInstruction: string
+      dryCleanInstruction: string
+      dryInstruction: string
+      extraCareInstruction: string
+    clearance: true
+    color: White
+    comingSoonSignup: 0
+    customizable: true
+    defaultColor: Copper Metalic / White Chalk / Cardboard
+    fitbarPosition: string
+    flashProduct: true
+    gender: K
+    genderSub: KB
+    hastag: string
+    hypeProduct: true
+    maxQuantity: string
+    modelNumber: string
+    name: Obuv F/22 Primeknit
+    onlineFrom: '2017-06-21T14:07:17Z'
+    onlineTo: '2017-06-21T14:07:17Z'
+    pdp:
+      callout: string
+      content: string
+      model: string
+    personalizable: true
+    preorder: true
+    previewTo: '2017-06-21T14:07:17Z'
+    price:
+      standardPrice: 3799
+      standardPriceWithoutVAT: 3139.67
+      currentPrice: 3799
+      salesPrice: 0
+    prodcutLine: string
+    productDivision: Accessories
+    productFamily: string
+    productFilter: string
+    productLine: Tiro
+    productType: string
+    sizeChart: string
+    soldout: true
+    sport: Running
+    teams: string
+    template: string
