@@ -48,7 +48,7 @@ paths:
         200:
           description: List of domains
           schema:
-            $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            $ref: '#/definitions/supermodelIoAdidasReferenceApiDomainsHAL'
 
   /domains/{domainId}:
     x-summary: Reference Data Domain
@@ -1471,6 +1471,24 @@ definitions:
         categories:
           href: /domains/product/categories
       name: Product
+  supermodelIoAdidasReferenceApiDomainsHAL:
+    title: Domains HAL
+    description: Domains HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      domainCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /domains
+        domain:
+          - href: /domains/product
+          - href: /domains/vendor
+          - href: /domains/store
+      domainCount: 3
   supermodelIoAdidasReferenceApiEntityHAL:
     title: EntityHAL
     description: EntityHAL model description
