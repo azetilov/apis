@@ -1456,9 +1456,9 @@ definitions:
         domain:
           - href: /domains/brand
           - href: /domains/brandGroup
-          - href: /domains/branAsset
+          - href: /domains/brandAsset
           - href: /domains/ageGroup
-      domainCount: 4
+      categoriesCount: 4
   supermodelIoAdidasReferenceApiCategoryHAL:
     title: Category HAL
     description: Category HAL model description
