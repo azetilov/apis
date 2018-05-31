@@ -103,7 +103,7 @@ paths:
         200:
           description: List of entities
           schema:
-            $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            $ref: '#/definitions/localhostAdidasReferenceApiEntitiesHAL'
 
   /domains/{domainId}/categories/{categoryId}/entities/{entityId}:
     x-summary: Category Entity
@@ -119,7 +119,7 @@ paths:
         200:
           description: One Category Entity
           schema:
-            $ref: '#/definitions/supermodelIoAdidasApiHAL'            
+            $ref: '#/definitions/supermodelIoAdidasReferenceApiEntityHAL'            
 
 #
 # Parameters Definitions
@@ -1522,19 +1522,53 @@ definitions:
           - href: /domains/vendor
           - href: /domains/store
       domainCount: 3
-  supermodelIoAdidasReferenceApiEntityHAL:
-    title: EntityHAL
-    description: EntityHAL model description
+  localhostAdidasReferenceApiEntitiesHAL:
+    title: Entities HAL
+    description: Entities HAL model description
     type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
-      category:
-        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/category'
+      entitiesCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /domains/product/categories/brand/entities
+        entity:
+          - href: /domains/product/categories/brand/entities/11
+          - href: /domains/product/categories/brand/entities/23
+          - href: /domains/product/categories/brand/entities/42
+      entitiesCount: 3
+  supermodelIoAdidasReferenceApiEntityHAL:
+    title: Entity HAL
+    description: >
+      One design object instance representation, in its simple form it includes
+      only the three common attributes (code, description and acitivity flag).
+      However, it might include additional attributes based on the category of
+      the entity. To be documented.
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
       code:
         $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/code'
-      combinations:
-        $ref: >-
-          #/definitions/supermodelIoAdidasReferenceEntity/properties/combinations
       description:
         $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/description'
       isActive:
         $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/isActive'
+    example:
+      _links:
+        self:
+          href: /domains/product/categories/brand/entities/11
+        category:
+          href: /domains/product/categories/brand
+        combination:
+          - href: /domains/product/categories/someCategory/entities/7
+          - href: /domains/product/categories/someCategory/entities/23
+          - href: /domains/product/categories/someOtherCategory/entities/42
+        brandGroup:
+          - href: /domains/product/categories/brandGroup/entities/8
+      code: 11
+      description: adidas
+      isActive: true

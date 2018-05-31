@@ -1,22 +1,41 @@
 $id: http://supermodel.io/adidas/reference/api/EntityHAL
 $schema: http://json-schema.org/draft-07/schema#
 
-title: EntityHAL
-description: EntityHAL model description
+title: Entity HAL
+description: |
+  One design object instance representation, in its simple form it includes only the three common attributes (code, description and acitivity flag). However, it might include additional attributes based on the category of the entity. To be documented.
+
 type: object
 
-properties:
-  category:
-    $ref: http://supermodel.io/adidas/reference/Entity#/properties/category
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
 
+properties:
   code:
     $ref: http://supermodel.io/adidas/reference/Entity#/properties/code
-
-  combinations:
-    $ref: http://supermodel.io/adidas/reference/Entity#/properties/combinations
 
   description:
     $ref: http://supermodel.io/adidas/reference/Entity#/properties/description
 
   isActive:
     $ref: http://supermodel.io/adidas/reference/Entity#/properties/isActive
+
+examples:
+  - _links:
+      self:
+        href: /domains/product/categories/brand/entities/11
+
+      category:
+        href: /domains/product/categories/brand
+
+      combination:
+        - href: /domains/product/categories/someCategory/entities/7
+        - href: /domains/product/categories/someCategory/entities/23
+        - href: /domains/product/categories/someOtherCategory/entities/42
+
+      brandGroup:
+        - href: /domains/product/categories/brandGroup/entities/8
+
+    code: 11
+    description: adidas
+    isActive: true
