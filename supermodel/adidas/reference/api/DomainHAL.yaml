@@ -1,0 +1,23 @@
+$id: http://supermodel.io/adidas/reference/api/DomainHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Domain HAL
+description: Domain HAL model description
+type: object  
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  name:
+    $ref: http://supermodel.io/adidas/reference/Domain#/properties/name
+
+examples:
+  - _links:
+      self:
+        href: /domains/product
+
+      categories:
+        href: /domains/product/categories
+    
+    name: Product

@@ -1,0 +1,22 @@
+$id: http://supermodel.io/adidas/reference/api/EntityHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: EntityHAL
+description: EntityHAL model description
+type: object
+
+properties:
+  category:
+    $ref: http://supermodel.io/adidas/reference/Entity#/properties/category
+
+  code:
+    $ref: http://supermodel.io/adidas/reference/Entity#/properties/code
+
+  combinations:
+    $ref: http://supermodel.io/adidas/reference/Entity#/properties/combinations
+
+  description:
+    $ref: http://supermodel.io/adidas/reference/Entity#/properties/description
+
+  isActive:
+    $ref: http://supermodel.io/adidas/reference/Entity#/properties/isActive

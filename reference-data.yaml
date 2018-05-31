@@ -61,7 +61,7 @@ paths:
         200:
           description: One Reference Data Domain
           schema:
-            $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            $ref: '#/definitions/supermodelIoAdidasReferenceApiDomainHAL'
 
   /domains/{domainId}/categories:
     x-summary: Reference Data Categories
@@ -1389,3 +1389,101 @@ definitions:
         type: string
       description:
         type: string
+  supermodelIoAdidasReferenceCategory:
+    title: Category
+    description: Category model description
+    type: object
+    properties:
+      name:
+        type: string
+      domains:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceDomain'
+      parents:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+      entities:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceEntity'
+  supermodelIoAdidasReferenceDomain:
+    title: Domain
+    description: Domain model description
+    type: object
+    properties:
+      name:
+        type: string
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+  supermodelIoAdidasReferenceEntity:
+    title: Entity
+    description: Entity model description
+    type: object
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      isActive:
+        type: boolean
+      category:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+      combinations:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceEntity'
+  supermodelIoAdidasReferenceApiCategoryHAL:
+    title: CategoryHAL
+    description: CategoryHAL model description
+    type: object
+    properties:
+      children:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/children'
+      domains:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/domains'
+      entities:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/entities'
+      name:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/name'
+      parents:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/parents'
+  supermodelIoAdidasReferenceApiDomainHAL:
+    title: Domain HAL
+    description: Domain HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      name:
+        $ref: '#/definitions/supermodelIoAdidasReferenceDomain/properties/name'
+    example:
+      _links:
+        self:
+          href: /domains/product
+        categories:
+          href: /domains/product/categories
+      name: Product
+  supermodelIoAdidasReferenceApiEntityHAL:
+    title: EntityHAL
+    description: EntityHAL model description
+    type: object
+    properties:
+      category:
+        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/category'
+      code:
+        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/code'
+      combinations:
+        $ref: >-
+          #/definitions/supermodelIoAdidasReferenceEntity/properties/combinations
+      description:
+        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/description'
+      isActive:
+        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/isActive'
