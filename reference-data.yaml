@@ -3,10 +3,7 @@ info:
   version: '1.0.0'
   title: "[Draft] Reference Data API"
   description: |
-    Template API conforming to adidas API Guidelines.
-    This API is [documented at Apiary](http://docs.demotemplate.apiary.io)
-    and [stored on GitHub](https://github.com/adidas-group/demo-orders-api).
-
+    Draft of the Reference Data API
 
 produces:
   - application/hal+json      # Representation message format
@@ -522,18 +519,18 @@ definitions:
       conversionIDs:
         type: array
         items:
-          - type: object
-            properties:
-              localSize:
-                type: string
-              saleSizeConvID:
-                type: string
-              saleSizeScale:
-                type: string
-              saleSizeAbbr:
-                type: string
-              saleSizeDesc:
-                type: string
+          type: object
+          properties:
+            localSize:
+              type: string
+            saleSizeConvID:
+              type: string
+            saleSizeScale:
+              type: string
+            saleSizeAbbr:
+              type: string
+            saleSizeDesc:
+              type: string
     example:
       EAN: '4058026055128'
       UPC: '885591427616'
@@ -1012,15 +1009,15 @@ definitions:
       colorVariants:
         type: array
         items:
-          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
       miadidas:
         type: array
         items:
-          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
       completeLook:
         type: array
         items:
-          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
   supermodelIoAdidasProductEcomBadge:
     title: Badge
     type: object
