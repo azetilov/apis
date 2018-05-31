@@ -1454,10 +1454,10 @@ definitions:
         self:
           href: /domains/product/categories
         domain:
-          - href: /domains/brand
-          - href: /domains/brandGroup
-          - href: /domains/brandAsset
-          - href: /domains/ageGroup
+          - href: /domains/product/categories/brand
+          - href: /domains/product/categories/brandGroup
+          - href: /domains/product/categories/brandAsset
+          - href: /domains/product/categories/ageGroup
       categoriesCount: 4
   supermodelIoAdidasReferenceApiCategoryHAL:
     title: Category HAL
@@ -1474,6 +1474,10 @@ definitions:
           href: /domains/product/categories/brand
         entities:
           href: /domains/product/categories/brand/entities
+        entity:
+          - href: /domains/product/categories/brand/entities/11
+          - href: /domains/product/categories/brand/entities/23
+          - href: /domains/product/categories/brand/entities/42
         domain:
           - href: /domains/product
         parent:

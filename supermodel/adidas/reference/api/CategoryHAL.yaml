@@ -20,6 +20,11 @@ examples:
       entities:
         href: /domains/product/categories/brand/entities
 
+      entity:
+        - href: /domains/product/categories/brand/entities/11
+        - href: /domains/product/categories/brand/entities/23
+        - href: /domains/product/categories/brand/entities/42
+
       domain:
         - href: /domains/product
 

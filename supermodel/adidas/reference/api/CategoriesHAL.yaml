@@ -18,9 +18,9 @@ examples:
         href: /domains/product/categories
 
       domain:
-        - href: /domains/brand
-        - href: /domains/brandGroup
-        - href: /domains/brandAsset
-        - href: /domains/ageGroup
+        - href: /domains/product/categories/brand
+        - href: /domains/product/categories/brandGroup
+        - href: /domains/product/categories/brandAsset
+        - href: /domains/product/categories/ageGroup
     
     categoriesCount: 4
