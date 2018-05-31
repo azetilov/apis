@@ -17,7 +17,7 @@ examples:
       self:
         href: /domains/product/categories
 
-      domain:
+      category:
         - href: /domains/product/categories/brand
         - href: /domains/product/categories/brandGroup
         - href: /domains/product/categories/brandAsset
