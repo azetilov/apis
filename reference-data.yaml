@@ -74,7 +74,7 @@ paths:
         200:
           description: List of categories
           schema:
-            $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            $ref: '#/definitions/supermodelIoAdidasReferenceApiCategoriesHAL'
 
   /domains/{domainId}/categories/{categoryId}:
     x-summary: Reference Data Category
@@ -89,7 +89,7 @@ paths:
         200:
           description: One Reference Data Category
           schema:
-            $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            $ref: '#/definitions/supermodelIoAdidasReferenceApiCategoryHAL'
 
   /domains/{domainId}/categories/{categoryId}/entities:
     x-summary: Category Entities
@@ -1440,21 +1440,50 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/supermodelIoAdidasReferenceEntity'
-  supermodelIoAdidasReferenceApiCategoryHAL:
-    title: CategoryHAL
-    description: CategoryHAL model description
+  supermodelIoAdidasReferenceApiCategoriesHAL:
+    title: Categories HAL
+    description: Categories HAL model description
     type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
-      children:
-        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/children'
-      domains:
-        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/domains'
-      entities:
-        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/entities'
+      categoriesCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /domains/product/categories
+        domain:
+          - href: /domains/brand
+          - href: /domains/brandGroup
+          - href: /domains/branAsset
+          - href: /domains/ageGroup
+      domainCount: 4
+  supermodelIoAdidasReferenceApiCategoryHAL:
+    title: Category HAL
+    description: Category HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
       name:
         $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/name'
-      parents:
-        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/parents'
+    example:
+      _links:
+        self:
+          href: /domains/product/categories/brand
+        entities:
+          href: /domains/product/categories/brand/entities
+        domain:
+          - href: /domains/product
+        parent:
+          - href: /domains/product/categories/brandGroup
+          - href: /domains/product/categories/anoteherCategory
+        child:
+          - href: /domains/product/categories/someCategoryA
+          - href: /domains/product/categories/someCategoryB
+          - href: /domains/product/categories/someCategoryC
+      name: Brand
   supermodelIoAdidasReferenceApiDomainHAL:
     title: Domain HAL
     description: Domain HAL model description
