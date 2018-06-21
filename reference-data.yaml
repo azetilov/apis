@@ -63,8 +63,22 @@ paths:
           schema:
             $ref: '#/definitions/supermodelIoAdidasReferenceApiDomainHAL'
 
-  /domains/{domainId}/categories:
+  /categories:
     x-summary: Reference Data Categories
+
+    get:
+      summary: Search for Categories by Name
+      parameters:
+        - $ref: '#/parameters/categoryName'
+
+      responses:
+        200:
+          description: List of categories
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasReferenceApiCategoriesHAL'
+
+  /domains/{domainId}/categories:
+    x-summary: Reference Data Categories for Domain
     parameters:
       - $ref: '#/parameters/domainId'
 
@@ -127,6 +141,14 @@ paths:
 # Parameters Definitions
 #
 parameters:
+  categoryName:
+    name: name
+    in: query
+    description: Search for categories matching the name
+    required: true
+    type: string
+    x-example: brand
+
   domainId:
     name: domainId
     in: path
