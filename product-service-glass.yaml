@@ -187,39 +187,6 @@ parameters:
 # http://supermodel.io
 # https://github.com/supermodel/supermodel-cli
 definitions:
-  supermodelIoAdidasApiHALDefinitionsHalLinkObject:
-    title: HAL Link Object
-    type: object
-    properties:
-      href:
-        type: string
-      templated:
-        type: boolean
-      type:
-        type: string
-      deprecation:
-        type: string
-      name:
-        type: string
-      profile:
-        type: string
-      title:
-        type: string
-      hreflang:
-        type: string
-    required:
-      - href
-  supermodelIoAdidasApiHALDefinitionsHalCuriesLink:
-    title: HAL Curies Link
-    allOf:
-      - type: object
-        properties:
-          templated:
-            enum:
-              - true
-        required:
-          - templated
-      - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
   supermodelIoAdidasProductCatalogDefinitionsCatalogCopy:
     title: Catalog Copy
     type: object
@@ -311,41 +278,39 @@ definitions:
         résistance à l'usure.
       logoName: ECO_OrthoLiteLogo
       logoHref: 'http://domain.com/logo.jpeg'
-  supermodelIoAdidasApiHAL:
-    title: HAL
-    description: >-
-      JSON Hypertext Application Language. Definition of [HAL message
-      format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
+  supermodelIoAdidasApiHALDefinitionsHalLinkObject:
+    title: HAL Link Object
     type: object
     properties:
-      _links:
-        type: object
-        additionalProperties: {}
-        properties:
-          curies: {}
-      _embedded:
-        type: object
-        additionalProperties: {}
-  supermodelIoAdidasApiProblemDetail:
-    title: Problem Details for HTTP APIs
-    description: >-
-      Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
-      detail
-    type: object
-    properties:
+      href:
+        type: string
+      templated:
+        type: boolean
       type:
+        type: string
+      deprecation:
+        type: string
+      name:
+        type: string
+      profile:
         type: string
       title:
         type: string
-      status:
-        type: number
-      detail:
-        type: string
-      instance:
+      hreflang:
         type: string
     required:
-      - title
-      - detail
+      - href
+  supermodelIoAdidasApiHALDefinitionsHalCuriesLink:
+    title: HAL Curies Link
+    allOf:
+      - type: object
+        properties:
+          templated:
+            enum:
+              - true
+        required:
+          - templated
+      - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
   supermodelIoAdidasProductArticle:
     title: Article
     type: object
@@ -660,18 +625,18 @@ definitions:
       conversionIDs:
         type: array
         items:
-          - type: object
-            properties:
-              localSize:
-                type: string
-              saleSizeConvID:
-                type: string
-              saleSizeScale:
-                type: string
-              saleSizeAbbr:
-                type: string
-              saleSizeDesc:
-                type: string
+          type: object
+          properties:
+            localSize:
+              type: string
+            saleSizeConvID:
+              type: string
+            saleSizeScale:
+              type: string
+            saleSizeAbbr:
+              type: string
+            saleSizeDesc:
+              type: string
     example:
       EAN: '4058026055128'
       UPC: '885591427616'
@@ -1150,15 +1115,15 @@ definitions:
       colorVariants:
         type: array
         items:
-          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
       miadidas:
         type: array
         items:
-          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
       completeLook:
         type: array
         items:
-          - $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
   supermodelIoAdidasProductEcomBadge:
     title: Badge
     type: object
@@ -1421,3 +1386,54 @@ definitions:
         type: string
       description:
         type: string
+  supermodelIoAdidasApiHAL:
+    title: HAL
+    description: >-
+      JSON Hypertext Application Language. Definition of [HAL message
+      format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
+    type: object
+    properties:
+      _links:
+        type: object
+        additionalProperties:
+          allOf:
+            - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+            - type: array
+              items:
+                $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+        properties:
+          curies:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink'
+              - type: array
+                items:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink
+      _embedded:
+        type: object
+        additionalProperties:
+          allOf:
+            - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            - type: array
+              items:
+                $ref: '#/definitions/supermodelIoAdidasApiHAL'
+  supermodelIoAdidasApiProblemDetail:
+    title: Problem Details for HTTP APIs
+    description: >-
+      Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
+      detail
+    type: object
+    properties:
+      type:
+        type: string
+      title:
+        type: string
+      status:
+        type: number
+      detail:
+        type: string
+      instance:
+        type: string
+    required:
+      - title
+      - detail
