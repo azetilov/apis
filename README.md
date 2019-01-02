@@ -10,7 +10,7 @@ To compile the data model for use in OpenAPI Spec 2.0, install the [Supermodel C
 $ npm install -g @supermodel/cli
 ```
 
-and then run:
+and then run (for example):
 
 ```
 $ supermodel schema oas2 supermodel/adidas/product -o product.yaml
