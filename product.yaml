@@ -1583,6 +1583,24 @@ definitions:
         example: 3799
       salesPrice:
         type: number
+  supermodelIoAdidasProductEcomApiArticleAvro:
+    title: eCom Article Avro Model
+    type: object
+    properties:
+      brand:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/brand'
+      age:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/age'
+      changeInfo:
+        type: object
+        properties:
+          articleGeneralInfo:
+            type: boolean
+    example:
+      brand: 11
+      age: 10000
+      changeInfo:
+        articleGeneralInfo: true
   supermodelIoAdidasProductEcomApiArticleHAL:
     title: eCom Article HAL Representation
     type: object
