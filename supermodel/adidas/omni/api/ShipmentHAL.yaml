@@ -1,0 +1,37 @@
+$id: http://supermodel.io/adidas/omni/api/ShipmentHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Shipment HAL Representation
+description: Shipment HAL model description
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/omni/Shipment
+
+examples:
+  - _links:
+      self:
+        href: /orders/AD018295044/shipments/AD018295044-1
+      invoice:
+        - href: /orders/AD018295044/shipments/AD018295044-1/invoice/0001
+      shipmentline:
+        - href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines/1
+        - href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines/2
+    shipmentNumber: AD018295044-1
+    trackingNumber: '454793841764'
+    orderNumber: AD018295044
+    orderHeaderKey: '201808312124016179541708'
+    orderReleaseKey: '201808221859096084007963'
+    totalQuantity: '2'
+    releaseNumber: '1'
+    carrierServiceCode: GROUND
+    requestedCarrierServiceCode: '2NDDAY'
+    country: US
+    brand: adidas
+    shipNode: adidasUS_DC1
+    actualShipmentDate: '2018-08-22T21:38:57+00:00'
+    expectedDeliveryDate: '2018-08-25T04:00:00+00:00'
+    shipDate: '2018-09-01T18:41:36+00:00'
+    SCAC: 'FedEx'
+    orderType: '0001'

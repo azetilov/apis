@@ -1,0 +1,73 @@
+$id: http://supermodel.io/adidas/omni/OrderLinePriceInfo
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Order Line Price Info
+description: Order Line Price Info model description
+type: object
+
+properties:
+    pricingUnitOfMeasure:
+      type: string
+      examples:
+        - 'PIECE'
+    isPriceLocked:
+      type: string
+      examples:
+        - 'Y'
+    unitPrice:
+      type: string
+      examples:
+        - '80'
+    listPrice:
+      type: string
+      examples:
+        - '90'
+    retailPrice:
+      type: string
+      examples:
+        - '90'
+    taxableFlag:
+      type: string
+      examples:
+        - 'Y'
+    pricingQuantityStrategy:
+      type: string
+
+    invoicedLineTotal:
+      type: string
+
+    repricingQuantity:
+      type: string
+
+    tax:
+      type: string
+    
+    isEligibleForShippingDiscount:
+      type: string
+    
+    discountReference:
+      type: string
+    
+    invoicedPricingQuantity:
+      type: string
+
+    settledQuantity:
+      type: string
+    
+    lineTotal:
+      type: string
+    
+    settledAmount:
+      type: string
+    
+    orderedPricingQuantity:
+      type: string
+    
+    actualPricingQuantity:
+      type: string
+    
+    discountPercentage:
+      type: string
+    
+    discountType:
+      type: string

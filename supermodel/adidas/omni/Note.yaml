@@ -1,0 +1,76 @@
+$id: http://supermodel.io/adidas/omni/Note
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Note
+description: Note model description
+type: object
+
+properties:
+  createprogId:
+    type: string
+
+  notesKey:
+    type: string
+
+  createuserId:
+    type: string
+
+  customerSatIndicator:
+    type: string
+
+  modifyuserId:
+    type: string
+
+  modifyprogId:
+    type: string
+
+  contactTime:
+    type: string
+    format: date
+
+  reasonCode:
+    type: string
+
+  auditTransactionId:
+    type: string
+
+  createTimestamp:
+    type: string
+    format: date
+
+  noteText:
+    type: string
+
+  modifyTimestamp:
+    type: string
+    format: date
+
+  priority:
+    type: string
+
+  contactReference:
+    type: string
+
+  contactUser:
+    type: string
+
+  isHistory:
+    type: string
+
+  tranId:
+    type: string
+
+  tableName:
+    type: string
+
+  contactType:
+    type: string
+
+  sequenceNumber:
+    type: string
+
+  tableKey:
+    type: string
+
+  lockId:
+    type: string

@@ -1,11 +1,9 @@
 $id: http://supermodel.io/adidas/product/api/ArticleNotFoundProblemDetail
-
+$schema: http://json-schema.org/draft-07/schema#
 title: Article Not Found Problem
 type: object
-
 allOf:
   - $ref: http://supermodel.io/adidas/api/ProblemDetail
-
 examples:
   - title: Not Found
     detail: Cannot find the requested article

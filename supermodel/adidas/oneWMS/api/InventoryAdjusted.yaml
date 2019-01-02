@@ -1,0 +1,16 @@
+$id: http://supermodel.io/adidas/oneWMS/api/InventoryAdjusted
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Inventory Adjusted
+description: Inventory adjustment confirmation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  detail:
+    type: string
+
+examples:
+  - detail: Inventory adjusted successfully

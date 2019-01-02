@@ -1,0 +1,1005 @@
+swagger: '2.0'
+info:
+  version: '0.2.0'
+  title: "[oneWMS] OneWMS Consumer API"
+  description: |
+    # oneWMS Consumer API
+    This is a work in progress of oneWMS Consumer API.
+
+    This is outbound API e.g. from Manhattan WMS to AFS / OmniHub.
+
+produces:
+  - application/hal+json      # Representation message format
+  - application/problem+json  # Error message format
+
+schemes:
+  - https
+
+securityDefinitions:
+   "API Key":
+     type: apiKey
+     in: header
+     name: x-api-key
+
+security:
+  - "API Key": []
+
+paths:
+  /:
+    x-summary: API Root
+
+    get:
+      summary: Retrieve API Root
+      description: The API Root contains the initial set of link relations.
+      responses:
+        200:
+          description: The root of the API
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasOneWMSApiAPIRoot'
+
+  '/notification-receipt':
+    x-summary: Notification of Receipt
+
+    put:
+      summary: Create a Notification of Receipt
+      description: >-
+        ### Use Case
+
+        When an inbound delivery is verified in WMS, the details must be communicated to post the receipt and increase the available inventory
+
+        ### What is the action
+
+        The inbound delivery is updated and inventory becomes available
+
+        ### Data of Request
+
+        Data includes item, quantity, and reference fields storing the inbound delivery and inbound delivery line number
+
+      parameters:
+        - $ref: '#/parameters/contentLanguageHeader'
+        - $ref: '#/parameters/createNotificationOfReceipt'
+      responses:
+        201:
+          description: Notification Created
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasOneWMSApiNotificationOfReceiptCreated'
+        400:
+          description: Wrong Parameters
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+            example:
+              title: Incorrect Input Parameter
+              detail: Parameter `unitsShipped` should be a positive integer
+        401:
+          $ref: '#/responses/notAuthorizedResponse'
+
+
+  '/orders':
+    x-summary: Orders Statuses
+
+    put:
+      summary: Update Orders Statuses
+      description: >-
+        ### Use Case
+
+        When an orders statuses change in WMS the changes must be communicated.
+
+      parameters:
+        - $ref: '#/parameters/contentLanguageHeader'
+        - $ref: '#/parameters/updateOrdersStatuses'
+      responses:
+        200:
+          description: Statuses of the orders were updated
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasOneWMSApiOrdersUpdated'
+        400:
+          description: Wrong Parameters
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+            example:
+              title: Incorrect Input Parameter
+              detail: Parameter `unitsShipped` should be a positive integer
+        401:
+          $ref: '#/responses/notAuthorizedResponse'
+
+  '/return-receipt':
+    x-summary: Return Receipt Confirmation
+
+    put:
+      summary: Create Return Receipt Confirmation
+      description: >-
+        ### Use Case
+
+        When a return order is recieved by warehouse the order line information is communicated to ERP / order management system.
+
+      parameters:
+        - $ref: '#/parameters/contentLanguageHeader'
+        - $ref: '#/parameters/createReturnReceiptConfirmation'
+      responses:
+        201:
+          description: Return Receipt Confirmation Accepted
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasOneWMSApiReturnReceiptConfirmationAccepted'
+        400:
+          description: Wrong Parameters
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+            example:
+              title: Incorrect Input Parameter
+              detail: Parameter `unitsReceived` should be a positive integer
+        401:
+          $ref: '#/responses/notAuthorizedResponse'
+
+  '/notification-shipment':
+    x-summary: Notification of Shipment
+
+    put:
+      summary: Create Notification of Shipment
+      description: >-
+        ### Use Case
+
+        Lorem Ipsum
+
+      parameters:
+        - $ref: '#/parameters/contentLanguageHeader'
+        - $ref: '#/parameters/createNotificationOfShipment'
+      responses:
+        201:
+          description: Notification Created
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasOneWMSApiNotificationOfShipmentCreated'
+        400:
+          description: Wrong Parameters
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+            example:
+              title: Incorrect Input Parameter
+              detail: Requireed parameter `deliveryNumber` is missing.
+        401:
+          $ref: '#/responses/notAuthorizedResponse'
+
+  '/inventory-adjustment':
+    x-summary: Inventory Adjustment
+
+    post:
+      summary: Perform Inventory Adjustment
+      
+      parameters: 
+        - $ref: '#/parameters/contentLanguageHeader'
+        - $ref: '#/parameters/performInventoryAdjustment'
+      responses:
+        200:
+          description: Adjustment performed
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasOneWMSApiInventoryAdjusted'
+        400:
+          description: Wrong Parameters
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+            example:
+              title: Incorrect Input Parameter
+              detail: Requireed parameter `quantity` is missing.
+        401:
+          $ref: '#/responses/notAuthorizedResponse'
+
+parameters:
+  # adidas API guidelines: Pagination
+  offset:
+    name: offset
+    in: query
+    description: Number of results to skip from the start of the list
+    required: false
+    type: string
+    default: '0'
+    x-example: '10'
+
+  # adidas API guidelines: Pagination
+  limit:
+    name: limit
+    in: query
+    description: The maximum number of reusults to return
+    required: false
+    type: string
+    default: '10'
+    x-example: '5'
+
+  # adidas API guidelines: Sparse fieldset
+  fields:
+    name: fields
+    in: query
+    description: Comma-separated list of fields to include in the response
+    required: false
+    type: array
+    items:
+      type: string
+    collectionFormat: csv
+    x-example:
+      - articleNumber
+      - modelNumber
+
+  # adidas API guidelines: Sparse fieldset
+  embedded:
+    name: embedded
+    in: query
+    description: Comma-separated list of resource (relations) to embed in the response
+    required: false
+    type: array
+    items:
+      type: string
+    collectionFormat: csv
+    x-example:
+      - prices
+      - assets
+
+  contentLanguageHeader:
+    name: 'Content-Language'
+    in: header
+    type: string
+    default: en-US
+    x-example: en-US
+
+  createNotificationOfReceipt:
+    name: createNotificationOfReceipt
+    in: body
+    description: Notification to be created
+    required: true
+    schema:
+      $ref: '#/definitions/supermodelIoAdidasOneWMSNotificationOfReceipt'
+
+  createNotificationOfShipment:
+    name: createNotificationOfShipment
+    in: body
+    description: Notification to be created
+    required: true
+    schema:
+      $ref: '#/definitions/supermodelIoAdidasOneWMSNotificationOfShipment'
+
+  updateOrdersStatuses:
+    name: updateOrdersStatuses
+    in: body
+    description: Statuses of the orders to be udpated
+    required: true
+    schema:
+      $ref: '#/definitions/supermodelIoAdidasOneWMSOrdersStatuses'
+
+  createReturnReceiptConfirmation:
+    name: createReturnReceiptConfirmation
+    in: body
+    description: Return receipt confirmation
+    required: true
+    schema:
+      $ref: '#/definitions/supermodelIoAdidasOneWMSReturnReceipt'
+
+  performInventoryAdjustment:
+    name: performInventoryAdjustment
+    in: body
+    description: Inventory adjustment
+    required: true
+    schema:
+      $ref: '#/definitions/supermodelIoAdidasOneWMSInventoryAjdustment'
+
+responses:
+  notAuthorizedResponse:
+    description: Not authorized
+    headers:
+      Content-Type:
+        type: string
+        default: application/problem+json
+    schema:
+      allOf:
+        - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+      example:
+        title: Not Authorized
+        detail: Missing authorization credentials
+
+
+
+
+# DO NOT EDIT
+# This definitions section is automatically generated by supermodel.io
+#
+# http://supermodel.io
+# https://github.com/supermodel/supermodel-cli
+definitions:
+  supermodelIoAdidasApiHALDefinitionsHalLinkObject:
+    title: HAL Link Object
+    type: object
+    properties:
+      href:
+        type: string
+      templated:
+        type: boolean
+      type:
+        type: string
+      deprecation:
+        type: string
+      name:
+        type: string
+      profile:
+        type: string
+      title:
+        type: string
+      hreflang:
+        type: string
+    required:
+      - href
+  supermodelIoAdidasApiHALDefinitionsHalCuriesLink:
+    title: HAL Curies Link
+    allOf:
+      - type: object
+        properties:
+          templated:
+            enum:
+              - true
+        required:
+          - templated
+      - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+  supermodelIoAdidasOneWMSAjdustmentItem:
+    title: Ajdustment Item
+    description: Ajdustment Item model description
+    type: object
+    properties:
+      articleNumber:
+        type: string
+        example: B75743
+      srcSizeCD3:
+        type: string
+        example: A570
+      plant:
+        type: string
+        example: P7210
+      storageLocation:
+        type: string
+        example: SL0001
+      stockCategory:
+        type: string
+        example: A
+      salesOrder:
+        type: string
+        example: '1234567890'
+      salesOrderLine:
+        type: string
+        example: '123456'
+  supermodelIoAdidasOneWMSDeliveryItem:
+    title: Delivery Item
+    description: Delivery Item model description
+    type: object
+    properties:
+      deliveryItem:
+        type: string
+        example: '900005'
+      deliveryLine:
+        type: string
+      articleNumber:
+        type: string
+        description: Also known as `articleNo`
+        example: B75743
+      srcSizeCd3:
+        type: string
+        description: Also known as `sourcingSizeCd3`
+        example: '370'
+      salesSizeDescription:
+        type: string
+        example: 10-
+      actualDeliveredQuantity:
+        type: number
+        example: 2
+      deliveryQuantity:
+        type: number
+        example: 2
+      customsStatus:
+        type: string
+      countryOfOrigin:
+        type: string
+        example: CN
+      lvs_Id:
+        type: string
+  supermodelIoAdidasOneWMSHandlingUnit:
+    title: Handling Unit
+    description: Handling Unit model description
+    type: object
+    properties:
+      handlingUnitNumber:
+        type: string
+        example: 00000980900479198505
+      packingMaterialType:
+        type: string
+      totalVolume:
+        type: number
+        example: 3.16
+      volumeUnit:
+        type: string
+      totalWeight:
+        type: number
+        example: 102.5
+      netWeight:
+        type: number
+        example: 100.01
+      weightUnit:
+        type: string
+      quantity:
+        type: string
+      length:
+        type: string
+      width:
+        type: string
+      height:
+        type: string
+      externalHandlingUnit:
+        type: string
+      description:
+        type: string
+      dimUnit:
+        type: string
+      handlingUnitItems:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSHandlingUnitItem'
+  supermodelIoAdidasOneWMSHandlingUnitItem:
+    title: Handling Unit Item
+    description: Handling Unit Item model description
+    type: object
+    properties:
+      handlingUnitItem:
+        type: string
+      documentItem:
+        type: string
+      documentLine:
+        type: string
+      articleNumber:
+        type: string
+        description: Also known as `articleNo`
+        example: B75743
+      srcSizeCd3:
+        type: string
+        description: Also known as `sourcingSizeCd3`
+        example: '370'
+      salesSizeDescription:
+        type: string
+        example: 10-
+      cartonQuantity:
+        type: number
+      lowerLevelHU:
+        type: string
+      pkngLevel:
+        type: string
+      referenceDocument:
+        type: string
+      customsStatus:
+        type: string
+      countryOfOrigin:
+        type: string
+        example: CN
+      lvs_Id:
+        type: string
+  supermodelIoAdidasOneWMSHostIndicator:
+    title: HostIndicator
+    type: string
+    description: ReferenceCode10 / Reference610
+    example: REU
+  supermodelIoAdidasOneWMSInboundDeliveryLine:
+    title: Inbound Delivery Line
+    description: Inbound Delivery Line description
+    type: object
+    properties:
+      lineNumber:
+        type: string
+        example: '000001'
+      articleNumber:
+        type: string
+        example: B75743
+      srcSizeCd3:
+        type: string
+        example: '370'
+      salesOrder:
+        type: string
+        example: '1010101020'
+      salesOrderLine:
+        type: string
+        example: '223451'
+      iLPNsShipped:
+        type: number
+        example: 1
+      unitsShipped:
+        type: number
+        example: 10
+      iLPNsReceived:
+        type: number
+        example: 1
+      unitsReceived:
+        type: number
+        example: 10
+      division:
+        type: string
+        description: 'ReferenceCode1 / Reference1 01 = FTW, 02 = APP, 03 = ACC, 99 = non-AFS'
+        example: '01'
+      twoStepSellingDeliveryLine:
+        type: string
+        example: '000000'
+    required:
+      - lineNumber
+      - articleNumber
+      - srcSizeCd3
+      - unitsReceived
+  supermodelIoAdidasOneWMSInventoryAjdustment:
+    title: Inventory Ajdustment
+    description: Inventory Ajdustment model description
+    type: object
+    properties:
+      created:
+        type: string
+        format: date-time
+      warehouse:
+        type: string
+        example: PAN
+      transactionNumber:
+        type: string
+        example: A123456
+      sequenceNumber:
+        type: string
+        example: A789
+      publisher:
+        type: string
+        example: ZTIB_PANAMA
+      movemementType:
+        type: string
+        example: Z53
+      quantity:
+        type: number
+        example: 100
+      reference:
+        type: string
+        example: A123345
+      from:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSAjdustmentItem'
+      to:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSAjdustmentItem'
+  supermodelIoAdidasOneWMSNotificationOfReceipt:
+    title: Notification of Receipt
+    description: Notification of Receipt
+    type: object
+    properties:
+      created:
+        type: string
+        description: ISO 8601 timestamp
+        allOf:
+          - $ref: '#/definitions/supermodelIoSchemaorgDateTime'
+        example: '2018-10-03T09:59:06Z'
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      plant:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSPlant'
+      warehouse:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSWarehouse'
+      transactionNumber:
+        type: string
+        example: 5141621
+      sequenceNumber:
+        type: string
+        example: 2
+      receiptsVariance:
+        type: string
+        example: 'N'
+      receiptsCompleted:
+        type: string
+        example: 'N'
+      containerNumber:
+        type: string
+        description: ReferenceCode6 / Reference6
+        example: GEISHP0918001
+      twoStepSellingDelivery:
+        type: string
+        example: '0000000000'
+      inboundDeliveryNumber:
+        type: string
+        description: ReferenceCode3 / Reference3
+        example: GEASN0918001
+      inboundDeliveryLines:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSInboundDeliveryLine'
+    required:
+      - hostIndicator
+      - plant
+      - warehouse
+      - transactionNumber
+      - inboundDeliveryNumber
+      - inboundDeliveryLines
+  supermodelIoAdidasOneWMSNotificationOfShipment:
+    title: Notification of Shipment
+    description: Notification of Shipment model description
+    type: object
+    properties:
+      warehouse:
+        type: string
+        example: PAN
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      deliveryNumber:
+        type: string
+        example: '6187131189'
+      totalWeight:
+        type: number
+      netWeight:
+        type: string
+      weightUnit:
+        type: number
+      totalVolume:
+        type: number
+      volumeUnit:
+        type: string
+      totalNumberOfPackages:
+        type: number
+      totalQuantity:
+        type: number
+      plannedGoodsMovementDate:
+        type: string
+        format: date
+      actualGoodsMovementDate:
+        type: string
+        format: date
+      billOfLadingNumber:
+        type: string
+      billOfLading:
+        type: string
+      masterBillOfLading:
+        type: string
+      externalIdentification:
+        type: string
+      multiShipFlag:
+        type: string
+        example: M
+      pickingDate:
+        type: string
+        format: date
+      transportPlanningDate:
+        type: string
+        format: date
+      loadingDate:
+        type: string
+        format: date
+      forwardingAgent:
+        type: string
+      loadNumber:
+        type: number
+      trailerNumber:
+        type: number
+      carrier:
+        type: number
+      deliveryNoteGrouping:
+        type: string
+      deliveryNoteCount:
+        type: number
+      priceCondition:
+        type: object
+        properties:
+          conditionType:
+            type: string
+          conditionValue:
+            type: string
+          conditionCurrency:
+            type: string
+          conditionClass:
+            type: string
+      deliveryItems:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSDeliveryItem'
+      handlingUnits:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSHandlingUnit'
+    required:
+      - deliveryNumber
+  supermodelIoAdidasOneWMSOrderStatus:
+    title: Order Status
+    description: Status udpate of one order
+    type: object
+    properties:
+      outboundDeliveryNumber:
+        type: string
+        example: GEASN0918001
+      salesOrder:
+        type: string
+        example: AUS0000001
+      releaseNumber:
+        type: number
+        example: 1
+      status:
+        type: string
+        enum:
+          - inWMS
+          - inProcess
+          - inPacking
+          - packed
+          - loaded
+          - shipped
+      timestamp:
+        type: string
+        description: ISO 8601 timestamp of the status event
+        allOf:
+          - $ref: '#/definitions/supermodelIoSchemaorgDateTime'
+        example: '2018-10-03T09:59:06Z'
+      plant:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSPlant'
+    required:
+      - outboundDeliveryNumber
+      - status
+      - plant
+  supermodelIoAdidasOneWMSOrdersStatuses:
+    title: Orders Statuses
+    description: Statuses update for Orders
+    type: object
+    properties:
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      warehouse:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSWarehouse'
+      orders:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSOrderStatus'
+    required:
+      - hostIndicator
+      - warehouse
+      - orders
+  supermodelIoAdidasOneWMSPlant:
+    title: Plant
+    type: string
+    description: ReferenceCode4 / Reference4
+    example: '6025'
+  supermodelIoAdidasOneWMSReturnOrderLine:
+    title: Return Order Line
+    description: Return Order Line model
+    type: object
+    properties:
+      orderLine:
+        type: string
+      articleNumber:
+        type: string
+      srcSizeCD3:
+        type: string
+      stockCategory:
+        type: string
+      salesOrganization:
+        type: string
+      channel:
+        type: string
+      storageLocation:
+        type: string
+      unitsReceived:
+        type: number
+      division:
+        type: string
+      brand:
+        type: string
+    example:
+      orderLine: '000001'
+      articleNumber: B75743
+      srcSizeCD3: '370'
+      stockCategory: A
+      salesOrganization: '6038'
+      channel: '01'
+      storageLocation: '0001'
+      unitsReceived: 10
+      division: '01'
+      brand: '11'
+    required:
+      - orderLine
+      - articleNumber
+      - srcSizeCD3
+      - unitsReceived
+  supermodelIoAdidasOneWMSReturnReceipt:
+    title: Return Receipt Confirmation
+    description: Return Receipt model description
+    type: object
+    properties:
+      created:
+        type: string
+        description: ISO 8601 timestamp
+        allOf:
+          - $ref: '#/definitions/supermodelIoSchemaorgDateTime'
+        example: '2018-10-03T09:59:06Z'
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      plant:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSPlant'
+      warehouse:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSWarehouse'
+      transactionNumber:
+        type: string
+        example: 5141621
+      sequenceNumber:
+        type: string
+        example: 2
+      returnOrder:
+        type: string
+        example: GEASN0918001
+      originalOrder:
+        type: string
+        example: GEASN0918001
+      enterpriseCode:
+        type: string
+        example: '6000000001'
+      shipTo:
+        type: string
+        example: '6000000042'
+      soldTo:
+        type: string
+        example: '6000000072'
+      purchaseOrderType:
+        type: string
+        example: '01'
+      reasonCode:
+        type: string
+        example: '50'
+      returnNote:
+        type: string
+        example: Lorem Ipsum
+      returnOrderLines:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSReturnOrderLine'
+  supermodelIoAdidasOneWMSWarehouse:
+    title: Warehouse
+    type: string
+    example: DTC
+  supermodelIoAdidasOneWMSApiAPIRoot:
+    title: HAL
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    example:
+      _links:
+        self: /
+        createNotificationOfReceipt: /notification-receipt
+        updateOrderStatuses: /orders
+        returnReceiptConfirmation: /return-receipt
+        createNotificationOfShipment: /notification-shipment
+        inventoryAdjustment: /inventory-adjustment
+  supermodelIoAdidasOneWMSApiInventoryAdjusted:
+    title: Inventory Adjusted
+    description: Inventory adjustment confirmation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Inventory adjusted successfully
+  supermodelIoAdidasOneWMSApiNotificationOfReceiptCreated:
+    title: Notification of Receipt Created
+    description: Confirmation of notification being created
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Notification of receipt created successfully
+      inboundDeliveryNumber: GEASN0918001
+  supermodelIoAdidasOneWMSApiNotificationOfShipmentCreated:
+    title: Notification of Shipment Created
+    description: Confirmation of notification being created
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Notification of receipt created successfully
+      deliveryNumber: 6187131189
+  supermodelIoAdidasOneWMSApiOrdersUpdated:
+    title: Orders Updated
+    description: Confirmation of orders statuses being updated
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Orders statuses update successfully
+  supermodelIoAdidasOneWMSApiProblemDetail:
+    title: Problem Detail
+    $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+  supermodelIoAdidasOneWMSApiReturnReceiptConfirmationAccepted:
+    title: Return Receipt Confirmation Accepted
+    description: Confirmation of return receipt
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Return receipt confirmation accepted
+  supermodelIoSchemaorgDateTime:
+    title: DateTime
+    type: string
+    description: >-
+      A combination of date and time of day in the form
+      [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] (see Chapter 5.4 of ISO 8601).
+    allOf:
+      - $ref: '#/definitions/supermodelIoSchemaorgDataType'
+  supermodelIoSchemaorgDataType:
+    title: DataType
+    description: 'The basic data types such as Integers, Strings, etc.'
+  supermodelIoAdidasApiHAL:
+    title: HAL
+    description: >-
+      JSON Hypertext Application Language. Definition of [HAL message
+      format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
+    type: object
+    properties:
+      _links:
+        type: object
+        additionalProperties:
+          allOf:
+            - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+            - type: array
+              items:
+                $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+        properties:
+          curies:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink'
+              - type: array
+                items:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink
+      _embedded:
+        type: object
+        additionalProperties:
+          allOf:
+            - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            - type: array
+              items:
+                $ref: '#/definitions/supermodelIoAdidasApiHAL'
+  supermodelIoAdidasApiProblemDetail:
+    title: Problem Details for HTTP APIs
+    description: >-
+      Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
+      detail
+    type: object
+    properties:
+      type:
+        type: string
+      title:
+        type: string
+      status:
+        type: number
+      detail:
+        type: string
+      instance:
+        type: string
+    required:
+      - title
+      - detail

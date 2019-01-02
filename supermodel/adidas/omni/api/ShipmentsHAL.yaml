@@ -1,0 +1,23 @@
+$id: http://supermodel.io/adidas/omni/api/ShipmentsHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Shipments HAL
+description: Collection of shipments
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+examples:
+  - _links:
+      self:
+        href: /orders/AD018295044/shipments
+    shipmentsCount: 2
+    _embedded:
+      shipment:
+        - _links:
+            self:
+              href: /orders/AD018295044/shipments/AD018295044-1
+        - _links:
+            self:
+              href: /orders/AD018295044/shipments/AD018295044-2              

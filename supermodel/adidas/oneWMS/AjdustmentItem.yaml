@@ -1,0 +1,42 @@
+$id: http://supermodel.io/adidas/oneWMS/AjdustmentItem
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Ajdustment Item
+description: Ajdustment Item model description
+type: object
+
+properties:
+  articleNumber:
+    type: string
+    examples:
+      - 'B75743'
+
+  srcSizeCD3:
+    type: string
+    examples:
+      - 'A570'
+
+  plant:
+    type: string
+    examples:
+      - 'P7210'
+
+  storageLocation:
+    type: string
+    examples:
+      - 'SL0001'
+
+  stockCategory:
+    type: string
+    examples:
+      - 'A'
+
+  salesOrder:
+    type: string
+    examples:
+      - '1234567890'
+
+  salesOrderLine:
+    type: string
+    examples:
+      - '123456'

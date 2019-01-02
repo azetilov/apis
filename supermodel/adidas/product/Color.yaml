@@ -1,9 +1,8 @@
 $id: http://supermodel.io/adidas/product/Color
-
+$schema: http://json-schema.org/draft-07/schema#
 title: Color
 type: object
 description: Color descriptions are language-dependent
-
 properties:
   color1:
     $ref: utils/CodeDescription
@@ -13,7 +12,6 @@ properties:
     $ref: utils/CodeDescription
   color4:
     $ref: utils/CodeDescription
-
 examples:
   - color1:
       code: "A0QM"

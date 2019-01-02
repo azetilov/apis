@@ -1,11 +1,9 @@
 $id: http://supermodel.io/adidas/product/api/SKUsHAL
-
+$schema: http://json-schema.org/draft-07/schema#
 title: HAL Representation of Collection of SKUs
 type: object
-
 allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
-
 properties:
   skuCount:
     type: number
@@ -13,7 +11,6 @@ properties:
     type: array
     items:
       $ref: http://supermodel.io/adidas/product/SKU
-
 examples:
   - _links:
       self:

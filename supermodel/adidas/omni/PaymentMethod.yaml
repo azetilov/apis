@@ -1,0 +1,30 @@
+$id: http://supermodel.io/adidas/omni/PaymentMethod
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Payment Method
+description: Payment Method model description
+type: object
+
+properties:
+  paymentReference2:
+    type: string
+    examples:
+      - 'EBAYPAYPAL_US'
+  paymentReference3:
+    type: string
+    examples:
+      - '073014712424'
+  paymentType:
+    type: string
+    examples:
+      - 'PAYPAL'
+  maxChargeLimit:
+    type: string
+  creditCardType:
+    type: string
+    examples:
+      - 'Mastercard'
+  creditCardNo:
+    type: string
+    examples:
+      - '54829632546'

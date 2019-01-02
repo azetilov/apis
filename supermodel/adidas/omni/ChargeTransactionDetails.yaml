@@ -1,0 +1,56 @@
+$id: http://supermodel.io/adidas/omni/ChargeTransactionDetails
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Charge Transaction Details
+description: Charge Transaction Details model description
+type: object
+
+properties:
+  totalTransferredIn:
+    type: string
+
+  totalOpenBookings:
+    type: string
+
+  totalOpenAuthorizations:
+    type: string
+
+  totalDebits:
+    type: string
+
+  additionalExpectedAuthorizations:
+    type: string
+
+  chargeTransactionDetail:
+    type: array
+    items:
+      type: object
+      properties:
+        chargeType:
+          type: string
+
+        bookAmount:
+          type: string
+
+        status:
+          type: string
+
+        # TODO: add invoice data
+        # invoiceCollectionDetails:
+        #   $ref: '#/definitions/invoiceCollectionDetail'
+
+        requestAmount:
+          type: string
+
+        debitAmount:
+          type: string
+
+        distributedAmount:
+          type: string
+
+        creditAmount:
+          type: string
+
+        collectionDate:
+          type: string
+          format: date

@@ -1,0 +1,115 @@
+$id: http://supermodel.io/adidas/omni/Article
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Article
+description: Article OmniHub representation
+type: object  
+
+properties:
+  alternateArticleNumber:
+    type: string
+
+  bundleFulfillmentMode:
+    type: string
+
+  costCurrency:
+    type: string
+
+  countryOfOrigin:
+    type: string
+
+  customerArticle:
+    type: string
+
+  customerArticleDescription:
+    type: string
+
+  ECCNNO: 
+    type: string
+
+  harmonizedCode:
+    type: string
+
+  ISBN:
+    type: string
+
+  articleDescription:
+    type: string
+
+  articleNumber:
+    type: string
+    examples:
+      - 015110
+
+  articleShortDescription:
+    type: string
+
+  articleWeight:
+    type: string
+
+  articleWeightUnitOfMeasure:
+    type: string
+
+  languageDescriptionList:
+    type: object
+    properties:
+      languageDescription:
+        type: array
+        items:
+          type: object
+          properties:
+            description:
+              type: string
+            localCode:
+              type: string
+
+  manufacturerarticle:
+    type: string
+
+  manufacturerItemDescription:
+    type: string
+
+  manufacturerName:
+    type: string
+
+  NMFClass:
+    type: string
+
+  NMFCode:
+    type: string
+
+  NMFCDescription:
+    type: string
+
+  productClass:
+    type: string
+
+  productLine:
+    type: string
+
+  scheduleBcode:
+    type: string
+
+  substituteArticleNumber:
+    type: string
+
+  substituteArticleUnitOfMeasure:
+    type: string
+
+  supplierArticle:
+    type: string
+
+  supplierArticleDescription:
+    type: string
+
+  taxProductCode:
+    type: string
+
+  UPCCode:
+    type: string
+
+  unitCost:
+    type: string
+
+  unitOfMeasure:
+    type: string

@@ -1,8 +1,7 @@
 $id: http://supermodel.io/adidas/product/Article
-
+$schema: http://json-schema.org/draft-07/schema#
 title: Article
 type: object
-
 properties:
   articleNumber:
     type: string
@@ -47,7 +46,6 @@ properties:
     type: array
     items:
       $ref: Article
-
 examples:
   - articleNumber: '015110'
     modelNumber: '10034'
@@ -72,4 +70,3 @@ examples:
     skus: [{}]
     assets: [{}]
     catalog: {}
-

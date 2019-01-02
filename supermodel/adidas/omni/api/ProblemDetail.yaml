@@ -1,0 +1,4 @@
+$id: http://supermodel.io/adidas/omni/api/ProblemDetail
+$schema: http://json-schema.org/draft-07/schema#
+
+$ref: http://supermodel.io/adidas/api/ProblemDetail

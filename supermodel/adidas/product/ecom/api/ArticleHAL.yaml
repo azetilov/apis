@@ -1,141 +1,96 @@
 $id: http://supermodel.io/adidas/product/ecom/api/ArticleHAL
 $schema: http://json-schema.org/draft-07/schema#
-
 title: eCom Article HAL Representation
 type: object
-
 allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
-
 properties:
   age:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/age
-
   articleDescription:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/articleDescription
-
   articleNumber:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/articleNumber
-
   assets:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/assets
-
   athlete:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/athlete
-
   badge:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/badge
-
   brand:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/brand
-
   campaign:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/campaign
-
   care:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/care
-
   clearance:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/clearance
-
   color:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/color
-
   comingSoonSignup:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/comingSoonSignup
-
   customizable:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/customizable
-
   defaultColor:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/defaultColor
-
   fitbarPosition:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/fitbarPosition
-
   flashProduct:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/flashProduct
-
   gender:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/gender
-
   genderSub:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/genderSub
-
   hastag:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/hastag
-
   hypeProduct:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/hypeProduct
-
   maxQuantity:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/maxQuantity
-
   modelNumber:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/modelNumber
-
   name:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/name
-
   onlineFrom:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/onlineFrom
-
   onlineTo:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/onlineTo
-
   pdp:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/pdp
-
   personalizable:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/personalizable
-
   preorder:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/preorder
-
   previewTo:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/previewTo
-
   price:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/price
-
   prodcutLine:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/prodcutLine
-
   productDivision:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productDivision
-
   productFamily:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productFamily
-
   productFilter:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productFilter
-
   productLine:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productLine
-
   productType:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/productType
-
   sizeChart:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/sizeChart
-
   soldout:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/soldout
-
   sport:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/sport
-
   teams:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/teams
-
   template:
     $ref: http://supermodel.io/adidas/product/ecom/Article#/properties/template
-
 examples:
   - _links:
       self:
         href: /articles/AH2171?site=cz
-
     _embedded:
       colorvariant:
         - _links:
@@ -145,7 +100,6 @@ examples:
         - _links:
             self:
               href: /articles/CQ3025?site=cz
-
     age: Infant &amp; Toddler
     articleDescription: string
     articleNumber: string

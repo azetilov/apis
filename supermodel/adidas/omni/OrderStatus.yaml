@@ -1,0 +1,48 @@
+$id: http://supermodel.io/adidas/omni/OrderStatus
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Order Status
+description: Order Status model description
+type: object
+
+properties:
+  totalQuantity:
+    type: string
+
+  orderHeaderKey:
+    type: string
+
+  statusDate:
+    type: string
+    format: date
+
+  expectedDeliverytDate:
+    type: string
+    format: date
+
+  statusDescription:
+    type: string
+
+  orderReleasekey:
+    type: string
+
+  orderLinekey:
+    type: string
+
+  statusQuantity:
+    type: string
+
+  transactionalUnitOfMeasure:
+    type: string
+
+  shipNode:
+    type: string
+
+  pipelineKey:
+    type: string
+
+  orderLineScheduleKey:
+    type: string
+
+  orderReleaseStatusKey:
+    type: string

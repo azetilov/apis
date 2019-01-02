@@ -1,0 +1,27 @@
+$id: http://supermodel.io/adidas/omni/api/NotesHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Notes HAL
+description: Notes HAL model description
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  notesCount:
+    type: number
+  note:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/omni/Note
+
+examples:
+  - _links:
+      self:
+        href: /orders/AD018137687/notes
+
+    invoicesCount: 2
+    invoices:
+      - noteText: Hello World
+      - noteText: Lorem Ipsum

@@ -1,0 +1,55 @@
+$id: http://supermodel.io/adidas/oneWMS/ReturnOrderLine
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Return Order Line
+description: Return Order Line model
+type: object
+
+properties:
+  orderLine:
+    type: string 
+  
+  articleNumber:
+    type: string
+
+  srcSizeCD3:
+    type: string
+
+  stockCategory:
+    type: string
+
+  salesOrganization:
+    type: string
+  
+  channel:
+    type: string
+
+  storageLocation:
+    type: string
+
+  unitsReceived:
+    type: number
+  
+  division:
+    type: string
+
+  brand:
+    type: string
+
+examples:
+  - orderLine: '000001'
+    articleNumber: 'B75743'
+    srcSizeCD3: '370'
+    stockCategory: A
+    salesOrganization: '6038'
+    channel: '01'
+    storageLocation: '0001'
+    unitsReceived: 10
+    division: '01'
+    brand: '11'
+
+required:
+  - orderLine
+  - articleNumber
+  - srcSizeCD3
+  - unitsReceived

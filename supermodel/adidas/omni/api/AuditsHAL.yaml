@@ -1,0 +1,26 @@
+$id: http://supermodel.io/adidas/omni/api/AuditsHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Audits HAL
+description: Audits HAL model description
+type: object 
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  auditsCount: 
+    type: number
+
+  note:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/omni/Audit
+
+examples:
+  - _links:
+      self:
+        href: /orders/AD018137687/audits
+
+    audits: []
+

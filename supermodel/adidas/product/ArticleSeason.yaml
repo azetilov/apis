@@ -1,9 +1,8 @@
 $id: http://supermodel.io/adidas/product/ArticleSeason
-
+$schema: http://json-schema.org/draft-07/schema#
 title: Article Season
 description: Seasonal information about article
 type: object
-
 properties:
   seasonName:
     type: string
@@ -15,7 +14,6 @@ properties:
   retailExitDate:
     type: string
     format: date-time
-
 examples:
   - seasonName: FW17
     carryOver: false

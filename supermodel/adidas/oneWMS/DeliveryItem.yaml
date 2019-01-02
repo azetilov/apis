@@ -1,0 +1,53 @@
+$id: http://supermodel.io/adidas/oneWMS/DeliveryItem
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Delivery Item
+description: Delivery Item model description
+type: object
+
+properties:
+  deliveryItem: 
+    type: string
+    examples:
+      - '900005'
+      
+  deliveryLine:
+    type: string
+
+  articleNumber:
+    type: string
+    description: Also known as `articleNo`
+    examples:
+      - 'B75743'
+
+  srcSizeCd3:
+    type: string
+    description: Also known as `sourcingSizeCd3`
+    examples:
+      - '370'
+
+  salesSizeDescription: 
+    type: string
+    examples: 
+      - '10-'
+  
+  actualDeliveredQuantity: 
+    type: number
+    examples:
+      - 2
+
+  deliveryQuantity:
+    type: number
+    examples:
+      - 2
+
+  customsStatus:
+    type: string
+  
+  countryOfOrigin: 
+    type: string
+    examples:
+      - CN
+  
+  lvs_Id:
+    type: string

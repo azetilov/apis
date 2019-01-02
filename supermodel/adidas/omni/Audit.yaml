@@ -1,0 +1,241 @@
+$id: http://supermodel.io/adidas/omni/Audit
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Audit
+description: Audit model description
+type: object
+
+# REMARK: This model deservers cleanup and alignment with other models
+
+properties:
+  lastOrderAuditKey:
+    type: string
+
+  lastRecordSet:
+    type: string
+
+  readFromHistory:
+    type: string
+
+  totalOrderAuditList:
+    type: string
+
+  audit:
+    type: array
+    items:
+      type: object
+      properties:
+        auditTransactionId:
+          type: string
+
+        createUserName:
+          type: string
+
+        createTimestamp:
+          type: string
+          format: date
+
+        modifyUserName:
+          type: string
+
+        modifyTimestamp:
+          type: string
+
+        modifyUserId:
+          type: string
+
+        newBuffer:
+          type: string
+
+        oldBuffer:
+          type: string
+
+        order:
+          type: array
+          items:
+            type: object
+            properties:
+              documentType:
+                type: string
+
+              country:
+                type: string
+              brand:
+                type: string
+
+              orderNumber:
+                type: string
+
+        orderAuditKey:
+          type: string
+
+        orderAuditLevels:
+          type: object
+
+          properties:
+            orderauditLevel:
+              type: array
+              items:
+                type: object
+                properties:
+                  modificationLevel:
+                    type: string
+
+                  modificationLevelScreenName:
+                    type: string
+
+                  modificationTypes:
+                    type: object
+                    properties:
+                      modificationType:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+
+                            screenName:
+                              type: string
+
+                      orderAuditDetail:
+                        type: object
+                        properties:
+                          orderAuditDetail:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                action:
+                                  type: string
+                                attributes:
+                                  type: object
+                                  properties:
+                                    attribute:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          extended:
+                                            type: string
+                                          modificationType:
+                                            type: string
+                                          name:
+                                            type: string
+                                          newValue:
+                                            type: string
+                                          oldValue:
+                                            type: string
+                                auditType:
+                                  type: string
+                                customerAuditDetail:
+                                  type: object
+                                  properties:
+                                    orderAuditDetail:
+                                      type: object
+                                      properties:
+                                        action:
+                                          type: string
+                                        attributes:
+                                          type: object
+                                          properties:
+                                            attribute:
+                                              type: array
+                                              items:
+                                                type: object
+                                                properties:
+                                                  extended:
+                                                    type: string
+                                                  modificationType:
+                                                    type: string
+                                                  name:
+                                                    type: string
+                                                  newValue:
+                                                    type: string
+                                                  oldValue:
+                                                    type: string
+                                        auditType:
+                                          type: string
+                                        ids:
+                                          type: object
+                                          properties:
+                                            id:
+                                              type: array
+                                              items:
+                                                type: object
+                                                properties:
+                                                  name:
+                                                    type: string
+                                                  value:
+                                                    type: string
+                                ids:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          name:
+                                            type: string
+                                          value:
+                                            type: string
+                      orderLine:
+                        type: object
+                        properties:
+                          article:
+                            $ref: Article
+
+                          orderLineKey:
+                            type: string
+
+                          orderdedQuantity:
+                            type: string
+
+                          orderlineNumber:
+                            type: string
+
+                          subLineNumber:
+                            type: string
+
+                      orderLineKey:
+                        type: string
+
+                      orderRelease:
+                        type: object
+                        properties:
+                          releaseNumber:
+                            type: string
+
+                      orderReleaseKey:
+                        type: string
+
+        orderHeaderKey:
+          type: string
+
+        orderLineKey:
+          type: string
+
+        orderReleaseKey:
+          type: string
+        reasonText:
+          type: string
+
+        reference1:
+          type: string
+
+        reference2:
+          type: string
+
+        reference3:
+          type: string
+
+        reference4:
+          type: string
+
+        xmlFlag:
+          type: string
+
+        isHistory:
+          type: string
+

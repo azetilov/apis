@@ -1,29 +1,23 @@
 $id: http://supermodel.io/adidas/reference/Category
 $schema: http://json-schema.org/draft-07/schema#
-
 title: Category
 description: Category model description
 type: object
-
 properties:
   name:
     type: string
-
   domains:
     type: array
     items:
       $ref: Domain
-
   parents:
     type: array
     items:
       $ref: Category
-
   children:
     type: array
     items:
       $ref: Category
-
   entities:
     type: array
     items:

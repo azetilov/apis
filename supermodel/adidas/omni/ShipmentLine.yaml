@@ -1,0 +1,149 @@
+$id: http://supermodel.io/adidas/omni/ShipmentLine
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Shipment Line
+description: Shipment Line model description
+type: object
+
+properties:
+  articleNumber: 
+    type: string
+
+  trackingNumber:
+    type: string
+
+  shipmentLineKey: 
+    type: string
+
+  shipmentKey:
+    type: string
+
+  requestedSerialNumber:
+    type: string
+
+  orderReleaseKey: 
+    type: string
+
+  modifyprogId: 
+    type: string
+
+  modifyuserId: 
+    type: string
+
+  articleDescription: 
+    type: string
+
+  createTimestamp: 
+    type: string
+
+  segmentType:
+    type: string
+
+  modifyTimestamp:
+    type: string
+
+  action: 
+    type: string
+
+  orderNumber: 
+    type: string
+
+  isPickable:
+    type: string
+
+  netWeightUnitOfMeasure:
+    type: string
+
+  unitOfMeasure:
+    type: string
+
+  segment:
+    type: string
+
+  kitQuatnity:
+    type: string
+
+  orderLineKey: 
+    type: string
+
+  backroomPickedQuantity:
+    type: string
+
+  waveNumber: 
+    type: string
+
+  originalQuantity:
+    type: string
+
+  departmentCode: 
+    type: string
+
+  customerPoLineNumber:
+    type: string
+
+  countryOfOrigin:
+    type: string
+
+  createprogId: 
+    type: string
+
+  kitCode:
+    type: string
+
+  orderHeaderKey:
+    type: string
+
+  quantity:
+    type: string
+
+  orderlineNumber:
+    type: string
+
+  createuserId:
+    type: string
+
+  shortageQunatity:
+    type: string
+
+  releaseNumber:
+    type: string
+
+  subLineNumber:
+    type: string
+
+  shipmentSubLineNumber:
+    type: string
+
+  shipmentLineNumber:
+    type: string
+
+  fifoNumber:
+    type: string
+
+  netWeight:
+    type: string
+
+  productClass:
+    type: string
+
+  overShipQuantity:
+    type: string
+
+  isHistory:
+    type: string
+
+  customerPONumber:
+    type: string
+
+  levelOfService:
+    type: string
+
+  lockId:
+    type: string
+  
+  orderStatus:
+    type: string
+  
+  statusQty:
+    type: string
+  

@@ -1,8 +1,7 @@
 $id: http://supermodel.io/adidas/product/Catalog
-
+$schema: http://json-schema.org/draft-07/schema#
 title: Catalog
 type: object
-
 properties:
   catalogueCopy:
     $ref: '#/definitions/CatalogCopy'
@@ -10,11 +9,9 @@ properties:
     type: array
     items:
       $ref: '#/definitions/FeatureAndBenefit'
-
 examples:
   - catalogueCopy: {}
     featureAndBenefits: [{}]
-
 definitions:
   CatalogCopy:
     title: Catalog Copy
@@ -63,7 +60,6 @@ definitions:
         bullets5: "Woven Belgium crest on chest"
         bullets6: "3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha del pecho"
         bulletMaterial: "Maille double 100 % polyester."
-
   FeatureAndBenefit:
     title: Feature and Benefit
     type: object

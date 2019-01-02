@@ -1,0 +1,61 @@
+$id: http://supermodel.io/adidas/omni/OrderLineOverallTotals
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Order Line Overall Totals
+description: Order Line Overall Totals model description
+type: object 
+
+properties:
+  shippingTotals:
+    type: string
+
+  shippingBaseCharge:
+    type: string
+
+  additionalLinePriceTotal:
+    type: string
+
+  extendedPrice:
+    type: string
+
+  maualDiscountPercentage: 
+    type: string
+
+  tax:
+    type: string
+
+  unitPrice:
+    type: string
+
+  lineCost:
+    type: string
+
+  lineTotalWithoutTax:
+    type: string
+
+  pricingQuantity: 
+    type: string
+
+  lineTotal:
+    type: string
+
+  optionPrice:
+    type: string
+
+  shippingDiscount:
+    type: string
+
+  discount:
+    type: string
+
+  manualOverridePercentage: 
+    type: string
+
+  charges:
+    type: string
+
+  percentageProfitMargin:
+    type: string
+
+  shippingCharges:
+    type: string

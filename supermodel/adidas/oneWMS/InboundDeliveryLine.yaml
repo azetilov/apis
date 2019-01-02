@@ -1,0 +1,76 @@
+$id: http://supermodel.io/adidas/oneWMS/InboundDeliveryLine
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Inbound Delivery Line
+description: Inbound Delivery Line description
+type: object
+
+properties:
+  lineNumber:
+    type: string
+    examples:
+      - '000001'
+
+  articleNumber:
+    type: string
+    examples:
+      - 'B75743'
+
+  srcSizeCd3:
+    type: string
+    examples:
+      - '370'
+
+  salesOrder:
+    type: string
+    examples:
+      - '1010101020'
+
+  salesOrderLine:
+    type: string
+    examples:
+      - '223451'
+
+  iLPNsShipped:
+    type: number
+    examples:
+      - 1
+
+  unitsShipped:
+    type: number
+    examples:
+      - 10
+
+  iLPNsReceived:
+    type: number
+    examples:
+      - 1
+
+  unitsReceived:
+    type: number
+    examples:
+      - 10
+
+  division:
+    type: string
+    description: >-
+      ReferenceCode1 / Reference1
+      01 = FTW, 02 = APP, 03 = ACC, 99 = non-AFS
+    examples:
+      - '01'
+    # enum:
+    #   - FTW
+    #   - APP
+    #   - ACC
+    #   - nonAFS
+
+  twoStepSellingDeliveryLine:
+    type: string
+    examples:
+      - '000000'
+
+required:
+  - lineNumber
+  - articleNumber
+  - srcSizeCd3
+  - unitsReceived

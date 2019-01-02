@@ -1,0 +1,312 @@
+$id: http://supermodel.io/adidas/omni/Invoice
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Invoice
+description: Invoice model description
+type: object
+
+# REMARK: This model deserves a cleanup
+
+properties:
+  totalNumberOfRecord:
+    type: string
+
+  invoiceCollectionDetail:
+    type: array
+    items:
+      type: object
+      properties:
+        charges:
+          type: string
+
+        extendedPrice:
+          type: string
+
+        invoiceHeaderKey:
+          type: object
+
+          properties:
+            invoiceType:
+              type: string
+
+            orderInvoiceKey:
+              type: string
+
+            masterInvoiceNumber:
+              type: string
+
+            invoiceNumber:
+              type: string
+
+            shipmentKey:
+              type: string
+
+            returnReleaseKey:
+              type: string
+
+            totalAmount:
+              type: string
+
+            totalTax:
+              type: string
+
+            dateInvoiced:
+              type: string
+              format: date
+
+            actualFreightCharge:
+              type: string
+
+            chargedActualFreight:
+              type: string
+
+            collectedExternally:
+              type: string
+
+            collectedThroughAR:
+              type: string
+
+            lineSubTotal:
+              type: string
+
+            amountCollected:
+              type: string
+
+            shipNode:
+              type: string
+
+            reference1:
+              type: string
+
+            order: # REMARK: how does this relate to order model?
+              type: object
+              properties:
+                deliveryCode:
+                  type: string
+
+                orderType:
+                  type: string
+
+                country:
+                  type: string
+                brand:
+                  type: string
+
+                entryType:
+                  type: string
+
+                orderHeaderKey:
+                  type: string
+
+                orderNumber:
+                  type: string
+
+                priceInfo:
+                  $ref: PriceInfo
+
+                sellerOrganization:
+                  type: string
+
+                termsCode:
+                  type: string
+
+            shipment: # REMARK: how does this relate to Shipment model?
+              type: object
+              properties:
+                manifesToNumber:
+                  type: string
+
+                receivingNode:
+                  type: string
+
+                SCAC:
+                  type: string
+
+                shipDate:
+                  type: string
+
+                shipNode:
+                  type: string
+
+                shipmentKey:
+                  type: string
+
+                shipmentNumber:
+                  type: string
+
+        lineCharges: # REMARK: Is this already used somewhere else?
+          type: object
+
+          properties:
+            lineCharge:
+              type: array
+              items:
+                type: object
+                properties:
+                  chargeAmount:
+                    type: string
+
+                  chargeCategory:
+                    type: string
+
+                  chargeName:
+                    type: string
+
+                  chargeNameKey:
+                    type: string
+
+                  chargePerLine:
+                    type: string
+
+                  chargePerUnit:
+                    type: string
+
+                  isBillable:
+                    type: string
+
+                  isDiscount:
+                    type: string
+
+                  isShippingCharge:
+                    type: string
+
+                  originalChargePerLine:
+                    type: string
+
+                  originalChargePerUnit:
+                    type: string
+
+                  reference:
+                    type: string
+
+        lineDetailTranQuantity:
+          type: object
+          properties:
+            pricingQuantity:
+              type: string
+
+            quantity:
+              type: string
+
+            shippedQuantity:
+              type: string
+
+            transactionalUnitOfMeasure:
+              type: string
+
+        lineTaxes:
+          type: string
+          properties:
+            lineTax:
+              type: array
+              items:
+                type: object
+                properties:
+                  chargeCategory:
+                    type: string
+
+                  chargeName:
+                    type: string
+
+                  chargeNameKey:
+                    type: string
+
+                  reference1:
+                    type: string
+
+                  tax:
+                    type: string
+
+                  taxName:
+                    type: string
+
+                  taxPercentage:
+                    type: string
+
+            taxSummary:
+              type: object
+              properties:
+                taxSummaryDetail:
+                  type: object
+                  properties:
+                    tax:
+                      type: string
+                    taxName:
+                      type: string
+        
+        isHistory:
+          type: string
+        
+        lineTotal:
+          type: string
+        
+        orderInvoiceDetailKey:
+          type: string
+        
+        orderLine:
+          type: object
+          properties:
+            article: # REMARK: Reuse with Article model
+              type: object
+              properties:
+                articleNumber:
+                  type: string
+
+                productClass:
+                  type: string
+
+                unitOfmeasure:
+                  type: string
+
+                languageDescriptionlist: # REMARK: This is also defined elsewhere
+                  type: object
+                  properties:
+                    languageDescription:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          description:
+                            type: string
+
+                          extendedDescription:
+                            type: string
+
+                          localCode:
+                            type: string
+
+                          shortDescription:
+                            type: string
+
+              linePriceInfo:
+                $ref: OrderLinePriceInfo
+
+              orderLineKey:
+                type: string
+
+              orderlineNumber:
+                type: string
+
+              subLineNumber:
+                type: string
+
+        orderLineKey:
+          type: string
+
+        pricingQuantity:
+          type: string
+
+        quantity:
+          type: string
+
+        references:
+          type: string
+
+        shippedQuantity:
+          type: string
+        
+        tax:
+          type: string
+        
+        unitPrice:
+            type: string

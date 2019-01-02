@@ -1,0 +1,112 @@
+$id: http://supermodel.io/adidas/omni/api/CreateOrderLine
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Create Order Line
+description: Model for new order's order line
+type: object  
+
+properties:
+  orderLineNumber:
+    description: Describes the prime line number of the order line
+    type: string
+    examples:
+      - '1'
+  quantity:
+    description: Quantity of the item
+    type: string
+    examples:
+      - '1'
+  lineType:
+    description: Describes the orderline type
+    type: string
+    enum:
+      - inline
+      - personalized
+      - miadidas
+      - yourreebok
+      - Prebuy
+
+  carrierServiceCode:
+    description: Describes the Shipping method
+    type: string
+    enum:
+        - GRND
+        - LOWPRIORITY
+        - NONURGENT
+        - STANDARD
+        - STRDINLINE
+        - GRNDINLINE
+  article:
+    type: object
+    properties:
+      UPCCode:
+        type: string
+        examples:
+          - '28234839945'
+      articleDescription:
+        type: string
+        examples:
+          - 'Climacool Aerate 3 Shoes'
+      articleNumber:
+        description: Describes the item number and size of the article
+        type: string
+        examples:
+          - 'G98520_620'
+      productClass:
+        description: Describes a hardcoded value for the article class
+        type: string
+        examples:
+          - NEW
+      unitOfMeasure:
+        description: Describes the measurement of the the article
+        type: string
+        examples:
+          - PIECE
+  extn:
+    type: object
+    properties:
+      extnEAN:
+        type: string
+      extnArticleNumber:
+        type: string
+      extnSubOrderNumber:
+        type: string
+      extnLineType:
+        type: string
+  orderLinePriceInfo:
+    type: object
+    properties:
+      pricingUnitOfMeasure:
+          $ref: 'http://supermodel.io/adidas/omni/OrderLinePriceInfo#/properties/pricingUnitOfMeasure'
+      isPriceLocked:
+          $ref: 'http://supermodel.io/adidas/omni/OrderLinePriceInfo#/properties/isPriceLocked'
+      unitPrice:
+          $ref: 'http://supermodel.io/adidas/omni/OrderLinePriceInfo#/properties/unitPrice'
+      listPrice:
+          $ref: 'http://supermodel.io/adidas/omni/OrderLinePriceInfo#/properties/listPrice'
+      retailPrice:
+          $ref: 'http://supermodel.io/adidas/omni/OrderLinePriceInfo#/properties/retailPrice'
+      taxableFlag:
+          $ref: 'http://supermodel.io/adidas/omni/OrderLinePriceInfo#/properties/taxableFlag'
+  shippingAddress:
+      $ref: http://supermodel.io/adidas/omni/Address
+  lineTaxes:
+    type: object
+    properties:
+      lineTax:
+        type: object
+        properties:
+          chargeCategory:
+            type: string
+            examples:
+              -  LineTax
+          chargeName:
+            type: string
+            examples:
+              - OrderLineTax
+          reference1:
+            type: string
+          tax:
+            type: string
+            examples:
+              - '2.00'

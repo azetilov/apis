@@ -1,9 +1,8 @@
 $id: http://supermodel.io/adidas/api/HAL
-
+$schema: http://json-schema.org/draft-07/schema#
 title: HAL
 description: JSON Hypertext Application Language. Definition of [HAL message format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
 type: object
-
 properties:
   _links:
     type: object
@@ -28,7 +27,6 @@ properties:
         - type: array
           items:
             - $ref: '#/'
-
 definitions:
   halLinkObject:
     title: HAL Link Object
@@ -38,9 +36,6 @@ definitions:
         type: string
       templated:
         type: boolean
-      #
-      # WARN: Some version of OAS parser can have problem with property being called "type"
-      # resulting in the error 'Schema "type" key must be a string'
       type:
        type: string
       deprecation:
@@ -55,7 +50,6 @@ definitions:
         type: string
     required:
       - href
-
   halCuriesLink:
     title: HAL Curies Link
     allOf:

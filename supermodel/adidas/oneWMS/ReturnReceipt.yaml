@@ -1,0 +1,79 @@
+$id: http://supermodel.io/adidas/oneWMS/ReturnReceipt
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Return Receipt Confirmation
+description: Return Receipt model description
+type: object
+
+properties:
+  created:
+    type: string
+    description: ISO 8601 timestamp
+    allOf:
+      - $ref: http://supermodel.io/schemaorg/DateTime
+    examples:
+      - '2018-10-03T09:59:06Z'
+
+  hostIndicator:
+    $ref: HostIndicator
+
+  plant:
+    $ref: Plant
+
+  warehouse:
+    $ref: Warehouse
+
+  transactionNumber:
+    type: string
+    examples:
+      - 5141621
+
+  sequenceNumber:
+    type: string
+    examples:
+      - 2
+
+  returnOrder:
+    type: string
+    examples:
+      - "GEASN0918001"
+
+  originalOrder:
+    type: string
+    examples:
+      - "GEASN0918001"
+
+  enterpriseCode:
+    type: string
+    examples:
+      - "6000000001"
+
+  shipTo:
+    type: string
+    examples:
+      - "6000000042"
+
+  soldTo:
+    type: string
+    examples:
+      - "6000000072"
+
+  purchaseOrderType:
+    type: string
+    examples:
+      - "01"
+
+  reasonCode:
+    type: string
+    examples:
+      - "50" 
+
+  returnNote: 
+    type: string
+    examples:
+      - "Lorem Ipsum"
+
+  returnOrderLines:
+    type: array
+    items:
+      $ref: ReturnOrderLine

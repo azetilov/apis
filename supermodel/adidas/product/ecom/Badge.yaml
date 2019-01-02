@@ -1,9 +1,7 @@
 $id: http://supermodel.io/adidas/product/ecom/Badge
 $schema: http://json-schema.org/draft-07/schema#
-
 title: Badge
 type: object
-
 properties:
   style:
     type: string
@@ -16,7 +14,6 @@ properties:
       - soldout
     examples:
     - new
-
   description:
     type: string
     examples:

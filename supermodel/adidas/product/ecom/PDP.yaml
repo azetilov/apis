@@ -1,16 +1,12 @@
 $id: http://supermodel.io/adidas/product/ecom/PDP
 $schema: http://json-schema.org/draft-07/schema#
-
 title: PDP
 description: PDP model description
 type: object
-
 properties:
   callout:
     type: string
-
   content:
     type: string
-
   model:
     type: string

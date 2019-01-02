@@ -1,0 +1,124 @@
+$id: http://supermodel.io/adidas/oneWMS/NotificationOfShipment
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Notification of Shipment
+description: Notification of Shipment model description
+type: object
+
+properties:
+  warehouse:
+    type: string
+    examples:
+      - 'PAN'
+
+  hostIndicator:
+    $ref: HostIndicator
+
+  deliveryNumber:
+    type: string
+    examples:
+      - '6187131189'
+
+  totalWeight:
+    type: number
+
+  netWeight:
+    type: string
+
+  weightUnit:
+    type: number
+
+  totalVolume:
+    type: number
+
+  volumeUnit:
+    type: string
+
+  totalNumberOfPackages:
+    type: number
+
+  totalQuantity:
+    type: number
+
+  plannedGoodsMovementDate:
+    type: string
+    format: date
+
+  actualGoodsMovementDate:
+    type: string
+    format: date
+
+  billOfLadingNumber:
+    type: string
+
+  billOfLading: # TODO: is this different to billOfLadingNumber?
+    type: string
+
+  masterBillOfLading:
+    type: string
+
+  externalIdentification:
+    type: string
+
+  multiShipFlag:
+    type: string
+    examples:
+      - M
+
+  pickingDate:
+    type: string
+    format: date
+
+  transportPlanningDate:
+    type: string
+    format: date
+
+  loadingDate:
+    type: string
+    format: date
+
+  forwardingAgent:
+    type: string
+
+  loadNumber:
+    type: number
+
+  trailerNumber:
+    type: number
+
+  carrier:
+    type: number
+
+  deliveryNoteGrouping:
+    type: string
+
+  deliveryNoteCount:
+    type: number
+
+  priceCondition:
+    type: object
+    properties:
+      conditionType:
+        type: string
+
+      conditionValue:
+        type: string
+
+      conditionCurrency:
+        type: string
+
+      conditionClass:
+        type: string
+
+  deliveryItems:
+    type: array
+    items:
+      $ref: DeliveryItem
+
+  handlingUnits:
+    type: array
+    items:
+      $ref: HandlingUnit
+
+required:
+  - deliveryNumber

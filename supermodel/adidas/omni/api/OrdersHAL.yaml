@@ -1,0 +1,53 @@
+$id: http://supermodel.io/adidas/omni/api/OrdersHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Orders HAL
+description: Collection of orders
+type: object  
+
+allOf:
+  - $ref: 'http://supermodel.io/adidas/api/HAL'
+
+examples:
+  - _links:
+      self:
+        href: /...
+    orderCount: 2
+    _embedded:
+      order:
+        - _links:
+            self:
+              href: /orders/AD8141234
+          orderHeaderKey: '20170920062948701537801'
+          orderNumber: AD8141234
+          orderDate: '2017-01-16T14:18:47.321Z'
+          orderName: 790YVTAGTV4RLQDZ
+          firstName: Tigist
+          lastName: Gizaw
+          zipCode: '33131'
+          phoneNumber: '3399704037'
+          email: thechusfam@gmail.com
+          fulfillmentType: ShipToHome
+          orderType: '0001'
+          country: US
+          brand: adidas
+          status: delivered
+          maxOrderStatus: '3200.100'
+        - _links:
+            self:
+              href: /orders/AD9141238
+          orderHeaderKey: '2017092006294870153678'
+          orderNo: AD9141238
+          orderDate: '2018-01-16T14:18:47.321Z'
+          orderName: 879YVTAGTV4RABCD
+          firstName: Deepak
+          lastName: Gupta
+          zipCode: '22345'
+          phoneNo: '312345678'
+          email: thedeeus@gmail.com
+          fulfillmentType: ShipToHome
+          orderType: '0001'
+          country: US
+          brand: adidas
+          orderStatus: shipped
+          maxOrderStatus: '3200.200'

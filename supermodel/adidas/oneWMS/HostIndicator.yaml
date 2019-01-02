@@ -1,0 +1,9 @@
+$id: http://supermodel.io/adidas/oneWMS/HostIndicator
+$schema: http://json-schema.org/draft-07/schema#
+
+title: HostIndicator
+type: string
+description: >-
+  ReferenceCode10 / Reference610
+examples:
+  - REU

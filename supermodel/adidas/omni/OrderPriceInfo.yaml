@@ -1,0 +1,39 @@
+$id: http://supermodel.io/adidas/omni/OrderPriceInfo
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Order Price Info
+description: Order Price Info model description
+type: object
+
+properties:
+      enterpriseCurrency:
+        description: Describes the currency used in the system
+        type: string
+        enum:
+          - USD
+          - GBP
+        examples:
+          - 'USD'
+      currency:
+        description: Describes the currency used
+        type: string
+        enum:
+          - USD
+          - GBP
+        examples:
+          - 'USD'
+      reportingConversionRate:
+        type: string
+        examples:
+          - '1.00'
+      totalAmount:
+        type: string
+        examples:
+          - '39.00'
+      reportingConversiondate:
+        type: string
+        format: date
+        examples:
+          - '2018-09-03T08:43:18+00:00'
+      headerTax:
+        type: string

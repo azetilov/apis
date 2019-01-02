@@ -1,0 +1,53 @@
+$id: http://supermodel.io/adidas/omni/api/OrderHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Order HAL
+description: Order HAL represenatation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/omni/Order
+
+examples:
+  - _links:
+      self:
+        href: /orders/AD018137687
+      cancel:
+        href: /orders/AD018137687/cancellation
+      update:
+        href: /orders/AD018137687
+      returns:
+        href: /orders/AD018137687/returns
+      exchanges:
+        href: /orders/AD018137687/exchanges
+      createReturn:
+        href: /orders/AD018137687/returns
+      createExchange:
+        href: /orders/AD018137687/exchanges
+      note:
+        - href: /orders/AD018137687/notes
+      audit:
+        - href: /orders/AD018137687/audits
+      invoice:
+        - href: /orders/AD018137687/invoices
+      shipments:
+        - href: /orders/AD018137687/shipments
+      orderline:
+        - href: /orders/AD018137687/orderlines/1
+        - href: /orders/AD018137687/orderlines/2
+    orderHeaderKey: '20170920062948701537801'
+    orderNumber: AD018137687
+    orderDate: '2017-01-16T14:18:47.321Z'
+    orderName: 790YVTAGTV4RLQDZ
+    firstName: Zdenek
+    lastName: Nemec
+    zipCode: '33131'
+    phoneNumber: '800–692–7753'
+    email: john@appleseed.com
+    fulfillmentType: ShipToHome
+    orderType: '0001'
+    country: US
+    brand: adidas
+    status: delivered
+    maxOrderStatus: '3200.100'

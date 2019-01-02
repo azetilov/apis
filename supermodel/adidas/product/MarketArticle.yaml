@@ -1,9 +1,8 @@
 $id: http://supermodel.io/adidas/product/MarketArticle
-
+$schema: http://json-schema.org/draft-07/schema#
 title: Market Article
 description: Market-specific Article Information
 type: object
-
 properties:
   articleNumber:
     $ref: http://supermodel.io/adidas/product/Article#/properties/articleNumber

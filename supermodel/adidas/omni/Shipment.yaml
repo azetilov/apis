@@ -1,0 +1,97 @@
+$id: http://supermodel.io/adidas/omni/Shipment
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Shipment
+description: Shipment model description
+type: object
+
+properties:
+  totalQuantity:
+    type: string
+
+  orderHeaderKey:
+    type: string
+
+  SCAC:
+    type: string
+
+  brand:
+    type: string
+
+  country:
+    type: string
+
+  orderType:
+    type: string
+
+  orderNumber:
+    type: string
+
+  shipmentKey:
+    type: string
+
+  releaseNumber:
+    type: string
+
+  orderReleaseKey:
+    type: string
+
+  carrierServiceCode:
+    type: string
+
+  requestedCarrierService:
+    type: string
+
+  actualShipmentDate:
+    type: string
+    format: date
+
+  actualDeliveryDate:
+    type: string
+    format: date
+
+  shipNode:
+    type: string
+
+  orderStatus:
+    type: string
+
+  shipmentNumber:
+    type: string
+
+  trackingNumber:
+    type: string
+
+  requestedDeliveryDate:
+    type: string
+    format: date
+
+  expectedDeliveryDate:
+    type: string
+    format: date
+
+  shipDate:
+    type: string
+    format: date
+
+  extn: # REMARK: what are extns?
+    type: object
+    properties:
+      extnTrackingURL:
+        type: string
+      extnShipAdviceNumber:
+        type: string
+
+  containers:
+    type: object
+    properties:
+      trackingNo:
+          type: string
+      containerNumber:
+          type: string
+      containersDetails: # REMARK: Does this serve a purpose?
+          type: object
+          properties:
+            quantity:
+              type: string
+  

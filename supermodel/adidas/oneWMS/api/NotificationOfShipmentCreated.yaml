@@ -1,0 +1,20 @@
+$id: http://supermodel.io/adidas/oneWMS/api/NotificationOfShipmentCreated
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Notification of Shipment Created
+description: Confirmation of notification being created
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  detail:
+    type: string
+
+deliveryNumber:
+    type: string
+
+examples:
+  - detail: Notification of receipt created successfully
+    deliveryNumber: 6187131189

@@ -1,0 +1,121 @@
+$id: http://supermodel.io/adidas/omni/api/CreateOrder
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Create Order
+description: Create Order model description
+type: object 
+
+properties:
+  country:
+    type: string
+    examples:
+      - 'US'
+  brand:
+    type: string
+    examples:
+      - 'adidas'
+  email:
+    type: string
+    examples:
+      - 'test@gmail.com'
+  orderDate:
+    type: string
+    format: date
+    examples:
+      - '2017-01-16T14:18:47.321Z'
+  channel:
+    type: string
+    examples:
+      - 'ebay'
+  customerPONo:
+    type: string
+    examples:
+      - '073014713412'
+  orderType:
+    type: string
+    examples:
+      - '0001'
+  firstName:
+    type: string
+    examples:
+      - 'Bill'
+  middleName:
+    type: string
+    examples:
+      - 'Maria'
+  lastName:
+    type: string
+    examples:
+      - 'Gates'
+  paymentStatus:
+    type: string
+    enum:
+      - PAID
+      - Authorized
+      - On Hold
+    examples:
+      - 'PAID'
+  priceInfo:
+    $ref: 'http://supermodel.io/adidas/omni/PriceInfo'
+  headerTaxes:
+    type: object
+    properties:
+      chargeCategory:
+        type: string
+        enum:
+          - ShippingTax
+          - ShippingCharge
+        examples:
+          - ShippingTax
+      chargeName:
+        type: string
+        enum:
+          - ShippingTax_Inline
+          - Shipping_Inline
+      taxName:
+        type: string
+        examples:
+          - 'ShippingTax_Inline'
+      tax:
+        type: string
+        examples:
+          - '5.00'
+  headerCharges:
+    type: object
+    properties:
+      chargeCategory:
+        type: string
+        examples:
+          - 'ShippingCharge'
+      chargeName:
+        type: string
+        examples:
+          - 'Shipping_Inline'
+      chargeAmount:
+        type: string
+        examples:
+          - '40.00'
+  extn:
+    type: object
+    properties:
+      extnLocalCode:
+        type: string
+      extnPaymentMethod:
+        type: string
+      extnOrderStatus:
+        type: string
+      extnTaxCalculated:
+        type: string
+      extnCustPONumber:
+        type: string
+
+  billingAddress:
+    $ref: http://supermodel.io/adidas/omni/Address
+
+  shippingAddress:
+    $ref: http://supermodel.io/adidas/omni/Address
+
+  paymentMethods:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/omni/PaymentMethod

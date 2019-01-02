@@ -1,11 +1,9 @@
 $id: http://supermodel.io/adidas/product/api/ArticleHAL
-
+$schema: http://json-schema.org/draft-07/schema#
 title: Article HAL Representation
 type: object
-
 allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
-
 properties:
   articleNumber:
     $ref: http://supermodel.io/adidas/product/Article#/properties/articleNumber
@@ -25,7 +23,6 @@ properties:
     $ref: http://supermodel.io/adidas/product/Article#/properties/colorway
   colors:
     $ref: http://supermodel.io/adidas/product/Article#/properties/colors
-
 examples:
   - _links:
       self:
@@ -76,4 +73,3 @@ examples:
         color4:
           code: "01F7"
           description: "ftwr white"
-

@@ -1,0 +1,62 @@
+$id: http://supermodel.io/adidas/oneWMS/HandlingUnit
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Handling Unit
+description: Handling Unit model description
+type: object
+
+properties:
+  handlingUnitNumber: 
+    type: string
+    examples:
+      - '00000980900479198505'
+  
+  packingMaterialType: 
+    type: string
+
+  totalVolume: 
+    type: number
+    examples:
+      - 3.16
+
+  volumeUnit: 
+    type: string
+
+  totalWeight: 
+    type: number
+    examples:
+      - 102.5
+
+  netWeight: 
+    type: number
+    examples:
+      - 100.01    
+
+  weightUnit: 
+    type: string
+
+  quantity: 
+    type: string
+
+  length: 
+    type: string
+
+  width: 
+    type: string
+
+  height: 
+    type: string
+
+  externalHandlingUnit: 
+    type: string
+
+  description: 
+    type: string
+
+  dimUnit: 
+    type: string
+
+  handlingUnitItems:
+    type: array
+    items:
+      $ref: HandlingUnitItem

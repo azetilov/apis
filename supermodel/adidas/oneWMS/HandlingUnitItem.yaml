@@ -1,0 +1,56 @@
+$id: http://supermodel.io/adidas/oneWMS/HandlingUnitItem
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Handling Unit Item
+description: Handling Unit Item model description
+type: object
+
+properties:
+  handlingUnitItem:
+    type: string
+
+  documentItem:
+    type: string
+
+  documentLine:
+    type: string
+
+  articleNumber:
+    type: string
+    description: Also known as `articleNo`
+    examples:
+      - 'B75743'
+
+  srcSizeCd3:
+    type: string
+    description: Also known as `sourcingSizeCd3`
+    examples:
+      - '370'
+
+  salesSizeDescription: 
+    type: string
+    examples: 
+      - '10-'
+
+  cartonQuantity:
+    type: number
+
+  lowerLevelHU:
+    type: string
+
+  pkngLevel:
+    type: string
+
+  referenceDocument:
+    type: string
+
+  customsStatus:
+    type: string
+  
+  countryOfOrigin: 
+    type: string
+    examples:
+      - CN
+      
+  lvs_Id:
+    type: string

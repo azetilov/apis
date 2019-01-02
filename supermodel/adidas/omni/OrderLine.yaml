@@ -1,0 +1,57 @@
+$id: http://supermodel.io/adidas/omni/OrderLine
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Order Line
+description: Order Line model description
+type: object 
+
+properties:
+  orderlineNumber:
+    type: string
+    examples:
+      - '1'
+
+  orderStatus:
+    type: string
+    enum:
+      - created
+      - scheduled
+      - released
+      - shipped
+      - partiallyShipped
+      - delivered
+      - partiallyDelivered
+      - return created
+  quantity:
+    type: number
+    examples:
+      - 2
+
+  lineType:
+    type: string
+
+  orderLineKey:
+    type: string
+
+  fulfillmentType:
+    type: string
+
+  returnReason:
+    type: string
+
+  article:
+    $ref: Article
+
+  orderLinePriceInfo:
+    $ref: OrderLinePriceInfo
+
+  orderStatuses:
+    type: array
+    items:
+      $ref: OrderStatus
+
+  orderLineOverAllTotals:
+    $ref: OrderLineOverallTotals
+
+  shippingAddress:
+    $ref: Address

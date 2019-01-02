@@ -1,0 +1,52 @@
+$id: http://supermodel.io/adidas/oneWMS/InventoryAjdustment
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Inventory Ajdustment
+description: Inventory Ajdustment model description
+type: object
+
+properties:
+  created:
+    type: string
+    format: date-time
+
+  warehouse:
+    type: string
+    examples:
+      - 'PAN'
+  
+  transactionNumber:
+    type: string
+    examples:
+      - 'A123456'
+
+  sequenceNumber:
+    type: string
+    examples:
+      - 'A789'
+
+  publisher:
+    type: string
+    examples:
+      - 'ZTIB_PANAMA'
+
+  movemementType: 
+    type: string
+    examples:
+      - 'Z53'
+  
+  quantity:
+    type: number
+    examples:
+      - 100
+
+  reference:
+    type: string
+    examples:
+      - 'A123345'
+
+  from:
+    $ref: AjdustmentItem
+
+  to:
+    $ref: AjdustmentItem

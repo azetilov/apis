@@ -1,20 +1,15 @@
 $id: http://supermodel.io/adidas/product/ecom/Care
 $schema: http://json-schema.org/draft-07/schema#
-
 title: Care
 description: Care model description
 type: object
-
 properties:
   bleachingInstruction:
     type: string
-
   ironInstruction:
     type: string
-
   dryCleanInstruction:
     type: string
-
   dryInstruction:
     type: string
     

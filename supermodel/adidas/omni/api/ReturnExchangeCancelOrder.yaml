@@ -1,0 +1,127 @@
+$id: http://supermodel.io/adidas/omni/api/ReturnExchangeCancelOrder
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Return, exchange, cancel Order
+description: Return, exchange, cancel Order model description
+type: object
+
+properties:
+  orderLines:
+    type: array
+    items:
+      type: object
+      properties:
+        quantity:
+          description: The quantity of item 
+          type: string
+        orderlineNumber:
+          description: This is running sequence number of the order line starting from 1
+          type: string
+        reasonText:
+          description: describes the reason for item being cancelled, returned and exchanged
+          type: string
+          enum:
+            - Cancellation - Item arrived late
+            - Cancellation - Cancelled by customer request
+            - Cancellation - Cancelled by customer from website
+            - Cancellation - Customer Initiated
+            - Cancellation - Customer Changed Mind
+            - Cancellation - Customer no longer wants order
+            - Cancellation - Customer no-show
+            - Cancellation - CNC Expired
+            - Cancellation - Expired Pickup window
+            - Cancellation - Cancelled due to inventory issue
+            - Cancellation - Cancelled due to inventory issue - Early
+            - Cancellation - Cancelled due to inventory issue - DC
+            - Cancellation - Cancelled due to inventory issue - Store
+            - Cancellation - Cancelled due to Inventory Shortage
+            - Cancellation - Cancelled due to payment problem
+            - Cancellation - Cancelled due to Inspection Failure
+            - Cancellation - Cancelled due to manual review decline
+            - Cancellation - Product Has Been Discontinued
+            - Cancellation - Bad SKU
+            - Cancellation - Wrong size CSR
+            - Cancellation - Does not fit customer
+            - Cancellation - Different size of same article selected
+            - Cancellation - Ordered wrong item
+            - Cancellation - Duplicate Item
+            - Cancellation - Out of Stock
+            - Cancellation - BackOrder Cancel
+            - Cancellation - Short pick in warehouse
+            - Cancellation - Wouldn't arrive in time
+            - Cancellation - Cannot fulfill the order in time
+            - Cancellation - Took too long to fulfill order
+            - Cancellation - Zip code not covered
+            - Cancellation - Cannot ship to PO Box
+            - Cancellation - Cannot ship USPS
+            - Cancellation - Cant Ship to Country
+            - Cancellation - Cannot Ship as Ordered
+            - Cancellation - Supplier cannot ship
+            - Cancellation - Invalid method of shipment
+            - Cancellation - Fraud validation
+            - Cancellation - Merchant detected fraud
+            - Cancellation - Supplier detected fraud
+            - Cancellation - Bad Address
+            - Cancellation - Wrong billing address
+            - Cancellation - Address validation failure
+            - Cancellation - Cancelled at Merchant's Request
+            - Cancellation - Order Entry Error
+            - Cancellation - Order Info Missing
+            - Cancellation - ON REQUEST of Consumer Service
+            - Cancellation - Change of delivery method
+            - Cancellation - Invalid Item Cost
+            - Cancellation - Duplicate Order
+            - Cancellation - Purchased cheaper elsewhere
+            - Cancellation - Found this product somewhere else
+            - Cancellation - Dislike design
+            - Cancellation - Damaged article
+            - Cancellation - Wrong pickup in warehouse
+            - Cancellation - Never Received Order from DC
+            - Return - wrong item 
+            - Return - Blind Return /refused delivery
+            - Return - Color Different from Order
+            - Return - Item Arrived Late
+            - Return - Item Does Not Match Description
+            - Return - Item Not Ordered
+            - Return - Correct Size but too Large
+            - Return - Return or Gift
+            - Return - Size Different from Order
+            - Return - Correct Size but too Small
+            - Return - Wrong Item Sent
+            - Return - Delivery Exception
+            - Return - Do not Like/Want
+            - Return - Store Exchange
+            - Return - Competitive Price
+            - Return - Damaged
+            - Return - Mismates
+            - Return - Refused Unclaimed
+            - Return - Undeliverable
+            - Return - Gift
+            - Return - Defective
+            - Return - Wrong Size
+            - Return - Exchange
+            - Return - Customer Dissatisfaction
+            - Return - Comfort / Performance
+            - Return - Duplicate Item
+            - Return - Item differs from online
+            - Return - Late Delivery
+            - Return - Material / Fabrics
+            - Return - Material / Production Defect
+            - Return - No Longer Required
+            - Return - Too large / big
+            - Return - Too long
+            - Return - Too short
+            - Return - Too small / tight
+            - Return - Wrong Item Delivered
+            - Return - Wrong Item Ordered
+            - Return - WH Return Requested
+            - others
+
+        articleNumber:
+          type: string
+examples:
+  - orderLines:
+      - quantity: 2
+        orderlineNumber: 1
+        reasonText: Item arrived late 
+        articleNumber: AA2131_130

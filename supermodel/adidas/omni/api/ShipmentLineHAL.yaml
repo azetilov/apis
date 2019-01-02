@@ -1,0 +1,42 @@
+$id: http://supermodel.io/adidas/omni/api/ShipmentLineHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Shipment Line HAL
+description: Shipment Line HAL model description
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/omni/ShipmentLine
+
+examples:
+  - _links:
+      self:
+        href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines/1
+      orderline:
+        href: /orders/AD018295044/orderline/1
+    shipmentNumber: AD018295044-1
+    trackingNumber: '454793841764'
+    orderReleaseKey: '201808221859096084007963'
+    releaseNumber: '1'
+    orderNumber: AD018295044
+    shipmentLineNumber: '1'
+    shipmentLineKey: '201809012302536188597714'
+    article:
+      articleNumber: 'CE2392_470'
+      articleDescription: 'SST Track Jacket'
+      unitOfMeasure: PIECE
+      productClass: NEW
+    quantity: '1'
+    orderLineNumber: '1'
+    orderLineKey: '201808220115396076391733'
+    subLineNo: '1'
+    carrierServiceCode: GRND
+    country: US
+    brand: adidas
+    expectedDeliveryDate: '2018-08-25T04:00:00+00:00'
+    actualShipmentDate: '2018-08-22T21:38:57+00:00'
+    customerPoNo: T3AJ0VNMDLG719LH
+    createuserid: adidas_ProcessShipment
+    createTimeStamp: '2018-09-01T23:02:52+00:00'
+    orderType: '0001'

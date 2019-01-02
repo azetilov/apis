@@ -1,0 +1,32 @@
+$id: http://supermodel.io/adidas/omni/api/OrderLineHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Order Line HAL
+description: Order Line HAL representation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/omni/OrderLine
+
+examples:
+  - _links:
+      self:
+        href: /orders/AD018137687/orderlines/1
+      note:
+        - href: /orders/AD018137687/orderlines/1/notes
+        - href: /orders/AD018137687/orderlines/2/notes
+      audit:
+        - href: /orders/AD018137687/orderlines/1/audits
+    orderlineNumber: '1'
+    orderlineStatus: Delivered
+    orderdedQuantity: 2
+    lineType: 'inline'
+    orderLineKey: '201808220115396076391733'
+    article:
+      articleNumber: 'CE2392_470'
+      articleDescription: 'SST Track Jacket'
+      unitOfMeasure: PIECE
+      productClass: NEW
+    internalOrderLineStatus:
+    numberOfNotes: 1

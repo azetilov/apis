@@ -1,0 +1,44 @@
+$id: http://supermodel.io/adidas/omni/Address
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Address
+description: Address model description
+type: object
+
+properties:
+  firstName:
+    type: string
+    examples:
+      - 'Bill'
+  middleName:
+    type: string
+    examples: 
+      - 'Maria'
+  lastName:
+    type: string
+    examples: 
+      - 'Gates'
+  addressLine1:
+    type: string
+    examples: 
+      - 'erlangenstrasse 19'
+  city:
+    type: string
+    examples: 
+      - 'Munich'
+  zipCode:
+    type: string
+    examples: 
+      - '950264'
+  state:
+    type: string
+    examples: 
+      - 'Bavaria'
+  country:
+    type: string
+    examples: 
+      - 'Germany'
+  email:
+    type: string
+    examples: 
+      - 'test@gmail.com'

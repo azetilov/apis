@@ -1,0 +1,76 @@
+$id: http://supermodel.io/adidas/oneWMS/NotificationOfReceipt
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Notification of Receipt
+description: Notification of Receipt
+type: object
+
+properties:
+  created:
+    type: string
+    description: ISO 8601 timestamp
+    allOf:
+      - $ref: http://supermodel.io/schemaorg/DateTime
+    examples:
+      - '2018-10-03T09:59:06Z'
+
+  hostIndicator:
+    $ref: HostIndicator
+
+  plant:
+    $ref: Plant
+
+  warehouse:
+    $ref: Warehouse
+
+  transactionNumber:
+    type: string
+    examples:
+      - 5141621
+
+  sequenceNumber:
+    type: string
+    examples:
+      - 2
+
+  receiptsVariance:
+    type: string
+    examples:
+      - 'N'
+
+  receiptsCompleted:
+    type: string
+    examples:
+      - 'N'
+
+  containerNumber:
+    type: string
+    description: >-
+      ReferenceCode6 / Reference6
+    examples:
+      - GEISHP0918001
+
+  twoStepSellingDelivery:
+    type: string
+    examples:
+      - '0000000000'
+
+  inboundDeliveryNumber:
+    type: string
+    description: >-
+      ReferenceCode3 / Reference3
+    examples:
+      - GEASN0918001
+
+  inboundDeliveryLines:
+    type: array
+    items:
+      - $ref: InboundDeliveryLine
+
+required:
+  - hostIndicator
+  - plant
+  - warehouse
+  - transactionNumber
+  - inboundDeliveryNumber
+  - inboundDeliveryLines
