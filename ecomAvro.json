@@ -1,0 +1,341 @@
+{
+  "namespace": "io.supermodel.adidas.product.ecom.api",
+  "name": "eCom Avro Model",
+  "type": "record",
+  "doc": "Model of Kafka topic that communicates any updates to the whole ecom data model",
+  "fields": [
+    {
+      "name": "price",
+      "type": {
+        "name": "Price",
+        "doc": "Price model description",
+        "type": "record",
+        "fields": [
+          {
+            "name": "standardPrice",
+            "type": "float"
+          },
+          {
+            "name": "standardPriceWithoutVAT",
+            "type": "float"
+          },
+          {
+            "name": "currentPrice",
+            "type": "float"
+          },
+          {
+            "name": "salesPrice",
+            "type": "float"
+          }
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "Asset",
+          "doc": "Digital Asset",
+          "type": "record",
+          "fields": [
+            {
+              "name": "assetType",
+              "type": {
+                "name": "assetType",
+                "type": "enum",
+                "symbols": [
+                  "image",
+                  "video",
+                  "other"
+                ]
+              }
+            },
+            {
+              "name": "viewGroup",
+              "type": "string"
+            },
+            {
+              "name": "view",
+              "type": "string"
+            },
+            {
+              "name": "assetCategory",
+              "type": "string"
+            },
+            {
+              "name": "usageTerms",
+              "type": {
+                "type": "array",
+                "items": "string"
+              }
+            },
+            {
+              "name": "assetHref",
+              "type": "string"
+            },
+            {
+              "name": "image",
+              "type": {
+                "name": "image",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "style",
+                    "type": "string"
+                  },
+                  {
+                    "name": "width",
+                    "type": "int"
+                  },
+                  {
+                    "name": "height",
+                    "type": "int"
+                  },
+                  {
+                    "name": "bgColor",
+                    "type": "string"
+                  },
+                  {
+                    "name": "representation",
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "video",
+              "type": {
+                "name": "video",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "fileSize",
+                    "type": "int"
+                  }
+                ]
+              }
+            },
+            {
+              "name": "model",
+              "type": {
+                "name": "model",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "waist",
+                    "type": "string"
+                  },
+                  {
+                    "name": "chest",
+                    "type": "string"
+                  },
+                  {
+                    "name": "height",
+                    "type": "string"
+                  },
+                  {
+                    "name": "productSize",
+                    "type": "string"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "catalog",
+      "type": {
+        "name": "Catalog",
+        "type": "record",
+        "fields": [
+          {
+            "name": "catalogueCopy",
+            "type": {
+              "name": "Catalog Copy",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "acsModelName",
+                  "type": "string"
+                },
+                {
+                  "name": "b2cCopy",
+                  "type": "string"
+                },
+                {
+                  "name": "b2cCopyShort",
+                  "type": "string"
+                },
+                {
+                  "name": "b2bCopy",
+                  "type": "string"
+                },
+                {
+                  "name": "b2bCopyShort",
+                  "type": "string"
+                },
+                {
+                  "name": "materialComposition",
+                  "type": "string"
+                },
+                {
+                  "name": "materialConstruction",
+                  "type": "string"
+                },
+                {
+                  "name": "bullets1",
+                  "type": "string"
+                },
+                {
+                  "name": "bullets2",
+                  "type": "string"
+                },
+                {
+                  "name": "bullets3",
+                  "type": "string"
+                },
+                {
+                  "name": "bullets4",
+                  "type": "string"
+                },
+                {
+                  "name": "bullets5",
+                  "type": "string"
+                },
+                {
+                  "name": "bullets6",
+                  "type": "string"
+                },
+                {
+                  "name": "bulletMaterial",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "featureAndBenefits",
+            "type": {
+              "type": "array",
+              "items": {
+                "name": "Feature and Benefit",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "featureAndBenefitCode",
+                    "type": "string"
+                  },
+                  {
+                    "name": "businessCode",
+                    "type": "string"
+                  },
+                  {
+                    "name": "shoePart",
+                    "type": "string"
+                  },
+                  {
+                    "name": "featureName",
+                    "type": "string"
+                  },
+                  {
+                    "name": "featureDescription",
+                    "type": "string"
+                  },
+                  {
+                    "name": "logoName",
+                    "type": "string"
+                  },
+                  {
+                    "name": "logoHref",
+                    "type": "string"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "skus",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "SKU",
+          "type": "record",
+          "fields": [
+            {
+              "name": "EAN",
+              "type": "string"
+            },
+            {
+              "name": "UPC",
+              "type": "string"
+            },
+            {
+              "name": "srcSizeCD3",
+              "type": "string"
+            },
+            {
+              "name": "srcSizeScale",
+              "type": "string"
+            },
+            {
+              "name": "srcSizeDescription",
+              "type": "string"
+            },
+            {
+              "name": "conversionIDs",
+              "type": {
+                "type": "array",
+                "items": {
+                  "name": "conversionIDs",
+                  "type": "record",
+                  "fields": [
+                    {
+                      "name": "localSize",
+                      "type": "string"
+                    },
+                    {
+                      "name": "saleSizeConvID",
+                      "type": "string"
+                    },
+                    {
+                      "name": "saleSizeScale",
+                      "type": "string"
+                    },
+                    {
+                      "name": "saleSizeAbbr",
+                      "type": "string"
+                    },
+                    {
+                      "name": "saleSizeDesc",
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "changeInfo",
+      "type": {
+        "name": "changeInfo",
+        "doc": "Change information object carries information on what areas of the topic have changed since the last event.",
+        "type": "record",
+        "fields": [
+          {
+            "name": "articleGeneralInfo",
+            "type": "boolean"
+          }
+        ]
+      }
+    }
+  ]
+}

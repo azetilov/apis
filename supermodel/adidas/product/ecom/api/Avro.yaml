@@ -1,0 +1,37 @@
+$id: http://supermodel.io/adidas/product/ecom/api/Avro
+$schema: http://json-schema.org/draft-07/schema#
+
+title: eCom Avro Model
+description: Model of Kafka topic that communicates any updates to the whole ecom data model 
+type: object
+
+properties:
+  # article:
+  #   $ref: http://supermodel.io/adidas/product/ecom/Article
+
+  price:
+    $ref: http://supermodel.io/adidas/product/ecom/Price
+
+  assets:
+    type: array
+    items:
+      - $ref: http://supermodel.io/adidas/product/Asset
+
+  catalog:
+    $ref: http://supermodel.io/adidas/product/Catalog
+
+  skus:
+    type: array
+    items:
+      - $ref: http://supermodel.io/adidas/product/SKU
+
+  changeInfo:
+    type: object
+    description: Change information object carries information on what areas of the topic have changed since the last event.
+    properties:
+      articleGeneralInfo:
+        type: boolean      
+
+
+
+  
