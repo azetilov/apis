@@ -123,12 +123,12 @@ properties:
   colorVariants:
     type: array
     items:
-      - $ref: '#/'
+      - $ref: '#'
   miadidas:
     type: array
     items:
-      - $ref: '#/'
+      - $ref: '#'
   completeLook:
     type: array
     items:
-      - $ref: '#/'
+      - $ref: '#'

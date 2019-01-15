@@ -23,10 +23,10 @@ properties:
     type: object
     additionalProperties:
       anyOf:
-        - $ref: '#/'
+        - $ref: '#'
         - type: array
           items:
-            - $ref: '#/'
+            - $ref: '#'
 definitions:
   halLinkObject:
     title: HAL Link Object
