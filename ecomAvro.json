@@ -333,6 +333,66 @@
           {
             "name": "articleGeneralInfo",
             "type": "boolean"
+          },
+          {
+            "name": "articleColorInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "articleAssetInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "catalogGeneralInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "modelGeneralInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "articleSeasonInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "articleSKUInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "eComArticleGeneralInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "eComArticleCustomInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "eComArticlePriceInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "eComArticleSortInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "eComArticleCareInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "eComArticleSpecificationInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "eComArticleSKUInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "articlePriceInfo",
+            "type": "boolean"
+          },
+          {
+            "name": "CTA",
+            "type": "boolean"
           }
         ]
       }

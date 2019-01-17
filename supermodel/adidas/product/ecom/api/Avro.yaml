@@ -2,7 +2,7 @@ $id: http://supermodel.io/adidas/product/ecom/api/Avro
 $schema: http://json-schema.org/draft-07/schema#
 
 title: eCom Avro Model
-description: Model of Kafka topic that communicates any updates to the whole ecom data model 
+description: Model of Kafka topic that communicates any updates to the whole ecom data model
 type: object
 
 properties:
@@ -30,8 +30,34 @@ properties:
     description: Change information object carries information on what areas of the topic have changed since the last event.
     properties:
       articleGeneralInfo:
-        type: boolean      
-
-
-
-  
+        type: boolean  
+      articleColorInfo:
+        type: boolean  
+      articleAssetInfo:
+        type: boolean
+      catalogGeneralInfo:
+        type: boolean
+      modelGeneralInfo:
+        type: boolean
+      articleSeasonInfo:
+        type: boolean
+      articleSKUInfo:
+        type: boolean
+      eComArticleGeneralInfo:
+        type: boolean
+      eComArticleCustomInfo:
+        type: boolean
+      eComArticlePriceInfo:
+        type: boolean
+      eComArticleSortInfo:
+        type: boolean
+      eComArticleCareInfo:
+        type: boolean
+      eComArticleSpecificationInfo:
+        type: boolean
+      eComArticleSKUInfo:
+        type: boolean
+      articlePriceInfo:
+        type: boolean
+      CTA: 
+        type: boolean
