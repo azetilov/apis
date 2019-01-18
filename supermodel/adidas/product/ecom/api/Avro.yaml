@@ -6,8 +6,8 @@ description: Model of Kafka topic that communicates any updates to the whole eco
 type: object
 
 properties:
-  # article:
-  #   $ref: http://supermodel.io/adidas/product/ecom/Article
+  article:
+    $ref: http://supermodel.io/adidas/product/ecom/Article
 
   price:
     $ref: http://supermodel.io/adidas/product/ecom/Price

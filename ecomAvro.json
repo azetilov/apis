@@ -1,154 +1,418 @@
 {
   "namespace": "io.supermodel.adidas.product.ecom.api",
-  "name": "eCom Avro Model",
-  "type": "record",
+  "name": "SupermodelIoAdidasProductEcomApiAvro",
   "doc": "Model of Kafka topic that communicates any updates to the whole ecom data model",
+  "type": "record",
   "fields": [
     {
-      "name": "price",
+      "name": "article",
       "type": {
-        "name": "Price",
-        "doc": "Price model description",
+        "name": "SupermodelIoAdidasProductEcomArticle",
         "type": "record",
         "fields": [
           {
-            "name": "standardPrice",
+            "name": "athlete",
+            "type": "string"
+          },
+          {
+            "name": "clearance",
+            "type": "boolean"
+          },
+          {
+            "name": "comingSoonSignup",
             "type": "float"
           },
           {
-            "name": "standardPriceWithoutVAT",
-            "type": "float"
+            "name": "customizable",
+            "type": "boolean"
           },
           {
-            "name": "currentPrice",
-            "type": "float"
+            "name": "age",
+            "type": "string"
           },
           {
-            "name": "salesPrice",
-            "type": "float"
+            "name": "brand",
+            "type": "string"
+          },
+          {
+            "name": "campaign",
+            "type": "string"
+          },
+          {
+            "name": "color",
+            "type": "string"
+          },
+          {
+            "name": "defaultColor",
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "type": "string"
+          },
+          {
+            "name": "genderSub",
+            "type": "string"
+          },
+          {
+            "name": "hastag",
+            "type": "string"
+          },
+          {
+            "name": "maxQuantity",
+            "type": "string"
+          },
+          {
+            "name": "productDivision",
+            "type": "string"
+          },
+          {
+            "name": "productLine",
+            "type": "string"
+          },
+          {
+            "name": "productType",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": {
+              "name": "SupermodelIoAdidasProductEcomPrice",
+              "doc": "Price model description",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "standardPrice",
+                  "type": "float"
+                },
+                {
+                  "name": "standardPriceWithoutVAT",
+                  "type": "float"
+                },
+                {
+                  "name": "currentPrice",
+                  "type": "float"
+                },
+                {
+                  "name": "salesPrice",
+                  "type": "float"
+                }
+              ]
+            }
+          },
+          {
+            "name": "sport",
+            "type": "string"
+          },
+          {
+            "name": "fitbarPosition",
+            "type": "string"
+          },
+          {
+            "name": "care",
+            "type": {
+              "name": "SupermodelIoAdidasProductEcomCare",
+              "doc": "Care model description",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "bleachingInstruction",
+                  "type": "string"
+                },
+                {
+                  "name": "ironInstruction",
+                  "type": "string"
+                },
+                {
+                  "name": "dryCleanInstruction",
+                  "type": "string"
+                },
+                {
+                  "name": "dryInstruction",
+                  "type": "string"
+                },
+                {
+                  "name": "extraCareInstruction",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "onlineFrom",
+            "type": "string",
+            "doc": "ISO 8601 Date"
+          },
+          {
+            "name": "onlineTo",
+            "type": "string",
+            "doc": "ISO 8601 Date"
+          },
+          {
+            "name": "previewTo",
+            "type": "string",
+            "doc": "ISO 8601 Date"
+          },
+          {
+            "name": "pdp",
+            "type": {
+              "name": "SupermodelIoAdidasProductEcom",
+              "doc": "PDP model description",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "callout",
+                  "type": "string"
+                },
+                {
+                  "name": "content",
+                  "type": "string"
+                },
+                {
+                  "name": "model",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "flashProduct",
+            "type": "boolean"
+          },
+          {
+            "name": "hypeProduct",
+            "type": "boolean"
+          },
+          {
+            "name": "personalizable",
+            "type": "boolean"
+          },
+          {
+            "name": "preorder",
+            "type": "boolean"
+          },
+          {
+            "name": "soldout",
+            "type": "boolean"
+          },
+          {
+            "name": "productFamily",
+            "type": "string"
+          },
+          {
+            "name": "productFilter",
+            "type": "string"
+          },
+          {
+            "name": "prodcutLine",
+            "type": "string"
+          },
+          {
+            "name": "sizeChart",
+            "type": "string"
+          },
+          {
+            "name": "teams",
+            "type": "string"
+          },
+          {
+            "name": "template",
+            "type": "string",
+            "doc": "The 'Template' is used to identify if the inline or miadidas PDP template should be applied in the ecommerce frontend."
+          },
+          {
+            "name": "articleNumber",
+            "type": "string"
+          },
+          {
+            "name": "modelNumber",
+            "type": "string"
+          },
+          {
+            "name": "articleDescription",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "badge",
+            "type": {
+              "name": "SupermodelIoAdidasProductEcomBadge",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "style",
+                  "type": {
+                    "type": "enum",
+                    "symbols": [
+                      "new",
+                      "preview",
+                      "preorder",
+                      "sales",
+                      "customizable",
+                      "soldout"
+                    ]
+                  }
+                },
+                {
+                  "name": "description",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "assets",
+            "type": {
+              "type": "array",
+              "items": {
+                "name": "SupermodelIoAdidasProductAsset",
+                "doc": "Digital Asset",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "assetType",
+                    "type": {
+                      "type": "enum",
+                      "symbols": [
+                        "image",
+                        "video",
+                        "other"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "viewGroup",
+                    "type": "string"
+                  },
+                  {
+                    "name": "view",
+                    "type": "string"
+                  },
+                  {
+                    "name": "assetCategory",
+                    "type": "string"
+                  },
+                  {
+                    "name": "usageTerms",
+                    "type": {
+                      "type": "array",
+                      "items": "string"
+                    }
+                  },
+                  {
+                    "name": "assetHref",
+                    "type": "string"
+                  },
+                  {
+                    "name": "image",
+                    "type": {
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "style",
+                          "type": "string"
+                        },
+                        {
+                          "name": "width",
+                          "type": "int"
+                        },
+                        {
+                          "name": "height",
+                          "type": "int"
+                        },
+                        {
+                          "name": "bgColor",
+                          "type": "string"
+                        },
+                        {
+                          "name": "representation",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "video",
+                    "type": {
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "fileSize",
+                          "type": "int"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "model",
+                    "type": {
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "waist",
+                          "type": "string"
+                        },
+                        {
+                          "name": "chest",
+                          "type": "string"
+                        },
+                        {
+                          "name": "height",
+                          "type": "string"
+                        },
+                        {
+                          "name": "productSize",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "colorVariants",
+            "type": {
+              "type": "array",
+              "items": "SupermodelIoAdidasProductEcomApiAvro"
+            }
+          },
+          {
+            "name": "miadidas",
+            "type": {
+              "type": "array",
+              "items": "SupermodelIoAdidasProductEcomApiAvro"
+            }
+          },
+          {
+            "name": "completeLook",
+            "type": {
+              "type": "array",
+              "items": "SupermodelIoAdidasProductEcomApiAvro"
+            }
           }
         ]
       }
     },
     {
+      "name": "price",
+      "type": "SupermodelIoAdidasProductEcomPrice"
+    },
+    {
       "name": "assets",
       "type": {
         "type": "array",
-        "items": {
-          "name": "Asset",
-          "doc": "Digital Asset",
-          "type": "record",
-          "fields": [
-            {
-              "name": "assetType",
-              "type": {
-                "name": "assetType",
-                "type": "enum",
-                "symbols": [
-                  "image",
-                  "video",
-                  "other"
-                ]
-              }
-            },
-            {
-              "name": "viewGroup",
-              "type": "string"
-            },
-            {
-              "name": "view",
-              "type": "string"
-            },
-            {
-              "name": "assetCategory",
-              "type": "string"
-            },
-            {
-              "name": "usageTerms",
-              "type": {
-                "type": "array",
-                "items": "string"
-              }
-            },
-            {
-              "name": "assetHref",
-              "type": "string"
-            },
-            {
-              "name": "image",
-              "type": {
-                "name": "image",
-                "type": "record",
-                "fields": [
-                  {
-                    "name": "style",
-                    "type": "string"
-                  },
-                  {
-                    "name": "width",
-                    "type": "int"
-                  },
-                  {
-                    "name": "height",
-                    "type": "int"
-                  },
-                  {
-                    "name": "bgColor",
-                    "type": "string"
-                  },
-                  {
-                    "name": "representation",
-                    "type": "string"
-                  }
-                ]
-              }
-            },
-            {
-              "name": "video",
-              "type": {
-                "name": "video",
-                "type": "record",
-                "fields": [
-                  {
-                    "name": "fileSize",
-                    "type": "int"
-                  }
-                ]
-              }
-            },
-            {
-              "name": "model",
-              "type": {
-                "name": "model",
-                "type": "record",
-                "fields": [
-                  {
-                    "name": "waist",
-                    "type": "string"
-                  },
-                  {
-                    "name": "chest",
-                    "type": "string"
-                  },
-                  {
-                    "name": "height",
-                    "type": "string"
-                  },
-                  {
-                    "name": "productSize",
-                    "type": "string"
-                  }
-                ]
-              }
-            }
-          ]
-        }
+        "items": "SupermodelIoAdidasProductAsset"
       }
     },
     {
       "name": "catalog",
       "type": {
-        "name": "Catalog",
+        "name": "SupermodelIoAdidasProductCatalog",
         "type": "record",
         "fields": [
           {
@@ -264,7 +528,7 @@
       "type": {
         "type": "array",
         "items": {
-          "name": "SKU",
+          "name": "SupermodelIoAdidasProduct",
           "type": "record",
           "fields": [
             {
@@ -292,7 +556,6 @@
               "type": {
                 "type": "array",
                 "items": {
-                  "name": "conversionIDs",
                   "type": "record",
                   "fields": [
                     {
@@ -326,7 +589,6 @@
     {
       "name": "changeInfo",
       "type": {
-        "name": "changeInfo",
         "doc": "Change information object carries information on what areas of the topic have changed since the last event.",
         "type": "record",
         "fields": [
