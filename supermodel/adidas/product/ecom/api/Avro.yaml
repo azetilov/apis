@@ -60,4 +60,4 @@ properties:
       articlePriceInfo:
         type: boolean
       CTA: 
-        type: boolean
+        type: string
