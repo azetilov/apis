@@ -245,6 +245,7 @@
                 {
                   "name": "style",
                   "type": {
+                    "name": "SupermodelIoAdidasProductEcomBadgeStyle",
                     "type": "enum",
                     "symbols": [
                       "new",
@@ -275,6 +276,7 @@
                   {
                     "name": "assetType",
                     "type": {
+                      "name": "SupermodelIoAdidasProductAssetAssetType",
                       "type": "enum",
                       "symbols": [
                         "image",
@@ -309,6 +311,7 @@
                   {
                     "name": "image",
                     "type": {
+                      "name": "SupermodelIoAdidasProductAssetImage",
                       "type": "record",
                       "fields": [
                         {
@@ -337,6 +340,7 @@
                   {
                     "name": "video",
                     "type": {
+                      "name": "SupermodelIoAdidasProductAssetVideo",
                       "type": "record",
                       "fields": [
                         {
@@ -349,6 +353,7 @@
                   {
                     "name": "model",
                     "type": {
+                      "name": "SupermodelIoAdidasProductAssetModel",
                       "type": "record",
                       "fields": [
                         {
@@ -418,7 +423,7 @@
           {
             "name": "catalogueCopy",
             "type": {
-              "name": "Catalog Copy",
+              "name": "SupermodelIoAdidasProductCatalogCatalogueCopy",
               "type": "record",
               "fields": [
                 {
@@ -485,7 +490,7 @@
             "type": {
               "type": "array",
               "items": {
-                "name": "Feature and Benefit",
+                "name": "SupermodelIoAdidasProductCatalogFeatureAndBenefits",
                 "type": "record",
                 "fields": [
                   {
@@ -556,6 +561,7 @@
               "type": {
                 "type": "array",
                 "items": {
+                  "name": "SupermodelIoAdidasProductConversionDs",
                   "type": "record",
                   "fields": [
                     {
@@ -589,6 +595,7 @@
     {
       "name": "changeInfo",
       "type": {
+        "name": "SupermodelIoAdidasProductEcomApiAvroChangeInfo",
         "doc": "Change information object carries information on what areas of the topic have changed since the last event.",
         "type": "record",
         "fields": [
