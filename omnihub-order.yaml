@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '1.0.0'
+  version: '0.1.0'
   title: "[omni] Order API"
   description: |
     The Orders API allows a user to retrieve list of orders, retrieve order details, create, return and exchange orders.
@@ -755,39 +755,6 @@ parameters:
 # http://supermodel.io
 # https://github.com/supermodel/supermodel-cli
 definitions:
-  supermodelIoAdidasApiHALDefinitionsHalLinkObject:
-    title: HAL Link Object
-    type: object
-    properties:
-      href:
-        type: string
-      templated:
-        type: boolean
-      type:
-        type: string
-      deprecation:
-        type: string
-      name:
-        type: string
-      profile:
-        type: string
-      title:
-        type: string
-      hreflang:
-        type: string
-    required:
-      - href
-  supermodelIoAdidasApiHALDefinitionsHalCuriesLink:
-    title: HAL Curies Link
-    allOf:
-      - type: object
-        properties:
-          templated:
-            enum:
-              - true
-        required:
-          - templated
-      - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
   supermodelIoAdidasOmniAddress:
     title: Address
     description: Address model description
@@ -802,9 +769,13 @@ definitions:
       lastName:
         type: string
         example: Gates
+      phoneNumber:
+        type: string
       addressLine1:
         type: string
         example: erlangenstrasse 19
+      addressLine2:
+        type: string
       city:
         type: string
         example: Munich
@@ -825,80 +796,49 @@ definitions:
     description: Article OmniHub representation
     type: object
     properties:
-      alternateArticleNumber:
-        type: string
-      bundleFulfillmentMode:
-        type: string
-      costCurrency:
-        type: string
-      countryOfOrigin:
-        type: string
-      customerArticle:
-        type: string
-      customerArticleDescription:
-        type: string
-      ECCNNO:
-        type: string
-      harmonizedCode:
-        type: string
-      ISBN:
-        type: string
       articleDescription:
         type: string
+        example: Climacool Aerate 3 Shoes
       articleNumber:
         type: string
-        example: 6728
+        description: Describes the item number and size of the article
+        example: G98520_620
       articleShortDescription:
         type: string
-      articleWeight:
-        type: string
-      articleWeightUnitOfMeasure:
-        type: string
-      languageDescriptionList:
-        type: object
-        properties:
-          languageDescription:
-            type: array
-            items:
-              type: object
-              properties:
-                description:
-                  type: string
-                localCode:
-                  type: string
-      manufacturerarticle:
-        type: string
-      manufacturerItemDescription:
-        type: string
-      manufacturerName:
-        type: string
-      NMFClass:
-        type: string
-      NMFCode:
-        type: string
-      NMFCDescription:
+      articleExtendedDescription:
         type: string
       productClass:
         type: string
-      productLine:
-        type: string
-      scheduleBcode:
-        type: string
-      substituteArticleNumber:
-        type: string
-      substituteArticleUnitOfMeasure:
-        type: string
-      supplierArticle:
-        type: string
-      supplierArticleDescription:
-        type: string
+        description: Describes a hardcoded value for the article class
+        example: NEW
       taxProductCode:
         type: string
       UPCCode:
         type: string
+        example: '28234839945'
+      EANCode:
+        type: string
+      localSize:
+        type: string
+      technicalSize:
+        type: string
+      color:
+        type: string
+      division:
+        type: string
+      gender:
+        type: string
+      articleImageURL:
+        type: string
       unitCost:
         type: string
       unitOfMeasure:
+        type: string
+        description: Describes the measurement of the the article
+        example: PIECE
+      modelNumber:
+        type: string
+      aricleSizeCode:
         type: string
   supermodelIoAdidasOmniAudit:
     title: Audit
@@ -1140,16 +1080,15 @@ definitions:
     description: Hold Type model description
     type: object
     properties:
-      status:
+      isOrderOnhold:
         type: string
-      orderHeaderKey:
-        type: string
+        example: 'Yes'
       holdType:
         type: string
-      statusDescription:
+        example: BuyerRemorseHold
+      holdAppliedTimestamp:
         type: string
-      lastHoldTypeDate:
-        type: string
+        format: date
   supermodelIoAdidasOmniInvoice:
     title: Invoice
     description: Invoice model description
@@ -1426,25 +1365,53 @@ definitions:
     properties:
       orderNumber:
         type: string
-        example: '0000'
-      orderHeaderKey:
-        type: string
       orderDate:
         type: string
         format: date-time
       channel:
+        description: describes the application where the order is created or entered by
         type: string
-      customer:
-        type: object
-        properties:
-          firstName:
-            type: string
-          lastName:
-            type: string
-          zipCode:
-            type: string
-          phoneNumber:
-            type: string
+        enum:
+          - adidasconsumerapp
+          - Store Endless Aisle
+          - storefront
+          - skava
+          - web
+          - mobile
+          - dsg
+          - hibbett
+          - famousfootwear
+          - kohls
+          - Amazon
+          - jcpenney
+          - eBay
+          - Jet
+          - models
+          - nordstrom
+          - finishline
+          - academy
+          - journeys
+          - RRS
+          - ZL
+          - AK
+          - AF
+          - SP
+          - PR
+          - LR
+          - OT
+          - ES
+          - VP
+          - JD
+          - VB
+          - ZA
+      firstName:
+        type: string
+      lastName:
+        type: string
+      zipCode:
+        type: string
+      phoneNumber:
+        type: string
       orderType:
         type: string
       fulfillmentType:
@@ -1453,32 +1420,51 @@ definitions:
         type: string
       brand:
         type: string
-        enum:
-          - adidas
-          - reebok
       orderStatus:
+        description: Describes customer facing order Statuses
         type: string
         enum:
-          - created
-          - scheduled
-          - released
-          - shipped
-          - partiallyShipped
-          - delivered
-          - partiallyDelivered
-          - return created
-      minOrderStatus:
-        type: string
-      maxOrderStatus:
-        type: string
-      paymentType:
+          - Created
+          - In Progress
+          - Shipped
+          - Delivered
+          - Cancelled
+          - Order Delivery Exception
+          - Sales Order Return Initiated
+          - Sales Order Return Received
+          - Sales Order Return Completed
+      internalOrderStatus:
+        description: Describes internal order Statuses
         type: string
         enum:
-          - giftcard
-      quantity:
-        type: string
+          - Created
+          - Backordered
+          - Backordered From Node
+          - Scheduled
+          - Released
+          - Started Production
+          - Booked with 3PL
+          - Received at 3PL
+          - Included In Shipment
+          - Shipped
+          - ShipConfirmed
+          - Order Delivery Exception
+          - Order Lost In Transit
+          - Order Delivered
+          - Return Created
+          - Return Received
+          - Return Completed
+          - Cancelled
+        example: Scheduled
       paymentStatus:
         type: string
+        enum:
+          - Await Authorization
+          - Authorized
+          - Failed Authorization
+          - Invoiced
+          - Charge Failed
+          - Paid
       paymentMethods:
         type: array
         items:
@@ -1487,36 +1473,42 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/supermodelIoAdidasOmniHoldType'
-      chargeTransactionDetails:
-        $ref: '#/definitions/supermodelIoAdidasOmniChargeTransactionDetails'
       priceInformation:
         $ref: '#/definitions/supermodelIoAdidasOmniOrderPriceInfo'
       overallTotals:
         $ref: '#/definitions/supermodelIoAdidasOmniOrderOverallTotals'
-      orderStatuses:
-        type: array
-        items:
-          $ref: '#/definitions/supermodelIoAdidasOmniOrderStatus'
       billingAddress:
         $ref: '#/definitions/supermodelIoAdidasOmniAddress'
       shippingAddress:
         $ref: '#/definitions/supermodelIoAdidasOmniAddress'
     example:
-      orderHeaderKey: '20170920062948701537801'
       orderNumber: AD8141234
       orderDate: '2017-01-16T14:18:47.321Z'
-      orderName: 790YVTAGTV4RLQDZ
-      customerFirstName: Tigist
-      customerLastName: Gizaw
-      customerZipCode: '33131'
-      customerPhoneNumber: '3399704037'
-      customerEmailID: thechusfam@gmail.com
+      firstName: Tigist
+      lastName: Gizaw
+      zipCode: '33131'
+      phoneNumber: '3399704037'
+      email: thechusfam@gmail.com
       fulfillmentType: ShipToHome
+      paymentStatus: Paid
       ordertype: '0001'
       brand: adidas
       country: US
-      orderStatus: delivered
-      maxOrderStatus: '3200.100'
+      channel: ebay
+      orderStatus: Delivered
+      internalOrderStatus: Delivered with Exception
+      paymentMethods:
+        paymentReference2: EBAYPAYPAL_US
+        paymentType: CREDIT_CARD
+        creditCardType: Mastercard
+        creditCardNo: XXXX-XXXX-XXXX-5487
+      orderHoldTypes:
+        isOrderOnhold: 'Yes'
+        holdType: BuyerRemorseHold
+        holdAppliedTimestamp: '2017-01-16T14:18:47.321Z'
+      priceInformation:
+        currency: USD
+        totalAmount: '180.00'
   supermodelIoAdidasOmniOrderLine:
     title: Order Line
     description: Order Line model description
@@ -1526,35 +1518,24 @@ definitions:
         type: string
         example: '1'
       orderStatus:
-        type: string
-        enum:
-          - created
-          - scheduled
-          - released
-          - shipped
-          - partiallyShipped
-          - delivered
-          - partiallyDelivered
-          - return created
+        $ref: '#/definitions/supermodelIoAdidasOmniOrder/properties/orderStatus'
+      internalOrderStatus:
+        $ref: >-
+          #/definitions/supermodelIoAdidasOmniOrder/properties/internalOrderStatus
       quantity:
         type: number
         example: 2
       lineType:
         type: string
-      orderLineKey:
-        type: string
+        example: inline
       fulfillmentType:
         type: string
-      returnReason:
+      reasontext:
         type: string
       article:
         $ref: '#/definitions/supermodelIoAdidasOmniArticle'
       orderLinePriceInfo:
         $ref: '#/definitions/supermodelIoAdidasOmniOrderLinePriceInfo'
-      orderStatuses:
-        type: array
-        items:
-          $ref: '#/definitions/supermodelIoAdidasOmniOrderStatus'
       orderLineOverAllTotals:
         $ref: '#/definitions/supermodelIoAdidasOmniOrderLineOverallTotals'
       shippingAddress:
@@ -1564,39 +1545,15 @@ definitions:
     description: Order Line Overall Totals model description
     type: object
     properties:
-      shippingTotals:
-        type: string
-      shippingBaseCharge:
-        type: string
-      additionalLinePriceTotal:
-        type: string
-      extendedPrice:
-        type: string
-      maualDiscountPercentage:
-        type: string
       tax:
         type: string
       unitPrice:
         type: string
-      lineCost:
-        type: string
-      lineTotalWithoutTax:
-        type: string
-      pricingQuantity:
-        type: string
       lineTotal:
-        type: string
-      optionPrice:
         type: string
       shippingDiscount:
         type: string
       discount:
-        type: string
-      manualOverridePercentage:
-        type: string
-      charges:
-        type: string
-      percentageProfitMargin:
         type: string
       shippingCharges:
         type: string
@@ -1605,51 +1562,10 @@ definitions:
     description: Order Line Price Info model description
     type: object
     properties:
-      pricingUnitOfMeasure:
-        type: string
-        example: PIECE
-      isPriceLocked:
-        type: string
-        example: 'Y'
       unitPrice:
         type: string
         example: '80'
-      listPrice:
-        type: string
-        example: '90'
-      retailPrice:
-        type: string
-        example: '90'
-      taxableFlag:
-        type: string
-        example: 'Y'
-      pricingQuantityStrategy:
-        type: string
-      invoicedLineTotal:
-        type: string
-      repricingQuantity:
-        type: string
-      tax:
-        type: string
-      isEligibleForShippingDiscount:
-        type: string
-      discountReference:
-        type: string
-      invoicedPricingQuantity:
-        type: string
-      settledQuantity:
-        type: string
       lineTotal:
-        type: string
-      settledAmount:
-        type: string
-      orderedPricingQuantity:
-        type: string
-      actualPricingQuantity:
-        type: string
-      discountPercentage:
-        type: string
-      discountType:
         type: string
   supermodelIoAdidasOmniOrderOverallTotals:
     title: Order Overall Totals
@@ -1667,10 +1583,6 @@ definitions:
       grandCharge:
         type: string
       headerShippingTotal:
-        type: string
-      additionalLinePrice:
-        type: string
-      manualDiscountPercentation:
         type: string
       grandShippingDiscount:
         type: string
@@ -1690,8 +1602,6 @@ definitions:
         type: string
       headerDiscount:
         type: string
-      percentProfitMargin:
-        type: string
       grandTotal:
         type: string
       grandShippingCharge:
@@ -1701,13 +1611,6 @@ definitions:
     description: Order Price Info model description
     type: object
     properties:
-      enterpriseCurrency:
-        description: Describes the currency used in the system
-        type: string
-        enum:
-          - USD
-          - GBP
-        example: USD
       currency:
         description: Describes the currency used
         type: string
@@ -1715,18 +1618,9 @@ definitions:
           - USD
           - GBP
         example: USD
-      reportingConversionRate:
-        type: string
-        example: '1.00'
       totalAmount:
         type: string
         example: '39.00'
-      reportingConversiondate:
-        type: string
-        format: date
-        example: '2018-09-03T08:43:18+00:00'
-      headerTax:
-        type: string
   supermodelIoAdidasOmniOrderStatus:
     title: Order Status
     description: Order Status model description
@@ -1773,30 +1667,21 @@ definitions:
         example: '073014712424'
       paymentType:
         type: string
-        example: PAYPAL
-      maxChargeLimit:
-        type: string
+        example: CREDIT_CARD
       creditCardType:
         type: string
         example: Mastercard
       creditCardNo:
         type: string
-        example: '54829632546'
+        example: XXXX-XXXX-XXXX-5487
   supermodelIoAdidasOmniPriceInfo:
     title: Price Info
     description: Price Info model description
     type: object
     properties:
-      enterpriseCurrency:
-        type: string
       currency:
         type: string
-      reporttingConversion:
-        type: string
-      reportingConversiondate:
-        type: string
-        format: date
-      headerTax:
+      totalAmount:
         type: string
   supermodelIoAdidasOmniShipment:
     title: Shipment
@@ -2007,7 +1892,7 @@ definitions:
       channel:
         type: string
         example: ebay
-      customerPONo:
+      referenceOrderNumber:
         type: string
         example: '073014713412'
       orderType:
@@ -2151,24 +2036,12 @@ definitions:
       orderLinePriceInfo:
         type: object
         properties:
-          pricingUnitOfMeasure:
-            $ref: >-
-              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/pricingUnitOfMeasure
-          isPriceLocked:
-            $ref: >-
-              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/isPriceLocked
           unitPrice:
             $ref: >-
               #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/unitPrice
-          listPrice:
+          lineTotal:
             $ref: >-
-              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/listPrice
-          retailPrice:
-            $ref: >-
-              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/retailPrice
-          taxableFlag:
-            $ref: >-
-              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/taxableFlag
+              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/lineTotal
       shippingAddress:
         $ref: '#/definitions/supermodelIoAdidasOmniAddress'
       lineTaxes:
@@ -2342,10 +2215,8 @@ definitions:
           - _links:
               self:
                 href: /orders/AD8141234
-            orderHeaderKey: '20170920062948701537801'
             orderNumber: AD8141234
             orderDate: '2017-01-16T14:18:47.321Z'
-            orderName: 790YVTAGTV4RLQDZ
             firstName: Tigist
             lastName: Gizaw
             zipCode: '33131'
@@ -2360,10 +2231,8 @@ definitions:
           - _links:
               self:
                 href: /orders/AD9141238
-            orderHeaderKey: '2017092006294870153678'
             orderNo: AD9141238
             orderDate: '2018-01-16T14:18:47.321Z'
-            orderName: 879YVTAGTV4RABCD
             firstName: Deepak
             lastName: Gupta
             zipCode: '22345'
@@ -2374,7 +2243,6 @@ definitions:
             country: US
             brand: adidas
             orderStatus: shipped
-            maxOrderStatus: '3200.200'
   supermodelIoAdidasOmniApiProblemDetail:
     $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
   supermodelIoAdidasOmniApiReturnExchangeCancelOrder:
@@ -2641,6 +2509,39 @@ definitions:
             - type: array
               items:
                 $ref: '#/definitions/supermodelIoAdidasApiHAL'
+  supermodelIoAdidasApiHALDefinitionsHalLinkObject:
+    title: HAL Link Object
+    type: object
+    properties:
+      href:
+        type: string
+      templated:
+        type: boolean
+      type:
+        type: string
+      deprecation:
+        type: string
+      name:
+        type: string
+      profile:
+        type: string
+      title:
+        type: string
+      hreflang:
+        type: string
+    required:
+      - href
+  supermodelIoAdidasApiHALDefinitionsHalCuriesLink:
+    title: HAL Curies Link
+    allOf:
+      - type: object
+        properties:
+          templated:
+            enum:
+              - true
+        required:
+          - templated
+      - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
   supermodelIoAdidasApiProblemDetail:
     title: Problem Details for HTTP APIs
     description: >-
