@@ -8,7 +8,6 @@ info:
 
 produces:
   - application/hal+json      # Representation message format
-  # - application/problem+json  # Error message format
 
 schemes:
   - https
@@ -38,4 +37,179 @@ paths:
               - _links:
                   self:
                     href: /
-            
+
+  /stores:
+    x-summary: Stores
+
+    get:
+      summary: List Stores by Country
+      description: Retrieves all the stores matching the required country parameter.
+      parameters:
+        - $ref: '#/parameters/countryCode'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/limit'
+      responses:
+        200:
+          description: List of stores
+          schema:
+            type: object
+
+  /stores-by-geo:
+    x-summary: Stores by Geolocation
+
+    get:
+      summary: List Stores by Geographical Location
+      description: Retrieves all the stores in a radius from geographical location
+      parameters:
+        - $ref: '#/parameters/latitude'
+        - $ref: '#/parameters/longitude'
+        - $ref: '#/parameters/distance'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/limit'
+      responses:
+        200:
+          description: List of stores
+          schema:
+            type: object            
+
+  /stores/{storeId}:
+    x-summary: Store
+
+    get:
+      summary: Retrieve Store Details
+      description: Retrieves details about one store.
+      parameters:
+        - $ref: '#/parameters/storeId'
+      responses:
+        200:
+          description: Store details
+          schema:
+            type: object
+
+        404: 
+          description: Store not found
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            type: object
+            # allOf:
+            #   - $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+            example:
+              title: Store not found
+              detail: Store with given id was not found
+
+  /stores/{storeId}/nearby:
+    x-summary: Nearby Stores to a Store
+
+    get:
+      summary: Retrieve Stores Nearby
+      description: Retrieves stores nearby to the given store.
+      parameters:
+        - $ref: '#/parameters/storeId'
+        - $ref: '#/parameters/distance'
+      responses:
+        200:
+          description: Store details
+          schema:
+            type: object
+
+parameters:
+  # adidas API guidelines: Pagination
+  offset:
+    name: offset
+    in: query
+    description: >- 
+      Number of results to skip from the start of the list
+    required: false
+    type: string
+    default: '0'
+    x-example: '10'
+
+  # adidas API guidelines: Pagination
+  limit:
+    name: limit
+    in: query
+    description: >-
+      The maximum number of reusults to return
+    required: false
+    type: string
+    default: '10'
+    x-example: '5'
+
+  # adidas API guidelines: Sparse fieldset
+  fields:
+    name: fields
+    in: query
+    description: >- 
+      Comma-separated list of fields to include in the response
+    required: false
+    type: array
+    items:
+      type: string
+    collectionFormat: csv
+    x-example:
+      - articleNumber
+      - modelNumber
+
+  # adidas API guidelines: Sparse fieldset
+  embedded:
+    name: embedded
+    in: query
+    description: >-
+      Comma-separated list of resource (relations) to embed in the response
+    required: false
+    type: array
+    items:
+      type: string
+    collectionFormat: csv
+    x-example:
+      - prices
+      - assets
+
+  latitude:
+    name: latitude
+    in: query
+    description: >-
+      Latitude
+    required: true
+    type: number
+    x-example: 33.4112
+
+  longitude:
+    name: longitude
+    in: query
+    description: >-
+      Longitude
+    required: true
+    type: number
+    x-example: -119.0713
+
+  countryCode:
+    name: countryCode
+    in: query
+    description: >-
+      A short text string code (Alpha-2 Code ISO 3166) specifying the country.
+    required: true
+    type: string
+    x-example: 'DE'
+
+  storeId:
+    name: storeId
+    in: path
+    description: >-
+      Unique identifier for the single store record in SSM.
+    required: true
+    type: string
+    x-example: '1234'
+
+  distance:
+    name: distance
+    in: query
+    description: >-
+      Distance specifying the radius in km from the location
+    required: false
+    type: number
+    x-example: 50
+    default: 100
