@@ -1,0 +1,37 @@
+$id: http://supermodel.io/adidas/storeMasterData/api/StoresHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Stores HAL Representation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/storeMasterData/core/Store
+
+examples:
+  - _links:
+      self:
+        href: /stores?country=DE
+      next:
+        href: /stores?country=DE&offset=10
+      last:
+        href: /stores?country=DE&offset=80
+
+    numberOfResults: 87
+
+    _embedded:
+      store:
+        - _links:
+            self:
+              href: /stores/1234
+            someStoreInfo: Store 1
+
+        - _links:
+            self:
+              href: /stores/1235
+            someStoreInfo: Store 2
+
+        - _links:
+            self:
+              href: /stores/1236
+            someStoreInfo: Store 3

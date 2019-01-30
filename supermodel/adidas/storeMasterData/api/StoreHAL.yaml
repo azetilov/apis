@@ -1,0 +1,33 @@
+$id: http://supermodel.io/adidas/storeMasterData/api/StoreHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Store HAL Representation
+type: object
+
+allOf: 
+  - $ref: http://supermodel.io/adidas/api/HAL
+  - $ref: http://supermodel.io/adidas/storeMasterData/core/Store
+
+examples:
+  - _links: 
+      self:
+        href: /stores/1234
+      nearby:
+        href: /stores/1234/nearby
+
+    identifier:
+      ssmId: 123
+      bcsCode: abc
+      posID: '0001'
+
+    store: {}
+    storeClassification: {}
+    financialClassification: {}
+    location: {}
+    operations: {}
+    systems: {}
+    capabilitiesAndServices: {}
+    organization: {}
+    events: {}
+    consumer: {}  
+
