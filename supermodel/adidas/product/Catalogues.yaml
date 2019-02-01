@@ -1,6 +1,6 @@
-$id: http://supermodel.io/adidas/product/catalogues
+$id: http://supermodel.io/adidas/product/Catalogues
 
-title: catalogues
+title: Catalogues
 type: object
 
 properties:
