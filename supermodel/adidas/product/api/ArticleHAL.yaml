@@ -15,7 +15,7 @@ properties:
   articleDescription:
     $ref: http://supermodel.io/adidas/product/Article#/properties/articleDescription
   gender:
-      $ref: http://supermodel.io/adidas/product/Article#/properties/gender
+    $ref: http://supermodel.io/adidas/product/Article#/properties/gender
   brand:
     $ref: http://supermodel.io/adidas/product/Article#/properties/brand
   productType:
