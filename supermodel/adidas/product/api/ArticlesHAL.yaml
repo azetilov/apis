@@ -1,12 +1,40 @@
 $id: http://supermodel.io/adidas/product/api/ArticlesHAL
 $schema: http://json-schema.org/draft-07/schema#
+
 title: HAL Representation of Collections of Articles
 type: object
+
 allOf:
   - $ref: http://supermodel.io/adidas/api/HAL
+
 properties:
   articleCount:
     type: number
+  _embedded:
+    type: object
+    properties:
+      articles:
+        type: array
+        items:
+          type: object
+          properties:
+              articleNumber:
+                $ref: http://supermodel.io/adidas/product/Article#/properties/articleNumber
+              modelNumber:
+                $ref: http://supermodel.io/adidas/product/Article#/properties/modelNumber
+              articleDescription:
+                $ref: http://supermodel.io/adidas/product/Article#/properties/articleDescription
+              brand:
+                $ref: http://supermodel.io/adidas/product/Article#/properties/brand
+              productDivision:
+                $ref: http://supermodel.io/adidas/product/Article#/properties/productType
+              productType:
+                $ref: http://supermodel.io/adidas/product/Article#/properties/productType
+              gender:
+                  $ref: http://supermodel.io/adidas/product/Article#/properties/gender
+              ageGroup:
+                $ref: http://supermodel.io/adidas/product/Article#/properties/ageGroup        
+
 examples:
   - _links:
       self:
@@ -19,4 +47,38 @@ examples:
         href: /articles?offset=40&limit=5
     articleCount: 1
     _embedded:
-      article: [{}]
+      articles:
+      - articleNumber: '011040'
+        modelNumber: '10009'
+        articleDescription: 
+        brand:
+          code: '11'
+          description: ADIDAS
+        productDivision:
+          code: '1'
+          description: 'sample'
+        productType: 
+          code: '1'
+          description: 'sample'
+        gender: 
+          code: '1'
+          description: 'sample'
+        ageGroup: 
+          code: '1'
+          description: 'sample'
+        _links:
+          self:
+            href: /articles/011040
+          assets:
+            href: /articles/011040/assets
+          skus:
+            href: /articles/011040/skus
+          prices:
+            href: /articles/011040/prices
+          seasons:
+            href: /articles/011040/seasons
+          ecom:
+            href: /articles/011040/ecom
+          catalogue:
+            href: /articles/011040/catalogue
+

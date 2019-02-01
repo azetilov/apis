@@ -1,7 +1,9 @@
 $id: http://supermodel.io/adidas/product/SKU
 $schema: http://json-schema.org/draft-07/schema#
+
 title: SKU
 type: object
+
 properties:
   EAN:
     type: string

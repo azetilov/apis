@@ -1,0 +1,25 @@
+$id: http://supermodel.io/adidas/product/api/SeasonsHAL
+
+title: HAL Representation of Collection of Seasons
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  articleNumber:
+    type: string
+  modelNumber:
+    type: string
+  seasons:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/product/Season
+
+examples:
+  - _links:
+      self:
+        href: /articles/AB1234/seasons
+    articleNumber: AB1234
+    modelNumber: MD9876
+    seasons: [{}]

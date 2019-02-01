@@ -2,33 +2,17 @@ $id: http://supermodel.io/adidas/product/Asset
 $schema: http://json-schema.org/draft-07/schema#
 
 title: Asset
-description: Digital Asset  
+description: Digital Asset
 type: object
+
 properties:
-  assetType:
-    type: string
-    enum:
-      - image
-      - video
-      - other
   viewGroup:
     type: string
   view:
     type: string
-  assetCategory:
-    type: string
-  usageTerms:
-    type: array
-    items:
-      type: string
-  assetHref:
-    type: string
-    format: uri
   image:
     type: object
     properties:
-      style:
-        type: string
       width:
         type: integer
       height:
@@ -37,11 +21,10 @@ properties:
         type: string
       representation:
         type: string
-  video:
-    type: object
-    properties:
-      fileSize:
-        type: integer
+  assetCategory:
+    type: string
+  imageStyle:
+    type: string
   model:
     type: object
     properties:
@@ -53,6 +36,41 @@ properties:
         type: string
       productSize:
         type: string
+  pairedArticles:
+    type: array
+    items:
+      - value:
+        type: string
+  video:
+    type: object
+    properties:
+      fileSize:
+        type: integer
+  publicId:
+    type: string
+  defaultAlias:
+    type: string
+  sortOrder:
+    type: string
+  usage:
+    type: array
+    items:
+      - value:
+        type: string
+  assetHref:
+    type: string
+    format: uri
+  usageTerms:
+    type: array
+    items:
+      - value:
+        type: string
+  assetType:
+    type: string
+    enum:
+      - image
+      - video
+      - other
 required:
   - assetType
   - viewGroup
@@ -60,19 +78,32 @@ required:
   - assetCategory
   - usageTerms
   - assetHref
+
 examples:
-  - assetType: image
-    viewGroup: 3d
-    assetCategory: Photography
-    usageTerms: B2B Cataloguge
-    assetHref: http://domain.com/image.jpeg
+  - viewGroup: 3d
+    view: Top
     image:
-      style: On Model
       width: 2000
       height: 2000
       bgColor: transparent
+      representation: null
+    assetCategory: Photography
+    imageStyle: Standard
     model:
       waist: 58
       chest: 97
       height: 197
       productSize: 540
+    pairedArticles:
+      value: AB1234
+    video:
+      fileSize: 99
+    publicID: AZ1
+    defaultAlias: alias
+    sortOrder: 6
+    usage:
+      value: pdp
+    assetHref: http://domain.com/image.jpeg
+    usageTerms: 
+      value: B2B Catalogue
+    assetType: image

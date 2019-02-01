@@ -1,0 +1,142 @@
+$id: http://supermodel.io/adidas/product/ecom/Specification
+$schema: http://json-schema.org/draft-07/schema#
+
+title: Specification
+description: Specification detail description
+type: object
+
+properties:
+  locale:
+    type: string
+  legalCertNo: 
+    type: string
+  legalCertValidFrom: 
+    type: string
+    description: ISO 8601 Date
+    example: '2017-06-21T14:07:17Z'
+  legalCertValidTo: 
+    type: string
+    description: ISO 8601 Date
+    example: '2017-06-21T14:07:17Z'
+  legalCountryOfOrigin: 
+    type: string
+  legalManufName:
+    type: string
+  legalManufAddress: 
+    type: string
+  productFit:
+    type: array
+    items:
+      $ref: MultiValue
+  sleeveLength:
+    type: array
+    items:
+      $ref: MultiValue
+  baseMaterial:
+    type: array
+    items:
+      $ref: MultiValue
+  pattern:
+    type: array
+    items:
+      $ref: MultiValue
+  backLength:
+    type: array
+    items:
+      $ref: MultiValue
+  lining:
+    type: array
+    items:
+      $ref: MultiValue
+  pantLength:
+    type: array
+    items:
+      $ref: MultiValue
+  rise:
+    type: array
+    items:
+      $ref: MultiValue
+  neckline:
+    type: array
+    items:
+      $ref: MultiValue
+  support:
+    type: array
+    items:
+      $ref: MultiValue
+  designFeature:
+    type: array
+    items:
+      $ref: MultiValue
+  strap:
+    type: array
+    items:
+      $ref: MultiValue
+  closure:
+    type: array
+    items:
+      $ref: MultiValue
+  width:
+    type: array
+    items:
+      $ref: MultiValue
+  dimensions:
+    type: array
+    items:
+      $ref: MultiValue
+  capacity:
+    type: array
+    items:
+      $ref: MultiValue
+  compatibility:
+    type: array
+    items:
+      $ref: MultiValue
+  compareOutsoleTechnology:
+    type: array
+    items:
+      $ref: MultiValue
+  compareUpperTechnology:
+    type: array
+    items:
+      $ref: MultiValue
+  compareWeight:
+    type: array
+    items:
+      $ref: MultiValue
+
+examples:
+  - locale: de-DE
+    legalCertNo: 
+    legalCertValidFrom: 
+    legalCertValidTo: 
+    legalCountryOfOrigin: 
+    legalManufName: 
+    legalManufAddress: 
+    productFit:
+    - value: Regulär
+    sleeveLength: []
+    baseMaterial:
+    - value: Polyester
+    pattern:
+    - value: Logo-Print
+    backLength: []
+    lining: []
+    pantLength: []
+    rise: []
+    neckline:
+    - value: Rundhalsausschnitt
+    support: []
+    designFeature: []
+    strap: []
+    closure: []
+    width: []
+    dimensions: []
+    capacity: []
+    compatibility: []
+    compareOutsoleTechnology:
+    - value: boost™
+    compareUpperTechnology:
+    - value: Rubber
+    compareWeight:
+    - value: '270'

@@ -1,0 +1,58 @@
+$id: http://supermodel.io/adidas/product/ecom/api/SpecificationsHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: eCom Article Specifications HAL Representation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  articleNumber:
+    type: string
+
+  specifications:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/product/ecom/Specification
+
+examples:
+  - articleNumber: T12345
+    specifications:
+    - locale: de-DE
+      legalCertNo: 
+      legalCertValidFrom: 
+      legalCertValidTo: 
+      legalCountryOfOrigin: 
+      legalManufName: 
+      legalManufAddress: 
+      productFit:
+      - value: Regulär
+      sleeveLength: []
+      baseMaterial:
+      - value: Polyester
+      pattern:
+      - value: Logo-Print
+      backLength: []
+      lining: []
+      pantLength: []
+      rise: []
+      neckline:
+      - value: Rundhalsausschnitt
+      support: []
+      designFeature: []
+      strap: []
+      closure: []
+      width: []
+      dimensions: []
+      capacity: []
+      compatibility: []
+      compareOutsoleTechnology:
+      - value: boost™
+      compareUpperTechnology:
+      - value: Rubber
+      compareWeight:
+      - value: '270'
+    _links:
+      self:
+        href: /articles/T12345/ecom/specifications?site=de

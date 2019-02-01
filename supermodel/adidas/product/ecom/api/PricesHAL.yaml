@@ -1,0 +1,29 @@
+$id: http://supermodel.io/adidas/product/ecom/api/PricesHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: eCom Article Prices HAL Representation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  articleNumber:
+    type: string
+
+  prices:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/product/ecom/Price
+
+examples:
+  - articleNumber: T12345
+    careInstructions:
+    - locale: en-IE
+      standardPrice: 24.95
+      salesPrice: 12.50
+      vipSalesPrice: 10.95
+      currency: EUR
+    _links:
+      self:
+        href: /articles/T12345/ecom/prices?site=IE

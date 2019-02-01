@@ -1,0 +1,9 @@
+$id: http://supermodel.io/adidas/product/ecom/MultiValue
+$schema: http://json-schema.org/draft-07/schema#
+
+title: MultiValue
+type: object
+
+properties:
+  value:
+    type: string

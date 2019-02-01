@@ -1,0 +1,32 @@
+$id: http://supermodel.io/adidas/product/Season
+
+title: Season
+type: object
+
+properties:
+  seasonCode: 
+    type: string
+  isCarryOver: 
+    type: boolean
+  retailIntroDate:
+    type: string
+    format: date-time
+  retailExitDate:
+    type: string
+    format: date-time
+  quarter: 
+    $ref: utils/CodeDescription
+  salesLine: 
+    $ref: utils/CodeDescription
+
+examples:
+  - seasonCode: "20181"
+    isCarryOver: true
+    retailIntroDate: "1990-11-30T22:00:00.000Z"
+    retailExitDate: "1990-11-30T22:00:00.000Z"
+    quarter:
+      code: "Q1"
+      description: "Quarter 1"
+    salesLine:
+      code: "1S"
+      description: "Line 1"

@@ -1,0 +1,52 @@
+$id: http://supermodel.io/adidas/product/ecom/Sort
+$schema: http://json-schema.org/draft-07/schema#
+
+title: eCom Sort
+type: object
+
+properties:
+  locale:
+    type: string
+    examples: 
+      - en-GB
+  sort1:
+    type: string
+  sort2:
+    type: string
+  sort3:
+    type: string
+  sort4:
+    type: string
+  sort5:
+    type: string
+  sort6:
+    type: string
+  sort7:
+    type: string
+  sort8:
+    type: string
+  sort9:
+    type: string
+  sort10:
+    type: string
+  sort11:
+    type: string
+  sort12:
+    type: string
+  sort13:
+    type: string
+  sort14:
+    type: string
+  sort15:
+    type: string
+  sort16:
+    type: string
+  sort17:
+    type: string
+  sort18:
+    type: string
+  sort19:
+    type: string
+  sort20:
+    type: string
+      

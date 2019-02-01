@@ -1,68 +1,106 @@
 $id: http://supermodel.io/adidas/product/ecom/Article
 $schema: http://json-schema.org/draft-07/schema#
+
 title: eCom Article
 type: object
+
 properties:
-  athlete:
+  articleNumber:
     type: string
-  clearance:
-    type: boolean
-  comingSoonSignup:
-    type: number
-  customizable:
-    type: boolean
-  age:
+
+  modelNumber:
     type: string
-    examples:
-      - 'Infant &amp; Toddler'
+
+  locale:
+    type: string
+    examples: 
+      - en-GB
+
+  activity:
+    type: string
+
+  ages:
+    type: array
+    items:
+      $ref: MultiValue
+
+  athletes:
+    type: array
+    items:
+      $ref: MultiValue
+
+  badge:
+    type: string
+
+  bestFor:
+    type: array
+    items:
+      $ref: MultiValue
+
   brand:
     type: string
-    examples:
-      - Performance
-  campaign:
+  campaignPLP:
+    type: array
+    items:
+      $ref: MultiValue
+  clearance:
+    type: number
+  clicks3:
     type: string
-    examples:
-      - Black Friday;Cyber Monday;After Christmas Sale;End of Season Sale;Friends Family;Presidents Day Sale;MLK Jr Day Sale
-  color:
+  clicks14:
     type: string
-    examples:
-      - White
+  colors:
+    type: array
+    items:
+      $ref: MultiValue
+  comingSoonSignup:
+    type: boolean
+  customizable:
+    type: boolean
   defaultColor:
     type: string
-    examples:
-      - Copper Metalic / White Chalk / Cardboard
-  gender:
-    type: string
-    examples:
-      - K
-  genderSub:
-    type: string
-    examples:
-      - KB
-  hastag:
-    type: string
-  maxQuantity:
-    type: string
-  productDivision:
-    type: string
-    examples:
-      - Accessories
-  productLine:
-    type: string
-    examples:
-      - Tiro
-  productType:
-    type: string
-  price:
-    $ref: Price
-  sport:
-    type: string
-    examples:
-      - Running
   fitbarPosition:
     type: string
-  care:
-    $ref: Care
+  flashProduct:
+    type: boolean
+  frequency:
+    type: string
+  functions:
+    type: array
+    items:
+      $ref: MultiValue
+  gender:
+    type: string
+  genderSub:
+    type: string
+  hashtag:
+    type: array
+    items:
+      $ref: MultiValue
+  hypeProduct:
+    type: boolean
+  maxQuantity:
+    type: number
+  miInspirationName:
+    type: string
+  miPdpBackgroundImage:
+    type: string
+  miQuickBuy:
+    type: string
+  miRecipeUrl:
+    type: string
+  miSearchSizes:
+    type: array
+    items:
+      $ref: MultiValue
+  miTeamCountries:
+    type: array
+    items:
+      $ref: MultiValue
+  miBnmCountries:
+    type: array
+    items:
+      $ref: MultiValue
   onlineFrom:
     type: string
     description: ISO 8601 Date
@@ -73,62 +111,91 @@ properties:
     description: ISO 8601 Date
     examples:
       - '2017-06-21T14:07:17Z'
+  outlet:
+    type: boolean
+  pageKeywords:
+    type: array
+    items:
+      $ref: MultiValue
+  partners:
+    type: array
+    items:
+      $ref: MultiValue
+  pdpCallout:
+    type: string
+  pdpContent:
+    type: string
+  pdpModel:
+    type: string
+  personalizable:
+    type: boolean
+  preorder:
+    type: boolean
   previewTo:
     type: string
     description: ISO 8601 Date
     examples:
       - '2017-06-21T14:07:17Z'
-  pdp:
-    $ref: PDP
-  
-  flashProduct:
-    type: boolean
-  hypeProduct:
-    type: boolean
-  personalizable:
-    type: boolean
-  preorder:
-    type: boolean
-  soldout:
-    type: boolean
+  productDivision:
+    type: string
   productFamily:
-    type: string
+    type: array
+    items:
+      $ref: MultiValue
   productFilter:
+    type: array
+    items:
+      $ref: MultiValue
+  productFit:
     type: string
-  prodcutLine:
+  productLines:
+    type: array
+    items:
+      $ref: MultiValue
+  productType:
+    type: array
+    items:
+      $ref: MultiValue
+  sales3:
+    type: string
+  sales14:
+    type: string
+  searchableIfUnavailable:
+    type: boolean
+  shippingOn:
     type: string
   sizeChart:
+    type: array
+    items:
+      $ref: MultiValue
+  soldout:
+    type: boolean
+  sports:
+    type: array
+    items:
+      $ref: MultiValue
+  surface:
+    type: array
+    items:
+      $ref: MultiValue
+  taxClass:
+    type: string
+  teamkits:
     type: string
   teams:
+    type: array
+    items:
+      $ref: MultiValue
+  teamwear:
     type: string
+  technologies:
+    type: array
+    items:
+      $ref: MultiValue
   template:
     type: string
-    description: The 'Template' is used to identify if the inline or miadidas PDP template should be applied in the ecommerce frontend.
-  articleNumber:
-    $ref: http://supermodel.io/adidas/product/Article#/properties/articleNumber
-  modelNumber:
-    $ref: http://supermodel.io/adidas/product/Article#/properties/modelNumber
-  articleDescription:
-    $ref: http://supermodel.io/adidas/product/Article#/properties/articleDescription
-  name:
+  type:
     type: string
-    examples:
-    - Obuv F/22 Primeknit
-  badge:
-    $ref: Badge
-  assets:
-    type: array
-    items:
-      $ref: http://supermodel.io/adidas/product/Asset
-  colorVariants:
-    type: array
-    items:
-      - $ref: '#'
-  miadidas:
-    type: array
-    items:
-      - $ref: '#'
-  completeLook:
-    type: array
-    items:
-      - $ref: '#'
+  width:
+    type: string
+      

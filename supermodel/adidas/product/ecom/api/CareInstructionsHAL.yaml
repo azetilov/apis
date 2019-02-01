@@ -1,0 +1,42 @@
+$id: http://supermodel.io/adidas/product/ecom/api/CareInstructionsHAL
+$schema: http://json-schema.org/draft-07/schema#
+
+title: eCom Article Care Instructions HAL Representation
+type: object
+
+allOf:
+  - $ref: http://supermodel.io/adidas/api/HAL
+
+properties:
+  articleNumber:
+    type: string
+
+  careInstructions:
+    type: array
+    items:
+      $ref: http://supermodel.io/adidas/product/ecom/CareInstruction
+
+examples:
+  - articleNumber: T12345
+    careInstructions:
+    - locale: de-DE
+      bleaching:
+        code: A2
+        description: Nur Handwäsche
+      drying:
+        code: C1
+        description: Nicht im Trockner trocknen
+      professionalCare:
+        code: B1
+        description: Nicht bleichen
+      ironing:
+        code: D1
+        description: Nicht bügeln
+      washing:
+        code: E1
+        description: Nicht chemisch reinigen
+      extraCare:
+        description: Nicht über der Heizung trocknen
+    _links:
+      self:
+        href: /articles/T12345/ecom/care-instructions?site=DE

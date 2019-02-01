@@ -11,7 +11,7 @@ properties:
   articleDescription:
     $ref: http://supermodel.io/adidas/product/Article#/properties/articleDescription
   gender:
-      $ref: http://supermodel.io/adidas/product/Article#/properties/gender
+    $ref: http://supermodel.io/adidas/product/Article#/properties/gender
   brand:
     $ref: http://supermodel.io/adidas/product/Article#/properties/brand
   productType:
@@ -19,7 +19,12 @@ properties:
   ageGroup:
     $ref: http://supermodel.io/adidas/product/Article#/properties/ageGroup
   colorway:
-    $ref: http://supermodel.io/adidas/product/Article#/properties/colorway
+    type: object
+    properties:
+      name:
+        $ref: http://supermodel.io/adidas/product/Article#/properties/colorwayName
+      description:
+        $ref: http://supermodel.io/adidas/product/Article#/properties/colorwayDescription
   colors:
     $ref: http://supermodel.io/adidas/product/Article#/properties/colors
   skus:

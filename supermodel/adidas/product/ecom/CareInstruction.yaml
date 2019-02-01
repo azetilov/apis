@@ -1,0 +1,44 @@
+$id: http://supermodel.io/adidas/product/ecom/CareInstruction
+$schema: http://json-schema.org/draft-07/schema#
+
+title: CareInstruction
+description: Care instruction detail description
+type: object
+
+properties:
+  locale:
+    type: string
+  bleaching:
+    $ref: ../utils/CodeDescription
+  ironing:
+    $ref: ../utils/CodeDescription
+  professionalCare:
+    $ref: ../utils/CodeDescription
+  drying:
+    $ref: ../utils/CodeDescription
+  washing:
+    $ref: ../utils/CodeDescription
+  extraCare:
+    type: array
+    items:
+      $ref: MultiValue
+
+examples:
+  - locale: de-DE
+    bleaching:
+      code: A2
+      description: Nur Handwäsche
+    drying:
+      code: C1
+      description: Nicht im Trockner trocknen
+    professionalCare:
+      code: B1
+      description: Nicht bleichen
+    ironing:
+      code: D1
+      description: Nicht bügeln
+    washing:
+      code: E1
+      description: Nicht chemisch reinigen
+    extraCare:
+      description: Nicht über der Heizung trocknen

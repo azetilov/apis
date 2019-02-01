@@ -1,7 +1,9 @@
 $id: http://supermodel.io/adidas/product/Price
 $schema: http://json-schema.org/draft-07/schema#
+
 title: Price
 type: object
+
 properties:
   timePeriodCode:
     type: string
@@ -25,6 +27,7 @@ properties:
     type: string
   countryCode:
     type: string
+
 examples:
   - timePeriodCode: "71"
     salesOrg: "0681"

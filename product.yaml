@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '1.0.0'
+  version: '1.6.0'
   title: "[Draft] Product Service"
   description: |
     Draft of a new Poduct API for outbound integration.
@@ -51,7 +51,7 @@ info:
     > representation of an article exercise its `self` relation.
 
 produces:
-  - application/hal+json      # Representation message format
+  - application/hal+json; charset=utf-8  # Representation message format
   - application/problem+json  # Error message format
 
 schemes:
@@ -112,13 +112,15 @@ paths:
       description: |
         Retrieve list of all articles.
 
-        | Available Filters | Parameter Location | Parameter Name(s)          |
-        |-------------------|--------------------|----------------------------|
-        | season            | query              | `season_name`              |
-        | language          | header             | `Accept-Language`          |
-
         The information about the articles are non-seasonal, however each non-seasonal article carries a link to related seasonal article information.
-        If the season filter is applied, only thos non-seasonal articles information that have seasonal article in the given season are returned.
+        If the season filter is applied, only those non-seasonal articles information that have seasonal article in the given season are returned.
+
+        | Available Filters | Parameter Location | Parameter Name(s) |
+        |-------------------|--------------------|-------------------|
+        | season            | query              | `season`          |
+        | limit             | header             | `offset`          |
+        | offset            | header             | `limit`           |
+        | language          | header             | `Accept-Language` |
 
       parameters:
         - $ref: '#/parameters/offset'
@@ -199,6 +201,27 @@ paths:
           schema:
             $ref: '#/definitions/supermodelIoAdidasProductApiAssetsHAL'
 
+  /articles/{article_id}/prices:
+    x-summary: Article Prices
+    x-description: Global articles Prices.
+    parameters:
+      - $ref: '#/parameters/articleId'
+      - $ref: '#/parameters/salesOrg'
+    get:
+      summary: Retrieve Article Prices
+      description: |
+        Retrieve prices information
+
+        | Available Filters | Parameter Location | Parameter Name(s) |
+        |-------------------|--------------------|-------------------|
+        | sales-org         | query              | `sales-org`       |
+
+      responses:
+        200:
+          description: Prices for an Article.
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductApiPricesHAL'
+
   /articles/{article_id}/skus:
     x-summary: Article SKUs
     x-description: Global articles SKUs.
@@ -225,12 +248,10 @@ paths:
 
         | Available Filters | Parameter Location | Parameter Name(s) |
         |-------------------|--------------------|-------------------|
-        | season            | query              | `season_name`     |
-        | language          | header             | `Accept-Language` |
+        | season            | query              | `season`          |
 
       parameters:
-        - $ref: '#/parameters/seasonName'
-        - $ref: '#/parameters/acceptLanguageHeader'
+        - $ref: '#/parameters/seasonNameOptional'
       responses:
         200:
           description: Seasons for an Article
@@ -244,10 +265,178 @@ paths:
               default: Accept-Language
               x-example: Accept-Language
           schema:
-            $ref: '#/definitions/supermodelIoAdidasProductApiArticleSeasonsHAL'
+            $ref: '#/definitions/supermodelIoAdidasProductApiSeasonsHAL'
 
         404:
           description: The given article was not found.
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleNotFoundProblemDetail'
+
+  /articles/{article_id}/ecom/care-instructions:
+    x-summary: Article eCom Care Instructions
+    x-description: eCom Care Instructions information.
+    parameters:
+      - $ref: '#/parameters/articleId'
+
+    get:
+      summary: Retrieve Article eCom Care Instructions
+      description: |
+        Retrieve a eCom Article care instructions.
+
+        | Available Filters | Parameter Location | Parameter Name(s)          |
+        |-------------------|--------------------|----------------------------|
+        | site              | query              | `site`                     |
+        | language          | header             | `Accept-Language`          |
+
+      parameters:
+        - $ref: '#/parameters/site'
+        - $ref: '#/parameters/acceptLanguageHeader'
+      responses:
+        200:
+          description: eCom Care Instructions for an Article
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductEcomApiCareInstructionsHAL'
+        404:
+          description: The given article eCom sort data was not found.
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleNotFoundProblemDetail'
+
+  /articles/{article_id}/ecom/prices:
+    x-summary: Article eCom prices
+    x-description: Article eCom price information.
+    parameters:
+      - $ref: '#/parameters/articleId'
+
+    get:
+      summary: Retrieve Article eCom price information
+      description: |
+        Retrieve eCom price information
+
+        | Available Filters | Parameter Location | Parameter Name(s) |
+        |-------------------|--------------------|-------------------|
+        | site              | query              | `site`            |
+        | language          | header             | `Accept-Language` |
+
+      parameters:
+        - $ref: '#/parameters/site'
+        - $ref: '#/parameters/acceptLanguageHeader'
+      responses:
+        200:
+          description: eCom Price details for an Article
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductEcomApiPricesHAL'
+        404:
+          description: The given article eCom price data was not found.
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleNotFoundProblemDetail'
+
+  /articles/{article_id}/ecom/sort:
+    x-summary: Article eCom Sort
+    x-description: Article eCom sort information.
+    parameters:
+      - $ref: '#/parameters/articleId'
+
+    get:
+      summary: Retrieve Article eCom sort Information
+      description: |
+        Retrieve eCom sort information
+
+        | Available Filters | Parameter Location | Parameter Name(s) |
+        |-------------------|--------------------|-------------------|
+        | site              | query              | `site`            |
+        | language          | header             | `Accept-Language` |
+
+      parameters:
+        - $ref: '#/parameters/site'
+        - $ref: '#/parameters/acceptLanguageHeader'
+      responses:
+        200:
+          description: eCom Sort details for an Article
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductEcomApiSortHAL'
+        404:
+          description: The given article eCom sort data was not found.
+          headers:
+            Content-Type:
+              type: string
+              default: application/problem+json
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductApiArticleNotFoundProblemDetail'
+
+  /articles/{article_id}/ecom/specifications:
+    x-summary: Article eCom Specifications
+    x-description: Article eCom Specifications information.
+    parameters:
+      - $ref: '#/parameters/articleId'
+
+    get:
+      summary: Retrieve Article eCom Specifications Information
+      description: |
+        Retrieve eCom Specifications information
+
+        | Available Filters | Parameter Location | Parameter Name(s) |
+        |-------------------|--------------------|-------------------|
+        | site              | query              | `site`            |
+        | language          | header             | `Accept-Language` |
+
+      parameters:
+        - $ref: '#/parameters/site'
+        - $ref: '#/parameters/acceptLanguageHeader'
+      responses:
+        200:
+          description: eCom Specifications for an Article
+          headers:
+            Content-Language:
+              type: string
+              default: en
+              x-example: en
+            Vary:
+              type: string
+              default: Accept-Language
+              x-example: Accept-Language
+          schema:
+            $ref: '#/definitions/supermodelIoAdidasProductEcomApiSpecificationsHAL'
+        404:
+          description: The given article eCom Specifications data was not found.
           headers:
             Content-Type:
               type: string
@@ -493,6 +682,18 @@ parameters:
   #  type: string
   #  x-example: '50'
 
+  # Sales Org filters
+  # Sales Org is the preffered way to filter for sales organization
+  salesOrg:
+    name: sales-org
+    in: query
+    description: |
+      Filter resutls based on the sales organization.
+      Sales org format is 4 numbers (e.g., 0610)
+    type: string
+    required: false
+    x-example: '0610'
+
   # Season filters
   # Season Name is the preffered way to filter for season
   seasonName:
@@ -506,11 +707,12 @@ parameters:
     x-example: 'FW17'
 
   seasonNameOptional:
-    name: season_name
+    name: season
     in: query
     description: |
       Filter resutls based on the season name.
       Season name format is 2 letters for season and 2 numbers for year (e.g., FW17)
+      Supported years 1990-2089
     type: string
     required: false
     x-example: 'FW17'
@@ -524,6 +726,17 @@ parameters:
       Season code format is "20171" – 4 digits for year and 1 digit for season type.
     type: string
     x-example: '20171'
+
+  # Site filters
+  site:
+    name: site
+    in: query
+    description: |
+      Filter resutls based on the relevant site.
+      Site format is 2 letters (e.g., GB)
+    type: string
+    required: true
+    x-example: 'GB'
 
   # adidas API guidelines: Pagination
   offset:
@@ -587,97 +800,6 @@ parameters:
 # http://supermodel.io
 # https://github.com/supermodel/supermodel-cli
 definitions:
-  supermodelIoAdidasProductCatalogDefinitionsCatalogCopy:
-    title: Catalog Copy
-    type: object
-    properties:
-      acsModelName:
-        type: string
-      b2cCopy:
-        type: string
-      b2cCopyShort:
-        type: string
-      b2bCopy:
-        type: string
-      b2bCopyShort:
-        type: string
-      materialComposition:
-        type: string
-      materialConstruction:
-        type: string
-      bullets1:
-        type: string
-      bullets2:
-        type: string
-      bullets3:
-        type: string
-      bullets4:
-        type: string
-      bullets5:
-        type: string
-      bullets6:
-        type: string
-      bulletMaterial:
-        type: string
-    example:
-      acsModelName: COPA MUNDIAL
-      b2cCopy: >-
-        De populairste voetbalschoen ooit, en terecht. De adidas Copa Mundial
-        heeft een bovenwerk van rijk leer en een loopzool met dubbele dichtheid
-        die al decennia lang de toon zet voor comfort en prestaties op het veld.
-      b2cCopyShort: >-
-        Entraîne-toi comme les pros avec ce haut de l'équipe de Belgique de
-        football.
-      b2bCopy: >-
-        Hurricanes Training Jersey as worn by the players when training with
-        dynamic retro design inspired by the original Super Jersey.Captured with
-        shock blue and black colors on climalite fabric with moisture wicking
-        properties.
-      b2bCopyShort: >-
-        Hurricanes Training Jersey as worn by the players when training with
-        dynamic retro design inspired by the orginal Super jersey.
-      materialComposition: 100% Organic Cotton
-      materialConstruction: Single jersey
-      bullets1: materiál Climalite odvádí pot a udrží tě vsuchu za všech okolností
-      bullets2: Ribbet V-hals
-      bullets3: Nackenband
-      bullets4: >-
-        Επένδυση προστασίας από τον άνεμο στο μπροστινό μέρος. Μανσέτες με
-        ανοίγματα για τους αντίχειρες
-      bullets5: Woven Belgium crest on chest
-      bullets6: >-
-        3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha del
-        pecho
-      bulletMaterial: Maille double 100 % polyester.
-  supermodelIoAdidasProductCatalogDefinitionsFeatureAndBenefit:
-    title: Feature and Benefit
-    type: object
-    properties:
-      featureAndBenefitCode:
-        type: string
-      businessCode:
-        type: string
-      shoePart:
-        type: string
-      featureName:
-        type: string
-      featureDescription:
-        type: string
-      logoName:
-        type: string
-      logoHref:
-        type: string
-        format: uri
-    example:
-      featureAndBenefitCode: '68465468'
-      businessCode: BU Young Athlete
-      shoePart: Upper
-      featureName: Costura à maquina
-      featureDescription: >-
-        construction nylon/TPU pour un bon toucher de balle et une bonne
-        résistance à l'usure.
-      logoName: ECO_OrthoLiteLogo
-      logoHref: 'http://domain.com/logo.jpeg'
   supermodelIoAdidasApiHALDefinitionsHalLinkObject:
     title: HAL Link Object
     type: object
@@ -711,6 +833,2473 @@ definitions:
         required:
           - templated
       - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+  supermodelIoAdidasProductCatalogDefinitionsCatalogCopy:
+    title: Catalog Copy
+    type: object
+    properties:
+      articleNumber:
+        type: string
+      modelNumber:
+        type: string
+      catalog:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductCatalogues'
+  supermodelIoAdidasApiHAL:
+    title: HAL
+    description: >-
+      JSON Hypertext Application Language. Definition of [HAL message
+      format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
+    type: object
+    properties:
+      _links:
+        type: object
+        additionalProperties:
+          allOf:
+            - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+            - type: array
+              items:
+                $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
+        properties:
+          curies:
+            allOf:
+              - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink'
+              - type: array
+                items:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink
+      _embedded:
+        type: object
+        additionalProperties:
+          allOf:
+            - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+            - type: array
+              items:
+                $ref: '#/definitions/supermodelIoAdidasApiHAL'
+  supermodelIoAdidasApiProblemDetail:
+    title: Problem Details for HTTP APIs
+    description: >-
+      Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
+      detail
+    type: object
+    properties:
+      type:
+        type: string
+      title:
+        type: string
+      status:
+        type: number
+      detail:
+        type: string
+      instance:
+        type: string
+    required:
+      - title
+      - detail
+  supermodelIoAdidasOmniAddress:
+    title: Address
+    description: Address model description
+    type: object
+    properties:
+      firstName:
+        type: string
+        example: Bill
+      middleName:
+        type: string
+        example: Maria
+      lastName:
+        type: string
+        example: Gates
+      addressLine1:
+        type: string
+        example: erlangenstrasse 19
+      city:
+        type: string
+        example: Munich
+      zipCode:
+        type: string
+        example: '950264'
+      state:
+        type: string
+        example: Bavaria
+      country:
+        type: string
+        example: Germany
+      email:
+        type: string
+        example: test@gmail.com
+  supermodelIoAdidasOmniArticle:
+    title: Article
+    description: Article OmniHub representation
+    type: object
+    properties:
+      alternateArticleNumber:
+        type: string
+      bundleFulfillmentMode:
+        type: string
+      costCurrency:
+        type: string
+      countryOfOrigin:
+        type: string
+      customerArticle:
+        type: string
+      customerArticleDescription:
+        type: string
+      ECCNNO:
+        type: string
+      harmonizedCode:
+        type: string
+      ISBN:
+        type: string
+      articleDescription:
+        type: string
+      articleNumber:
+        type: string
+        example: 6728
+      articleShortDescription:
+        type: string
+      articleWeight:
+        type: string
+      articleWeightUnitOfMeasure:
+        type: string
+      languageDescriptionList:
+        type: object
+        properties:
+          languageDescription:
+            type: array
+            items:
+              type: object
+              properties:
+                description:
+                  type: string
+                localCode:
+                  type: string
+      manufacturerarticle:
+        type: string
+      manufacturerItemDescription:
+        type: string
+      manufacturerName:
+        type: string
+      NMFClass:
+        type: string
+      NMFCode:
+        type: string
+      NMFCDescription:
+        type: string
+      productClass:
+        type: string
+      productLine:
+        type: string
+      scheduleBcode:
+        type: string
+      substituteArticleNumber:
+        type: string
+      substituteArticleUnitOfMeasure:
+        type: string
+      supplierArticle:
+        type: string
+      supplierArticleDescription:
+        type: string
+      taxProductCode:
+        type: string
+      UPCCode:
+        type: string
+      unitCost:
+        type: string
+      unitOfMeasure:
+        type: string
+  supermodelIoAdidasOmniAudit:
+    title: Audit
+    description: Audit model description
+    type: object
+    properties:
+      lastOrderAuditKey:
+        type: string
+      lastRecordSet:
+        type: string
+      readFromHistory:
+        type: string
+      totalOrderAuditList:
+        type: string
+      audit:
+        type: array
+        items:
+          type: object
+          properties:
+            auditTransactionId:
+              type: string
+            createUserName:
+              type: string
+            createTimestamp:
+              type: string
+              format: date
+            modifyUserName:
+              type: string
+            modifyTimestamp:
+              type: string
+            modifyUserId:
+              type: string
+            newBuffer:
+              type: string
+            oldBuffer:
+              type: string
+            order:
+              type: array
+              items:
+                type: object
+                properties:
+                  documentType:
+                    type: string
+                  country:
+                    type: string
+                  brand:
+                    type: string
+                  orderNumber:
+                    type: string
+            orderAuditKey:
+              type: string
+            orderAuditLevels:
+              type: object
+              properties:
+                orderauditLevel:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      modificationLevel:
+                        type: string
+                      modificationLevelScreenName:
+                        type: string
+                      modificationTypes:
+                        type: object
+                        properties:
+                          modificationType:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                screenName:
+                                  type: string
+                          orderAuditDetail:
+                            type: object
+                            properties:
+                              orderAuditDetail:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    action:
+                                      type: string
+                                    attributes:
+                                      type: object
+                                      properties:
+                                        attribute:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              extended:
+                                                type: string
+                                              modificationType:
+                                                type: string
+                                              name:
+                                                type: string
+                                              newValue:
+                                                type: string
+                                              oldValue:
+                                                type: string
+                                    auditType:
+                                      type: string
+                                    customerAuditDetail:
+                                      type: object
+                                      properties:
+                                        orderAuditDetail:
+                                          type: object
+                                          properties:
+                                            action:
+                                              type: string
+                                            attributes:
+                                              type: object
+                                              properties:
+                                                attribute:
+                                                  type: array
+                                                  items:
+                                                    type: object
+                                                    properties:
+                                                      extended:
+                                                        type: string
+                                                      modificationType:
+                                                        type: string
+                                                      name:
+                                                        type: string
+                                                      newValue:
+                                                        type: string
+                                                      oldValue:
+                                                        type: string
+                                            auditType:
+                                              type: string
+                                            ids:
+                                              type: object
+                                              properties:
+                                                id:
+                                                  type: array
+                                                  items:
+                                                    type: object
+                                                    properties:
+                                                      name:
+                                                        type: string
+                                                      value:
+                                                        type: string
+                                    ids:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: array
+                                          items:
+                                            type: object
+                                            properties:
+                                              name:
+                                                type: string
+                                              value:
+                                                type: string
+                          orderLine:
+                            type: object
+                            properties:
+                              article:
+                                $ref: '#/definitions/supermodelIoAdidasOmniArticle'
+                              orderLineKey:
+                                type: string
+                              orderdedQuantity:
+                                type: string
+                              orderlineNumber:
+                                type: string
+                              subLineNumber:
+                                type: string
+                          orderLineKey:
+                            type: string
+                          orderRelease:
+                            type: object
+                            properties:
+                              releaseNumber:
+                                type: string
+                          orderReleaseKey:
+                            type: string
+            orderHeaderKey:
+              type: string
+            orderLineKey:
+              type: string
+            orderReleaseKey:
+              type: string
+            reasonText:
+              type: string
+            reference1:
+              type: string
+            reference2:
+              type: string
+            reference3:
+              type: string
+            reference4:
+              type: string
+            xmlFlag:
+              type: string
+            isHistory:
+              type: string
+  supermodelIoAdidasOmniChargeTransactionDetails:
+    title: Charge Transaction Details
+    description: Charge Transaction Details model description
+    type: object
+    properties:
+      totalTransferredIn:
+        type: string
+      totalOpenBookings:
+        type: string
+      totalOpenAuthorizations:
+        type: string
+      totalDebits:
+        type: string
+      additionalExpectedAuthorizations:
+        type: string
+      chargeTransactionDetail:
+        type: array
+        items:
+          type: object
+          properties:
+            chargeType:
+              type: string
+            bookAmount:
+              type: string
+            status:
+              type: string
+            requestAmount:
+              type: string
+            debitAmount:
+              type: string
+            distributedAmount:
+              type: string
+            creditAmount:
+              type: string
+            collectionDate:
+              type: string
+              format: date
+  supermodelIoAdidasOmniHoldType:
+    title: Hold Type
+    description: Hold Type model description
+    type: object
+    properties:
+      status:
+        type: string
+      orderHeaderKey:
+        type: string
+      holdType:
+        type: string
+      statusDescription:
+        type: string
+      lastHoldTypeDate:
+        type: string
+  supermodelIoAdidasOmniInvoice:
+    title: Invoice
+    description: Invoice model description
+    type: object
+    properties:
+      totalNumberOfRecord:
+        type: string
+      invoiceCollectionDetail:
+        type: array
+        items:
+          type: object
+          properties:
+            charges:
+              type: string
+            extendedPrice:
+              type: string
+            invoiceHeaderKey:
+              type: object
+              properties:
+                invoiceType:
+                  type: string
+                orderInvoiceKey:
+                  type: string
+                masterInvoiceNumber:
+                  type: string
+                invoiceNumber:
+                  type: string
+                shipmentKey:
+                  type: string
+                returnReleaseKey:
+                  type: string
+                totalAmount:
+                  type: string
+                totalTax:
+                  type: string
+                dateInvoiced:
+                  type: string
+                  format: date
+                actualFreightCharge:
+                  type: string
+                chargedActualFreight:
+                  type: string
+                collectedExternally:
+                  type: string
+                collectedThroughAR:
+                  type: string
+                lineSubTotal:
+                  type: string
+                amountCollected:
+                  type: string
+                shipNode:
+                  type: string
+                reference1:
+                  type: string
+                order:
+                  type: object
+                  properties:
+                    deliveryCode:
+                      type: string
+                    orderType:
+                      type: string
+                    country:
+                      type: string
+                    brand:
+                      type: string
+                    entryType:
+                      type: string
+                    orderHeaderKey:
+                      type: string
+                    orderNumber:
+                      type: string
+                    priceInfo:
+                      $ref: '#/definitions/supermodelIoAdidasOmniPriceInfo'
+                    sellerOrganization:
+                      type: string
+                    termsCode:
+                      type: string
+                shipment:
+                  type: object
+                  properties:
+                    manifesToNumber:
+                      type: string
+                    receivingNode:
+                      type: string
+                    SCAC:
+                      type: string
+                    shipDate:
+                      type: string
+                    shipNode:
+                      type: string
+                    shipmentKey:
+                      type: string
+                    shipmentNumber:
+                      type: string
+            lineCharges:
+              type: object
+              properties:
+                lineCharge:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      chargeAmount:
+                        type: string
+                      chargeCategory:
+                        type: string
+                      chargeName:
+                        type: string
+                      chargeNameKey:
+                        type: string
+                      chargePerLine:
+                        type: string
+                      chargePerUnit:
+                        type: string
+                      isBillable:
+                        type: string
+                      isDiscount:
+                        type: string
+                      isShippingCharge:
+                        type: string
+                      originalChargePerLine:
+                        type: string
+                      originalChargePerUnit:
+                        type: string
+                      reference:
+                        type: string
+            lineDetailTranQuantity:
+              type: object
+              properties:
+                pricingQuantity:
+                  type: string
+                quantity:
+                  type: string
+                shippedQuantity:
+                  type: string
+                transactionalUnitOfMeasure:
+                  type: string
+            lineTaxes:
+              type: string
+              properties:
+                lineTax:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      chargeCategory:
+                        type: string
+                      chargeName:
+                        type: string
+                      chargeNameKey:
+                        type: string
+                      reference1:
+                        type: string
+                      tax:
+                        type: string
+                      taxName:
+                        type: string
+                      taxPercentage:
+                        type: string
+                taxSummary:
+                  type: object
+                  properties:
+                    taxSummaryDetail:
+                      type: object
+                      properties:
+                        tax:
+                          type: string
+                        taxName:
+                          type: string
+            isHistory:
+              type: string
+            lineTotal:
+              type: string
+            orderInvoiceDetailKey:
+              type: string
+            orderLine:
+              type: object
+              properties:
+                article:
+                  type: object
+                  properties:
+                    articleNumber:
+                      type: string
+                    productClass:
+                      type: string
+                    unitOfmeasure:
+                      type: string
+                    languageDescriptionlist:
+                      type: object
+                      properties:
+                        languageDescription:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              description:
+                                type: string
+                              extendedDescription:
+                                type: string
+                              localCode:
+                                type: string
+                              shortDescription:
+                                type: string
+            orderLineKey:
+              type: string
+            pricingQuantity:
+              type: string
+            quantity:
+              type: string
+            references:
+              type: string
+            shippedQuantity:
+              type: string
+            tax:
+              type: string
+            unitPrice:
+              type: string
+  supermodelIoAdidasOmniNote:
+    title: Note
+    description: Note model description
+    type: object
+    properties:
+      createprogId:
+        type: string
+      notesKey:
+        type: string
+      createuserId:
+        type: string
+      customerSatIndicator:
+        type: string
+      modifyuserId:
+        type: string
+      modifyprogId:
+        type: string
+      contactTime:
+        type: string
+        format: date
+      reasonCode:
+        type: string
+      auditTransactionId:
+        type: string
+      createTimestamp:
+        type: string
+        format: date
+      noteText:
+        type: string
+      modifyTimestamp:
+        type: string
+        format: date
+      priority:
+        type: string
+      contactReference:
+        type: string
+      contactUser:
+        type: string
+      isHistory:
+        type: string
+      tranId:
+        type: string
+      tableName:
+        type: string
+      contactType:
+        type: string
+      sequenceNumber:
+        type: string
+      tableKey:
+        type: string
+      lockId:
+        type: string
+  supermodelIoAdidasOmniOrder:
+    title: Order
+    description: Order model description
+    type: object
+    properties:
+      orderNumber:
+        type: string
+        example: '0000'
+      orderHeaderKey:
+        type: string
+      orderDate:
+        type: string
+        format: date-time
+      channel:
+        type: string
+      customer:
+        type: object
+        properties:
+          firstName:
+            type: string
+          lastName:
+            type: string
+          zipCode:
+            type: string
+          phoneNumber:
+            type: string
+      orderType:
+        type: string
+      fulfillmentType:
+        type: string
+      country:
+        type: string
+      brand:
+        type: string
+        enum:
+          - adidas
+          - reebok
+      orderStatus:
+        type: string
+        enum:
+          - created
+          - scheduled
+          - released
+          - shipped
+          - partiallyShipped
+          - delivered
+          - partiallyDelivered
+          - return created
+      minOrderStatus:
+        type: string
+      maxOrderStatus:
+        type: string
+      paymentType:
+        type: string
+        enum:
+          - giftcard
+      quantity:
+        type: string
+      paymentStatus:
+        type: string
+      paymentMethods:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniPaymentMethod'
+      orderHoldTypes:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniHoldType'
+      chargeTransactionDetails:
+        $ref: '#/definitions/supermodelIoAdidasOmniChargeTransactionDetails'
+      priceInformation:
+        $ref: '#/definitions/supermodelIoAdidasOmniOrderPriceInfo'
+      overallTotals:
+        $ref: '#/definitions/supermodelIoAdidasOmniOrderOverallTotals'
+      orderStatuses:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniOrderStatus'
+      billingAddress:
+        $ref: '#/definitions/supermodelIoAdidasOmniAddress'
+      shippingAddress:
+        $ref: '#/definitions/supermodelIoAdidasOmniAddress'
+    example:
+      orderHeaderKey: '20170920062948701537801'
+      orderNumber: AD8141234
+      orderDate: '2017-01-16T14:18:47.321Z'
+      orderName: 790YVTAGTV4RLQDZ
+      customerFirstName: Tigist
+      customerLastName: Gizaw
+      customerZipCode: '33131'
+      customerPhoneNumber: '3399704037'
+      customerEmailID: thechusfam@gmail.com
+      fulfillmentType: ShipToHome
+      ordertype: '0001'
+      brand: adidas
+      country: US
+      orderStatus: delivered
+      maxOrderStatus: '3200.100'
+  supermodelIoAdidasOmniOrderLine:
+    title: Order Line
+    description: Order Line model description
+    type: object
+    properties:
+      orderlineNumber:
+        type: string
+        example: '1'
+      orderStatus:
+        type: string
+        enum:
+          - created
+          - scheduled
+          - released
+          - shipped
+          - partiallyShipped
+          - delivered
+          - partiallyDelivered
+          - return created
+      quantity:
+        type: number
+        example: 2
+      lineType:
+        type: string
+      orderLineKey:
+        type: string
+      fulfillmentType:
+        type: string
+      returnReason:
+        type: string
+      article:
+        $ref: '#/definitions/supermodelIoAdidasOmniArticle'
+      orderLinePriceInfo:
+        $ref: '#/definitions/supermodelIoAdidasOmniOrderLinePriceInfo'
+      orderStatuses:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniOrderStatus'
+      orderLineOverAllTotals:
+        $ref: '#/definitions/supermodelIoAdidasOmniOrderLineOverallTotals'
+      shippingAddress:
+        $ref: '#/definitions/supermodelIoAdidasOmniAddress'
+  supermodelIoAdidasOmniOrderLineOverallTotals:
+    title: Order Line Overall Totals
+    description: Order Line Overall Totals model description
+    type: object
+    properties:
+      shippingTotals:
+        type: string
+      shippingBaseCharge:
+        type: string
+      additionalLinePriceTotal:
+        type: string
+      extendedPrice:
+        type: string
+      maualDiscountPercentage:
+        type: string
+      tax:
+        type: string
+      unitPrice:
+        type: string
+      lineCost:
+        type: string
+      lineTotalWithoutTax:
+        type: string
+      pricingQuantity:
+        type: string
+      lineTotal:
+        type: string
+      optionPrice:
+        type: string
+      shippingDiscount:
+        type: string
+      discount:
+        type: string
+      manualOverridePercentage:
+        type: string
+      charges:
+        type: string
+      percentageProfitMargin:
+        type: string
+      shippingCharges:
+        type: string
+  supermodelIoAdidasOmniOrderLinePriceInfo:
+    title: Order Line Price Info
+    description: Order Line Price Info model description
+    type: object
+    properties:
+      pricingUnitOfMeasure:
+        type: string
+        example: PIECE
+      isPriceLocked:
+        type: string
+        example: 'Y'
+      unitPrice:
+        type: string
+        example: '80'
+      listPrice:
+        type: string
+        example: '90'
+      retailPrice:
+        type: string
+        example: '90'
+      taxableFlag:
+        type: string
+        example: 'Y'
+      pricingQuantityStrategy:
+        type: string
+      invoicedLineTotal:
+        type: string
+      repricingQuantity:
+        type: string
+      tax:
+        type: string
+      isEligibleForShippingDiscount:
+        type: string
+      discountReference:
+        type: string
+      invoicedPricingQuantity:
+        type: string
+      settledQuantity:
+        type: string
+      lineTotal:
+        type: string
+      settledAmount:
+        type: string
+      orderedPricingQuantity:
+        type: string
+      actualPricingQuantity:
+        type: string
+      discountPercentage:
+        type: string
+      discountType:
+        type: string
+  supermodelIoAdidasOmniOrderOverallTotals:
+    title: Order Overall Totals
+    description: Order Overall Totals model description
+    type: object
+    properties:
+      headerTotal:
+        type: string
+      grandTax:
+        type: string
+      lineSubtotal:
+        type: string
+      headerCharge:
+        type: string
+      grandCharge:
+        type: string
+      headerShippingTotal:
+        type: string
+      additionalLinePrice:
+        type: string
+      manualDiscountPercentation:
+        type: string
+      grandShippingDiscount:
+        type: string
+      headerShippingCharge:
+        type: string
+      grandDiscount:
+        type: string
+      grandShippingBaseCharge:
+        type: string
+      headerShippingDiscount:
+        type: string
+      grandShippingTotal:
+        type: string
+      headerTax:
+        type: string
+      headerShippingBaseCharge:
+        type: string
+      headerDiscount:
+        type: string
+      percentProfitMargin:
+        type: string
+      grandTotal:
+        type: string
+      grandShippingCharge:
+        type: string
+  supermodelIoAdidasOmniOrderPriceInfo:
+    title: Order Price Info
+    description: Order Price Info model description
+    type: object
+    properties:
+      enterpriseCurrency:
+        description: Describes the currency used in the system
+        type: string
+        enum:
+          - USD
+          - GBP
+        example: USD
+      currency:
+        description: Describes the currency used
+        type: string
+        enum:
+          - USD
+          - GBP
+        example: USD
+      reportingConversionRate:
+        type: string
+        example: '1.00'
+      totalAmount:
+        type: string
+        example: '39.00'
+      reportingConversiondate:
+        type: string
+        format: date
+        example: '2018-09-03T08:43:18+00:00'
+      headerTax:
+        type: string
+  supermodelIoAdidasOmniOrderStatus:
+    title: Order Status
+    description: Order Status model description
+    type: object
+    properties:
+      totalQuantity:
+        type: string
+      orderHeaderKey:
+        type: string
+      statusDate:
+        type: string
+        format: date
+      expectedDeliverytDate:
+        type: string
+        format: date
+      statusDescription:
+        type: string
+      orderReleasekey:
+        type: string
+      orderLinekey:
+        type: string
+      statusQuantity:
+        type: string
+      transactionalUnitOfMeasure:
+        type: string
+      shipNode:
+        type: string
+      pipelineKey:
+        type: string
+      orderLineScheduleKey:
+        type: string
+      orderReleaseStatusKey:
+        type: string
+  supermodelIoAdidasOmniPaymentMethod:
+    title: Payment Method
+    description: Payment Method model description
+    type: object
+    properties:
+      paymentReference2:
+        type: string
+        example: EBAYPAYPAL_US
+      paymentReference3:
+        type: string
+        example: '073014712424'
+      paymentType:
+        type: string
+        example: PAYPAL
+      maxChargeLimit:
+        type: string
+      creditCardType:
+        type: string
+        example: Mastercard
+      creditCardNo:
+        type: string
+        example: '54829632546'
+  supermodelIoAdidasOmniPriceInfo:
+    title: Price Info
+    description: Price Info model description
+    type: object
+    properties:
+      enterpriseCurrency:
+        type: string
+      currency:
+        type: string
+      reporttingConversion:
+        type: string
+      reportingConversiondate:
+        type: string
+        format: date
+      headerTax:
+        type: string
+  supermodelIoAdidasOmniShipment:
+    title: Shipment
+    description: Shipment model description
+    type: object
+    properties:
+      totalQuantity:
+        type: string
+      orderHeaderKey:
+        type: string
+      SCAC:
+        type: string
+      brand:
+        type: string
+      country:
+        type: string
+      orderType:
+        type: string
+      orderNumber:
+        type: string
+      shipmentKey:
+        type: string
+      releaseNumber:
+        type: string
+      orderReleaseKey:
+        type: string
+      carrierServiceCode:
+        type: string
+      requestedCarrierService:
+        type: string
+      actualShipmentDate:
+        type: string
+        format: date
+      actualDeliveryDate:
+        type: string
+        format: date
+      shipNode:
+        type: string
+      orderStatus:
+        type: string
+      shipmentNumber:
+        type: string
+      trackingNumber:
+        type: string
+      requestedDeliveryDate:
+        type: string
+        format: date
+      expectedDeliveryDate:
+        type: string
+        format: date
+      shipDate:
+        type: string
+        format: date
+      extn:
+        type: object
+        properties:
+          extnTrackingURL:
+            type: string
+          extnShipAdviceNumber:
+            type: string
+      containers:
+        type: object
+        properties:
+          trackingNo:
+            type: string
+          containerNumber:
+            type: string
+          containersDetails:
+            type: object
+            properties:
+              quantity:
+                type: string
+  supermodelIoAdidasOmniShipmentLine:
+    title: Shipment Line
+    description: Shipment Line model description
+    type: object
+    properties:
+      articleNumber:
+        type: string
+      trackingNumber:
+        type: string
+      shipmentLineKey:
+        type: string
+      shipmentKey:
+        type: string
+      requestedSerialNumber:
+        type: string
+      orderReleaseKey:
+        type: string
+      modifyprogId:
+        type: string
+      modifyuserId:
+        type: string
+      articleDescription:
+        type: string
+      createTimestamp:
+        type: string
+      segmentType:
+        type: string
+      modifyTimestamp:
+        type: string
+      action:
+        type: string
+      orderNumber:
+        type: string
+      isPickable:
+        type: string
+      netWeightUnitOfMeasure:
+        type: string
+      unitOfMeasure:
+        type: string
+      segment:
+        type: string
+      kitQuatnity:
+        type: string
+      orderLineKey:
+        type: string
+      backroomPickedQuantity:
+        type: string
+      waveNumber:
+        type: string
+      originalQuantity:
+        type: string
+      departmentCode:
+        type: string
+      customerPoLineNumber:
+        type: string
+      countryOfOrigin:
+        type: string
+      createprogId:
+        type: string
+      kitCode:
+        type: string
+      orderHeaderKey:
+        type: string
+      quantity:
+        type: string
+      orderlineNumber:
+        type: string
+      createuserId:
+        type: string
+      shortageQunatity:
+        type: string
+      releaseNumber:
+        type: string
+      subLineNumber:
+        type: string
+      shipmentSubLineNumber:
+        type: string
+      shipmentLineNumber:
+        type: string
+      fifoNumber:
+        type: string
+      netWeight:
+        type: string
+      productClass:
+        type: string
+      overShipQuantity:
+        type: string
+      isHistory:
+        type: string
+      customerPONumber:
+        type: string
+      levelOfService:
+        type: string
+      lockId:
+        type: string
+      orderStatus:
+        type: string
+      statusQty:
+        type: string
+  supermodelIoAdidasOmniApiAuditsHAL:
+    title: Audits HAL
+    description: Audits HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      auditsCount:
+        type: number
+      note:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniAudit'
+    example:
+      _links:
+        self:
+          href: /orders/AD018137687/audits
+      audits: []
+  supermodelIoAdidasOmniApiCreateOrder:
+    title: Create Order
+    description: Create Order model description
+    type: object
+    properties:
+      country:
+        type: string
+        example: US
+      brand:
+        type: string
+        example: adidas
+      email:
+        type: string
+        example: test@gmail.com
+      orderDate:
+        type: string
+        format: date
+        example: '2017-01-16T14:18:47.321Z'
+      channel:
+        type: string
+        example: ebay
+      customerPONo:
+        type: string
+        example: '073014713412'
+      orderType:
+        type: string
+        example: '0001'
+      firstName:
+        type: string
+        example: Bill
+      middleName:
+        type: string
+        example: Maria
+      lastName:
+        type: string
+        example: Gates
+      paymentStatus:
+        type: string
+        enum:
+          - PAID
+          - Authorized
+          - On Hold
+        example: PAID
+      priceInfo:
+        $ref: '#/definitions/supermodelIoAdidasOmniPriceInfo'
+      headerTaxes:
+        type: object
+        properties:
+          chargeCategory:
+            type: string
+            enum:
+              - ShippingTax
+              - ShippingCharge
+            example: ShippingTax
+          chargeName:
+            type: string
+            enum:
+              - ShippingTax_Inline
+              - Shipping_Inline
+          taxName:
+            type: string
+            example: ShippingTax_Inline
+          tax:
+            type: string
+            example: '5.00'
+      headerCharges:
+        type: object
+        properties:
+          chargeCategory:
+            type: string
+            example: ShippingCharge
+          chargeName:
+            type: string
+            example: Shipping_Inline
+          chargeAmount:
+            type: string
+            example: '40.00'
+      extn:
+        type: object
+        properties:
+          extnLocalCode:
+            type: string
+          extnPaymentMethod:
+            type: string
+          extnOrderStatus:
+            type: string
+          extnTaxCalculated:
+            type: string
+          extnCustPONumber:
+            type: string
+      billingAddress:
+        $ref: '#/definitions/supermodelIoAdidasOmniAddress'
+      shippingAddress:
+        $ref: '#/definitions/supermodelIoAdidasOmniAddress'
+      paymentMethods:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniPaymentMethod'
+  supermodelIoAdidasOmniApiCreateOrderLine:
+    title: Create Order Line
+    description: Model for new order's order line
+    type: object
+    properties:
+      orderLineNumber:
+        description: Describes the prime line number of the order line
+        type: string
+        example: '1'
+      quantity:
+        description: Quantity of the item
+        type: string
+        example: '1'
+      lineType:
+        description: Describes the orderline type
+        type: string
+        enum:
+          - inline
+          - personalized
+          - miadidas
+          - yourreebok
+          - Prebuy
+      carrierServiceCode:
+        description: Describes the Shipping method
+        type: string
+        enum:
+          - GRND
+          - LOWPRIORITY
+          - NONURGENT
+          - STANDARD
+          - STRDINLINE
+          - GRNDINLINE
+      article:
+        type: object
+        properties:
+          UPCCode:
+            type: string
+            example: '28234839945'
+          articleDescription:
+            type: string
+            example: Climacool Aerate 3 Shoes
+          articleNumber:
+            description: Describes the item number and size of the article
+            type: string
+            example: G98520_620
+          productClass:
+            description: Describes a hardcoded value for the article class
+            type: string
+            example: NEW
+          unitOfMeasure:
+            description: Describes the measurement of the the article
+            type: string
+            example: PIECE
+      extn:
+        type: object
+        properties:
+          extnEAN:
+            type: string
+          extnArticleNumber:
+            type: string
+          extnSubOrderNumber:
+            type: string
+          extnLineType:
+            type: string
+      orderLinePriceInfo:
+        type: object
+        properties:
+          pricingUnitOfMeasure:
+            $ref: >-
+              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/pricingUnitOfMeasure
+          isPriceLocked:
+            $ref: >-
+              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/isPriceLocked
+          unitPrice:
+            $ref: >-
+              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/unitPrice
+          listPrice:
+            $ref: >-
+              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/listPrice
+          retailPrice:
+            $ref: >-
+              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/retailPrice
+          taxableFlag:
+            $ref: >-
+              #/definitions/supermodelIoAdidasOmniOrderLinePriceInfo/properties/taxableFlag
+      shippingAddress:
+        $ref: '#/definitions/supermodelIoAdidasOmniAddress'
+      lineTaxes:
+        type: object
+        properties:
+          lineTax:
+            type: object
+            properties:
+              chargeCategory:
+                type: string
+                example: LineTax
+              chargeName:
+                type: string
+                example: OrderLineTax
+              reference1:
+                type: string
+              tax:
+                type: string
+                example: '2.00'
+  supermodelIoAdidasOmniApiInvoicesHAL:
+    title: Invoices HAL
+    description: Invoices HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      invoicesCount:
+        type: number
+      invoice:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniInvoice'
+    example:
+      _links:
+        self:
+          href: /orders/AD018137687/invoices
+      invoicesCount: 1
+      invoices:
+        - totalNumberOfRecord: 3
+          invoiceCollectionDetail: []
+  supermodelIoAdidasOmniApiNotesHAL:
+    title: Notes HAL
+    description: Notes HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      notesCount:
+        type: number
+      note:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOmniNote'
+    example:
+      _links:
+        self:
+          href: /orders/AD018137687/notes
+      invoicesCount: 2
+      invoices:
+        - noteText: Hello World
+        - noteText: Lorem Ipsum
+  supermodelIoAdidasOmniApiOrderHAL:
+    title: Order HAL
+    description: Order HAL represenatation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasOmniOrder'
+    example:
+      _links:
+        self:
+          href: /orders/AD018137687
+        cancel:
+          href: /orders/AD018137687/cancellation
+        update:
+          href: /orders/AD018137687
+        returns:
+          href: /orders/AD018137687/returns
+        exchanges:
+          href: /orders/AD018137687/exchanges
+        createReturn:
+          href: /orders/AD018137687/returns
+        createExchange:
+          href: /orders/AD018137687/exchanges
+        note:
+          - href: /orders/AD018137687/notes
+        audit:
+          - href: /orders/AD018137687/audits
+        invoice:
+          - href: /orders/AD018137687/invoices
+        shipments:
+          - href: /orders/AD018137687/shipments
+        orderline:
+          - href: /orders/AD018137687/orderlines/1
+          - href: /orders/AD018137687/orderlines/2
+      orderHeaderKey: '20170920062948701537801'
+      orderNumber: AD018137687
+      orderDate: '2017-01-16T14:18:47.321Z'
+      orderName: 790YVTAGTV4RLQDZ
+      firstName: Zdenek
+      lastName: Nemec
+      zipCode: '33131'
+      phoneNumber: 800–692–7753
+      email: john@appleseed.com
+      fulfillmentType: ShipToHome
+      orderType: '0001'
+      country: US
+      brand: adidas
+      status: delivered
+      maxOrderStatus: '3200.100'
+  supermodelIoAdidasOmniApiOrderLineHAL:
+    title: Order Line HAL
+    description: Order Line HAL representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasOmniOrderLine'
+    example:
+      _links:
+        self:
+          href: /orders/AD018137687/orderlines/1
+        note:
+          - href: /orders/AD018137687/orderlines/1/notes
+          - href: /orders/AD018137687/orderlines/2/notes
+        audit:
+          - href: /orders/AD018137687/orderlines/1/audits
+      orderlineNumber: '1'
+      orderlineStatus: Delivered
+      orderdedQuantity: 2
+      lineType: inline
+      orderLineKey: '201808220115396076391733'
+      article:
+        articleNumber: CE2392_470
+        articleDescription: SST Track Jacket
+        unitOfMeasure: PIECE
+        productClass: NEW
+      internalOrderLineStatus: null
+      numberOfNotes: 1
+  supermodelIoAdidasOmniApiOrderLinesHAL:
+    title: Order Lines HAL
+    description: Collection of order lines
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    example:
+      _links:
+        self:
+          href: /orders/AD018137687/orderlines/
+      orderlinesCount: 2
+      _embedded:
+        orderline:
+          - _links:
+              self:
+                href: /orders/AD018137687/orderlines/1
+          - _links:
+              self:
+                href: /orders/AD018137687/orderlines/2
+  supermodelIoAdidasOmniApiOrdersHAL:
+    title: Orders HAL
+    description: Collection of orders
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    example:
+      _links:
+        self:
+          href: /...
+      orderCount: 2
+      _embedded:
+        order:
+          - _links:
+              self:
+                href: /orders/AD8141234
+            orderHeaderKey: '20170920062948701537801'
+            orderNumber: AD8141234
+            orderDate: '2017-01-16T14:18:47.321Z'
+            orderName: 790YVTAGTV4RLQDZ
+            firstName: Tigist
+            lastName: Gizaw
+            zipCode: '33131'
+            phoneNumber: '3399704037'
+            email: thechusfam@gmail.com
+            fulfillmentType: ShipToHome
+            orderType: '0001'
+            country: US
+            brand: adidas
+            status: delivered
+            maxOrderStatus: '3200.100'
+          - _links:
+              self:
+                href: /orders/AD9141238
+            orderHeaderKey: '2017092006294870153678'
+            orderNo: AD9141238
+            orderDate: '2018-01-16T14:18:47.321Z'
+            orderName: 879YVTAGTV4RABCD
+            firstName: Deepak
+            lastName: Gupta
+            zipCode: '22345'
+            phoneNo: '312345678'
+            email: thedeeus@gmail.com
+            fulfillmentType: ShipToHome
+            orderType: '0001'
+            country: US
+            brand: adidas
+            orderStatus: shipped
+            maxOrderStatus: '3200.200'
+  supermodelIoAdidasOmniApiProblemDetail:
+    $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+  supermodelIoAdidasOmniApiReturnExchangeCancelOrder:
+    title: 'Return, exchange, cancel Order'
+    description: 'Return, exchange, cancel Order model description'
+    type: object
+    properties:
+      orderLines:
+        type: array
+        items:
+          type: object
+          properties:
+            quantity:
+              description: The quantity of item
+              type: string
+            orderlineNumber:
+              description: >-
+                This is running sequence number of the order line starting from
+                1
+              type: string
+            reasonText:
+              description: >-
+                describes the reason for item being cancelled, returned and
+                exchanged
+              type: string
+              enum:
+                - Cancellation - Item arrived late
+                - Cancellation - Cancelled by customer request
+                - Cancellation - Cancelled by customer from website
+                - Cancellation - Customer Initiated
+                - Cancellation - Customer Changed Mind
+                - Cancellation - Customer no longer wants order
+                - Cancellation - Customer no-show
+                - Cancellation - CNC Expired
+                - Cancellation - Expired Pickup window
+                - Cancellation - Cancelled due to inventory issue
+                - Cancellation - Cancelled due to inventory issue - Early
+                - Cancellation - Cancelled due to inventory issue - DC
+                - Cancellation - Cancelled due to inventory issue - Store
+                - Cancellation - Cancelled due to Inventory Shortage
+                - Cancellation - Cancelled due to payment problem
+                - Cancellation - Cancelled due to Inspection Failure
+                - Cancellation - Cancelled due to manual review decline
+                - Cancellation - Product Has Been Discontinued
+                - Cancellation - Bad SKU
+                - Cancellation - Wrong size CSR
+                - Cancellation - Does not fit customer
+                - Cancellation - Different size of same article selected
+                - Cancellation - Ordered wrong item
+                - Cancellation - Duplicate Item
+                - Cancellation - Out of Stock
+                - Cancellation - BackOrder Cancel
+                - Cancellation - Short pick in warehouse
+                - Cancellation - Wouldn't arrive in time
+                - Cancellation - Cannot fulfill the order in time
+                - Cancellation - Took too long to fulfill order
+                - Cancellation - Zip code not covered
+                - Cancellation - Cannot ship to PO Box
+                - Cancellation - Cannot ship USPS
+                - Cancellation - Cant Ship to Country
+                - Cancellation - Cannot Ship as Ordered
+                - Cancellation - Supplier cannot ship
+                - Cancellation - Invalid method of shipment
+                - Cancellation - Fraud validation
+                - Cancellation - Merchant detected fraud
+                - Cancellation - Supplier detected fraud
+                - Cancellation - Bad Address
+                - Cancellation - Wrong billing address
+                - Cancellation - Address validation failure
+                - Cancellation - Cancelled at Merchant's Request
+                - Cancellation - Order Entry Error
+                - Cancellation - Order Info Missing
+                - Cancellation - ON REQUEST of Consumer Service
+                - Cancellation - Change of delivery method
+                - Cancellation - Invalid Item Cost
+                - Cancellation - Duplicate Order
+                - Cancellation - Purchased cheaper elsewhere
+                - Cancellation - Found this product somewhere else
+                - Cancellation - Dislike design
+                - Cancellation - Damaged article
+                - Cancellation - Wrong pickup in warehouse
+                - Cancellation - Never Received Order from DC
+                - Return - wrong item
+                - Return - Blind Return /refused delivery
+                - Return - Color Different from Order
+                - Return - Item Arrived Late
+                - Return - Item Does Not Match Description
+                - Return - Item Not Ordered
+                - Return - Correct Size but too Large
+                - Return - Return or Gift
+                - Return - Size Different from Order
+                - Return - Correct Size but too Small
+                - Return - Wrong Item Sent
+                - Return - Delivery Exception
+                - Return - Do not Like/Want
+                - Return - Store Exchange
+                - Return - Competitive Price
+                - Return - Damaged
+                - Return - Mismates
+                - Return - Refused Unclaimed
+                - Return - Undeliverable
+                - Return - Gift
+                - Return - Defective
+                - Return - Wrong Size
+                - Return - Exchange
+                - Return - Customer Dissatisfaction
+                - Return - Comfort / Performance
+                - Return - Duplicate Item
+                - Return - Item differs from online
+                - Return - Late Delivery
+                - Return - Material / Fabrics
+                - Return - Material / Production Defect
+                - Return - No Longer Required
+                - Return - Too large / big
+                - Return - Too long
+                - Return - Too short
+                - Return - Too small / tight
+                - Return - Wrong Item Delivered
+                - Return - Wrong Item Ordered
+                - Return - WH Return Requested
+                - others
+            articleNumber:
+              type: string
+    example:
+      orderLines:
+        - quantity: 2
+          orderlineNumber: 1
+          reasonText: Item arrived late
+          articleNumber: AA2131_130
+  supermodelIoAdidasOmniApiShipmentHAL:
+    title: Shipment HAL Representation
+    description: Shipment HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasOmniShipment'
+    example:
+      _links:
+        self:
+          href: /orders/AD018295044/shipments/AD018295044-1
+        invoice:
+          - href: /orders/AD018295044/shipments/AD018295044-1/invoice/0001
+        shipmentline:
+          - href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines/1
+          - href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines/2
+      shipmentNumber: AD018295044-1
+      trackingNumber: '454793841764'
+      orderNumber: AD018295044
+      orderHeaderKey: '201808312124016179541708'
+      orderReleaseKey: '201808221859096084007963'
+      totalQuantity: '2'
+      releaseNumber: '1'
+      carrierServiceCode: GROUND
+      requestedCarrierServiceCode: 2NDDAY
+      country: US
+      brand: adidas
+      shipNode: adidasUS_DC1
+      actualShipmentDate: '2018-08-22T21:38:57+00:00'
+      expectedDeliveryDate: '2018-08-25T04:00:00+00:00'
+      shipDate: '2018-09-01T18:41:36+00:00'
+      SCAC: FedEx
+      orderType: '0001'
+  supermodelIoAdidasOmniApiShipmentLineHAL:
+    title: Shipment Line HAL
+    description: Shipment Line HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasOmniShipmentLine'
+    example:
+      _links:
+        self:
+          href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines/1
+        orderline:
+          href: /orders/AD018295044/orderline/1
+      shipmentNumber: AD018295044-1
+      trackingNumber: '454793841764'
+      orderReleaseKey: '201808221859096084007963'
+      releaseNumber: '1'
+      orderNumber: AD018295044
+      shipmentLineNumber: '1'
+      shipmentLineKey: '201809012302536188597714'
+      article:
+        articleNumber: CE2392_470
+        articleDescription: SST Track Jacket
+        unitOfMeasure: PIECE
+        productClass: NEW
+      quantity: '1'
+      orderLineNumber: '1'
+      orderLineKey: '201808220115396076391733'
+      subLineNo: '1'
+      carrierServiceCode: GRND
+      country: US
+      brand: adidas
+      expectedDeliveryDate: '2018-08-25T04:00:00+00:00'
+      actualShipmentDate: '2018-08-22T21:38:57+00:00'
+      customerPoNo: T3AJ0VNMDLG719LH
+      createuserid: adidas_ProcessShipment
+      createTimeStamp: '2018-09-01T23:02:52+00:00'
+      orderType: '0001'
+  supermodelIoAdidasOmniApiShipmentLinesHAL:
+    title: Shipment Lines HAL
+    description: Shipment Lines HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    example:
+      _links:
+        self:
+          href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines
+      shipmentLinesCount: 1
+      _embedded:
+        shipment:
+          - _links:
+              self:
+                href: /orders/AD018295044/shipments/AD018295044-1/shipmentlines/1
+  supermodelIoAdidasOmniApiShipmentsHAL:
+    title: Shipments HAL
+    description: Collection of shipments
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    example:
+      _links:
+        self:
+          href: /orders/AD018295044/shipments
+      shipmentsCount: 2
+      _embedded:
+        shipment:
+          - _links:
+              self:
+                href: /orders/AD018295044/shipments/AD018295044-1
+          - _links:
+              self:
+                href: /orders/AD018295044/shipments/AD018295044-2
+  supermodelIoAdidasOneWMSAjdustmentItem:
+    title: Ajdustment Item
+    description: Ajdustment Item model description
+    type: object
+    properties:
+      articleNumber:
+        type: string
+        example: B75743
+      srcSizeCD3:
+        type: string
+        example: A570
+      plant:
+        type: string
+        example: P7210
+      storageLocation:
+        type: string
+        example: SL0001
+      stockCategory:
+        type: string
+        example: A
+      salesOrder:
+        type: string
+        example: '1234567890'
+      salesOrderLine:
+        type: string
+        example: '123456'
+  supermodelIoAdidasOneWMSDeliveryItem:
+    title: Delivery Item
+    description: Delivery Item model description
+    type: object
+    properties:
+      deliveryItem:
+        type: string
+        example: '900005'
+      deliveryLine:
+        type: string
+      articleNumber:
+        type: string
+        description: Also known as `articleNo`
+        example: B75743
+      srcSizeCd3:
+        type: string
+        description: Also known as `sourcingSizeCd3`
+        example: '370'
+      salesSizeDescription:
+        type: string
+        example: 10-
+      actualDeliveredQuantity:
+        type: number
+        example: 2
+      deliveryQuantity:
+        type: number
+        example: 2
+      customsStatus:
+        type: string
+      countryOfOrigin:
+        type: string
+        example: CN
+      lvs_Id:
+        type: string
+  supermodelIoAdidasOneWMSHandlingUnit:
+    title: Handling Unit
+    description: Handling Unit model description
+    type: object
+    properties:
+      handlingUnitNumber:
+        type: string
+        example: 00000980900479198505
+      packingMaterialType:
+        type: string
+      totalVolume:
+        type: number
+        example: 3.16
+      volumeUnit:
+        type: string
+      totalWeight:
+        type: number
+        example: 102.5
+      netWeight:
+        type: number
+        example: 100.01
+      weightUnit:
+        type: string
+      quantity:
+        type: string
+      length:
+        type: string
+      width:
+        type: string
+      height:
+        type: string
+      externalHandlingUnit:
+        type: string
+      description:
+        type: string
+      dimUnit:
+        type: string
+      handlingUnitItems:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSHandlingUnitItem'
+  supermodelIoAdidasOneWMSHandlingUnitItem:
+    title: Handling Unit Item
+    description: Handling Unit Item model description
+    type: object
+    properties:
+      handlingUnitItem:
+        type: string
+      documentItem:
+        type: string
+      documentLine:
+        type: string
+      articleNumber:
+        type: string
+        description: Also known as `articleNo`
+        example: B75743
+      srcSizeCd3:
+        type: string
+        description: Also known as `sourcingSizeCd3`
+        example: '370'
+      salesSizeDescription:
+        type: string
+        example: 10-
+      cartonQuantity:
+        type: number
+      lowerLevelHU:
+        type: string
+      pkngLevel:
+        type: string
+      referenceDocument:
+        type: string
+      customsStatus:
+        type: string
+      countryOfOrigin:
+        type: string
+        example: CN
+      lvs_Id:
+        type: string
+  supermodelIoAdidasOneWMSHostIndicator:
+    title: HostIndicator
+    type: string
+    description: ReferenceCode10 / Reference610
+    example: REU
+  supermodelIoAdidasOneWMSInboundDeliveryLine:
+    title: Inbound Delivery Line
+    description: Inbound Delivery Line description
+    type: object
+    properties:
+      lineNumber:
+        type: string
+        example: '000001'
+      articleNumber:
+        type: string
+        example: B75743
+      srcSizeCd3:
+        type: string
+        example: '370'
+      salesOrder:
+        type: string
+        example: '1010101020'
+      salesOrderLine:
+        type: string
+        example: '223451'
+      iLPNsShipped:
+        type: number
+        example: 1
+      unitsShipped:
+        type: number
+        example: 10
+      iLPNsReceived:
+        type: number
+        example: 1
+      unitsReceived:
+        type: number
+        example: 10
+      division:
+        type: string
+        description: 'ReferenceCode1 / Reference1 01 = FTW, 02 = APP, 03 = ACC, 99 = non-AFS'
+        example: '01'
+      twoStepSellingDeliveryLine:
+        type: string
+        example: '000000'
+    required:
+      - lineNumber
+      - articleNumber
+      - srcSizeCd3
+      - unitsReceived
+  supermodelIoAdidasOneWMSInventoryAjdustment:
+    title: Inventory Ajdustment
+    description: Inventory Ajdustment model description
+    type: object
+    properties:
+      created:
+        type: string
+        format: date-time
+      warehouse:
+        type: string
+        example: PAN
+      transactionNumber:
+        type: string
+        example: A123456
+      sequenceNumber:
+        type: string
+        example: A789
+      publisher:
+        type: string
+        example: ZTIB_PANAMA
+      movemementType:
+        type: string
+        example: Z53
+      quantity:
+        type: number
+        example: 100
+      reference:
+        type: string
+        example: A123345
+      from:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSAjdustmentItem'
+      to:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSAjdustmentItem'
+  supermodelIoAdidasOneWMSNotificationOfReceipt:
+    title: Notification of Receipt
+    description: Notification of Receipt
+    type: object
+    properties:
+      created:
+        type: string
+        description: ISO 8601 timestamp
+        allOf:
+          - $ref: '#/definitions/supermodelIoSchemaorgDateTime'
+        example: '2018-10-03T09:59:06Z'
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      plant:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSPlant'
+      warehouse:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSWarehouse'
+      transactionNumber:
+        type: string
+        example: 5141621
+      sequenceNumber:
+        type: string
+        example: 2
+      receiptsVariance:
+        type: string
+        example: 'N'
+      receiptsCompleted:
+        type: string
+        example: 'N'
+      containerNumber:
+        type: string
+        description: ReferenceCode6 / Reference6
+        example: GEISHP0918001
+      twoStepSellingDelivery:
+        type: string
+        example: '0000000000'
+      inboundDeliveryNumber:
+        type: string
+        description: ReferenceCode3 / Reference3
+        example: GEASN0918001
+      inboundDeliveryLines:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSInboundDeliveryLine'
+    required:
+      - hostIndicator
+      - plant
+      - warehouse
+      - transactionNumber
+      - inboundDeliveryNumber
+      - inboundDeliveryLines
+  supermodelIoAdidasOneWMSNotificationOfShipment:
+    title: Notification of Shipment
+    description: Notification of Shipment model description
+    type: object
+    properties:
+      warehouse:
+        type: string
+        example: PAN
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      deliveryNumber:
+        type: string
+        example: '6187131189'
+      totalWeight:
+        type: number
+      netWeight:
+        type: string
+      weightUnit:
+        type: number
+      totalVolume:
+        type: number
+      volumeUnit:
+        type: string
+      totalNumberOfPackages:
+        type: number
+      totalQuantity:
+        type: number
+      plannedGoodsMovementDate:
+        type: string
+        format: date
+      actualGoodsMovementDate:
+        type: string
+        format: date
+      billOfLadingNumber:
+        type: string
+      billOfLading:
+        type: string
+      masterBillOfLading:
+        type: string
+      externalIdentification:
+        type: string
+      multiShipFlag:
+        type: string
+        example: M
+      pickingDate:
+        type: string
+        format: date
+      transportPlanningDate:
+        type: string
+        format: date
+      loadingDate:
+        type: string
+        format: date
+      forwardingAgent:
+        type: string
+      loadNumber:
+        type: number
+      trailerNumber:
+        type: number
+      carrier:
+        type: number
+      deliveryNoteGrouping:
+        type: string
+      deliveryNoteCount:
+        type: number
+      priceCondition:
+        type: object
+        properties:
+          conditionType:
+            type: string
+          conditionValue:
+            type: string
+          conditionCurrency:
+            type: string
+          conditionClass:
+            type: string
+      deliveryItems:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSDeliveryItem'
+      handlingUnits:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSHandlingUnit'
+    required:
+      - deliveryNumber
+  supermodelIoAdidasOneWMSOrderStatus:
+    title: Order Status
+    description: Status udpate of one order
+    type: object
+    properties:
+      outboundDeliveryNumber:
+        type: string
+        example: GEASN0918001
+      salesOrder:
+        type: string
+        example: AUS0000001
+      releaseNumber:
+        type: number
+        example: 1
+      status:
+        type: string
+        enum:
+          - inWMS
+          - inProcess
+          - inPacking
+          - packed
+          - loaded
+          - shipped
+      timestamp:
+        type: string
+        description: ISO 8601 timestamp of the status event
+        allOf:
+          - $ref: '#/definitions/supermodelIoSchemaorgDateTime'
+        example: '2018-10-03T09:59:06Z'
+      plant:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSPlant'
+    required:
+      - outboundDeliveryNumber
+      - status
+      - plant
+  supermodelIoAdidasOneWMSOrdersStatuses:
+    title: Orders Statuses
+    description: Statuses update for Orders
+    type: object
+    properties:
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      warehouse:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSWarehouse'
+      orders:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSOrderStatus'
+    required:
+      - hostIndicator
+      - warehouse
+      - orders
+  supermodelIoAdidasOneWMSPlant:
+    title: Plant
+    type: string
+    description: ReferenceCode4 / Reference4
+    example: '6025'
+  supermodelIoAdidasOneWMSReturnOrderLine:
+    title: Return Order Line
+    description: Return Order Line model
+    type: object
+    properties:
+      orderLine:
+        type: string
+      articleNumber:
+        type: string
+      srcSizeCD3:
+        type: string
+      stockCategory:
+        type: string
+      salesOrganization:
+        type: string
+      channel:
+        type: string
+      storageLocation:
+        type: string
+      unitsReceived:
+        type: number
+      division:
+        type: string
+      brand:
+        type: string
+    example:
+      orderLine: '000001'
+      articleNumber: B75743
+      srcSizeCD3: '370'
+      stockCategory: A
+      salesOrganization: '6038'
+      channel: '01'
+      storageLocation: '0001'
+      unitsReceived: 10
+      division: '01'
+      brand: '11'
+    required:
+      - orderLine
+      - articleNumber
+      - srcSizeCD3
+      - unitsReceived
+  supermodelIoAdidasOneWMSReturnReceipt:
+    title: Return Receipt Confirmation
+    description: Return Receipt model description
+    type: object
+    properties:
+      created:
+        type: string
+        description: ISO 8601 timestamp
+        allOf:
+          - $ref: '#/definitions/supermodelIoSchemaorgDateTime'
+        example: '2018-10-03T09:59:06Z'
+      hostIndicator:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSHostIndicator'
+      plant:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSPlant'
+      warehouse:
+        $ref: '#/definitions/supermodelIoAdidasOneWMSWarehouse'
+      transactionNumber:
+        type: string
+        example: 5141621
+      sequenceNumber:
+        type: string
+        example: 2
+      returnOrder:
+        type: string
+        example: GEASN0918001
+      originalOrder:
+        type: string
+        example: GEASN0918001
+      enterpriseCode:
+        type: string
+        example: '6000000001'
+      shipTo:
+        type: string
+        example: '6000000042'
+      soldTo:
+        type: string
+        example: '6000000072'
+      purchaseOrderType:
+        type: string
+        example: '01'
+      reasonCode:
+        type: string
+        example: '50'
+      returnNote:
+        type: string
+        example: Lorem Ipsum
+      returnOrderLines:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasOneWMSReturnOrderLine'
+  supermodelIoAdidasOneWMSWarehouse:
+    title: Warehouse
+    type: string
+    example: DTC
+  supermodelIoAdidasOneWMSApiAPIRoot:
+    title: HAL
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    example:
+      _links:
+        self: /
+        createNotificationOfReceipt: /notification-receipt
+        updateOrderStatuses: /orders
+        returnReceiptConfirmation: /return-receipt
+        createNotificationOfShipment: /notification-shipment
+        inventoryAdjustment: /inventory-adjustment
+  supermodelIoAdidasOneWMSApiInventoryAdjusted:
+    title: Inventory Adjusted
+    description: Inventory adjustment confirmation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Inventory adjusted successfully
+  supermodelIoAdidasOneWMSApiNotificationOfReceiptCreated:
+    title: Notification of Receipt Created
+    description: Confirmation of notification being created
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Notification of receipt created successfully
+      inboundDeliveryNumber: GEASN0918001
+  supermodelIoAdidasOneWMSApiNotificationOfShipmentCreated:
+    title: Notification of Shipment Created
+    description: Confirmation of notification being created
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Notification of receipt created successfully
+      deliveryNumber: 6187131189
+  supermodelIoAdidasOneWMSApiOrdersUpdated:
+    title: Orders Updated
+    description: Confirmation of orders statuses being updated
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Orders statuses update successfully
+  supermodelIoAdidasOneWMSApiProblemDetail:
+    title: Problem Detail
+    $ref: '#/definitions/supermodelIoAdidasApiProblemDetail'
+  supermodelIoAdidasOneWMSApiReturnReceiptConfirmationAccepted:
+    title: Return Receipt Confirmation Accepted
+    description: Confirmation of return receipt
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      detail:
+        type: string
+    example:
+      detail: Return receipt confirmation accepted
   supermodelIoAdidasProductArticle:
     title: Article
     type: object
@@ -721,33 +3310,67 @@ definitions:
         type: string
       articleDescription:
         type: string
+      materialWeight:
+        type: string
+      colorwayName:
+        type: string
+      colorwayDescription:
+        type: string
+      imageLaunchDate:
+        type: string
+        format: date-time
       gender:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      ageGroup:
         $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       brand:
         $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
       productType:
         $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
-      ageGroup:
+      color1:
         $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
-      colorway:
+      color2:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      color3:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      color4:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      businessSegment:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      subBrand:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      productDivision:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      sportsCategory:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      franchise:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      productFit:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      productGroup:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      lifecycleStatus:
         type: object
         properties:
-          name:
+          code:
             type: string
+          date:
+            type: string
+            format: date-time
           description:
             type: string
       colors:
         type: array
         items:
           $ref: '#/definitions/supermodelIoAdidasProductColor'
-      seasons:
-        type: array
-        items:
-          $ref: '#/definitions/supermodelIoAdidasProductArticleSeason'
       skus:
         type: array
         items:
           $ref: '#/definitions/supermodelIoAdidasProductSKU'
+      seasons:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductArticleSeason'
       assets:
         type: array
         items:
@@ -762,21 +3385,34 @@ definitions:
       articleNumber: '015110'
       modelNumber: '10034'
       articleDescription: COPA MUNDIAL
+      materialWeight: weight
+      colorwayname: FTWR WHITE/BLACK
+      colorwayDescription: BLABAS/GRAFIT/BLABAS
+      imageLaunchDate: launchDate
       gender:
         code: M
         description: MALE
+      ageGroup:
+        code: A
+        description: ADULT
       brand:
         code: '11'
         description: ADIDAS
       productType:
         code: '104'
         description: FOOTBALL SHOES (FIRM GROUND)
-      ageGroup:
-        code: A
-        description: ADULT
-      colorway:
-        name: FTWR WHITE/BLACK
-        description: BLABAS/GRAFIT/BLABAS
+      color1:
+        code: R1
+        description: Red1
+      color2:
+        code: R2
+        description: Red2
+      color3:
+        code: R3
+        description: Red3
+      color4:
+        code: R4
+        description: Red4
       colors:
         - {}
       seasons:
@@ -811,30 +3447,13 @@ definitions:
     description: Digital Asset
     type: object
     properties:
-      assetType:
-        type: string
-        enum:
-          - image
-          - video
-          - other
       viewGroup:
         type: string
       view:
         type: string
-      assetCategory:
-        type: string
-      usageTerms:
-        type: array
-        items:
-          type: string
-      assetHref:
-        type: string
-        format: uri
       image:
         type: object
         properties:
-          style:
-            type: string
           width:
             type: integer
           height:
@@ -843,11 +3462,10 @@ definitions:
             type: string
           representation:
             type: string
-      video:
-        type: object
-        properties:
-          fileSize:
-            type: integer
+      assetCategory:
+        type: string
+      imageStyle:
+        type: string
       model:
         type: object
         properties:
@@ -859,6 +3477,38 @@ definitions:
             type: string
           productSize:
             type: string
+      pairedArticles:
+        type: array
+        items:
+          type: string
+      video:
+        type: object
+        properties:
+          fileSize:
+            type: integer
+      publicId:
+        type: string
+      defaultAlias:
+        type: string
+      sortOrder:
+        type: string
+      usage:
+        type: array
+        items:
+          type: string
+      assetHref:
+        type: string
+        format: uri
+      usageTerms:
+        type: array
+        items:
+          type: string
+      assetType:
+        type: string
+        enum:
+          - image
+          - video
+          - other
     required:
       - assetType
       - viewGroup
@@ -867,36 +3517,124 @@ definitions:
       - usageTerms
       - assetHref
     example:
-      assetType: image
       viewGroup: 3d
-      assetCategory: Photography
-      usageTerms: B2B Cataloguge
-      assetHref: 'http://domain.com/image.jpeg'
+      view: Top
       image:
-        style: On Model
         width: 2000
         height: 2000
         bgColor: transparent
+        representation: null
+      assetCategory: Photography
+      imageStyle: Standard
       model:
         waist: 58
         chest: 97
         height: 197
         productSize: 540
+      pairedArticles:
+        value: AB1234
+      video:
+        fileSize: 99
+      publicID: AZ1
+      defaultAlias: alias
+      sortOrder: 6
+      usage:
+        value: pdp
+      assetHref: 'http://domain.com/image.jpeg'
+      usageTerms:
+        value: B2B Catalogue
+      assetType: image
   supermodelIoAdidasProductCatalog:
     title: Catalog
     type: object
     properties:
       catalogueCopy:
         $ref: '#/definitions/supermodelIoAdidasProductCatalogDefinitionsCatalogCopy'
-      featureAndBenefits:
-        type: array
-        items:
-          $ref: >-
-            #/definitions/supermodelIoAdidasProductCatalogDefinitionsFeatureAndBenefit
     example:
       catalogueCopy: {}
       featureAndBenefits:
         - {}
+  supermodelIoAdidasProductCatalogues:
+    title: catalogues
+    type: object
+    properties:
+      locale:
+        type: string
+      acsModelName:
+        type: string
+      b2cModelName:
+        type: string
+      b2cCopy:
+        type: string
+      b2cCopyShort:
+        type: string
+      b2bCopy:
+        type: string
+      b2bCopyShort:
+        type: string
+      materialComposition:
+        type: string
+      materialConstruction:
+        type: string
+      bullets1:
+        type: string
+      bullets2:
+        type: string
+      bullets3:
+        type: string
+      bullets4:
+        type: string
+      bullets5:
+        type: string
+      bullets6:
+        type: string
+      bullets7:
+        type: string
+      bulletWeight:
+        type: string
+      bulletMeasurements:
+        type: string
+      bulletFit:
+        type: string
+      bulletMaterial:
+        type: string
+        example:
+          locale: en-GB
+          acsModelName: COPA MUNDIAL
+          b2cModelName: COPA MUNDIAL
+          b2cCopy: >-
+            De populairste voetbalschoen ooit, en terecht. De adidas Copa
+            Mundial heeft een bovenwerk van rijk leer en een loopzool met
+            dubbele dichtheid die al decennia lang de toon zet voor comfort en
+            prestaties op het veld.
+          b2cCopyShort: >-
+            Entraîne-toi comme les pros avec ce haut de l'équipe de Belgique de
+            football.
+          b2bCopy: >-
+            Hurricanes Training Jersey as worn by the players when training with
+            dynamic retro design inspired by the original Super Jersey.Captured
+            with shock blue and black colors on climalite fabric with moisture
+            wicking properties.
+          b2bCopyShort: >-
+            Hurricanes Training Jersey as worn by the players when training with
+            dynamic retro design inspired by the orginal Super jersey.
+          materialComposition: 100% Organic Cotton
+          materialConstruction: Single jersey
+          bullets1: materiál Climalite odvádí pot a udrží tě vsuchu za všech okolností
+          bullets2: Ribbet V-hals
+          bullets3: Nackenband
+          bullets4: >-
+            Επένδυση προστασίας από τον άνεμο στο μπροστινό μέρος. Μανσέτες με
+            ανοίγματα για τους αντίχειρες
+          bullets5: Woven Belgium crest on chest
+          bullets6: >-
+            3 bandas en las mangas; logotipo de adidas serigrafiado a la derecha
+            del pecho
+          bullets7: Three stripes
+          bulletWeight: bullet weight
+          bulletMeasurements: bullet measurements
+          bulletFit: bulletFit
+          bulletMaterial: Maille double 100 % polyester.
   supermodelIoAdidasProductColor:
     title: Color
     type: object
@@ -945,7 +3683,14 @@ definitions:
       ageGroup:
         $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/ageGroup'
       colorway:
-        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colorway'
+        type: object
+        properties:
+          name:
+            $ref: >-
+              #/definitions/supermodelIoAdidasProductArticle/properties/colorwayName
+          description:
+            $ref: >-
+              #/definitions/supermodelIoAdidasProductArticle/properties/colorwayDescription
       colors:
         $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colors'
       skus:
@@ -1046,6 +3791,35 @@ definitions:
         - saleSizeConvID: D
           saleSizeScale: 8C
           saleSizeAbbr: '27'
+  supermodelIoAdidasProductSeason:
+    title: Season
+    type: object
+    properties:
+      seasonCode:
+        type: string
+      isCarryOver:
+        type: boolean
+      retailIntroDate:
+        type: string
+        format: date-time
+      retailExitDate:
+        type: string
+        format: date-time
+      quarter:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      salesLine:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+    example:
+      seasonCode: '20181'
+      isCarryOver: true
+      retailIntroDate: '1990-11-30T22:00:00.000Z'
+      retailExitDate: '1990-11-30T22:00:00.000Z'
+      quarter:
+        code: Q1
+        description: Quarter 1
+      salesLine:
+        code: 1S
+        description: Line 1
   supermodelIoAdidasProductApiArticleCatalogHAL:
     title: Article Catalog HAL Representation
     type: object
@@ -1078,8 +3852,6 @@ definitions:
         $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/productType'
       ageGroup:
         $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/ageGroup'
-      colorway:
-        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colorway'
       colors:
         $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/colors'
     example:
@@ -1169,6 +3941,38 @@ definitions:
     properties:
       articleCount:
         type: number
+      _embedded:
+        type: object
+        properties:
+          articles:
+            type: array
+            items:
+              type: object
+              properties:
+                articleNumber:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/articleNumber
+                modelNumber:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/modelNumber
+                articleDescription:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/articleDescription
+                brand:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/brand
+                productDivision:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/productType
+                productType:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/productType
+                gender:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/gender
+                ageGroup:
+                  $ref: >-
+                    #/definitions/supermodelIoAdidasProductArticle/properties/ageGroup
     example:
       _links:
         self:
@@ -1181,8 +3985,40 @@ definitions:
           href: /articles?offset=40&limit=5
       articleCount: 1
       _embedded:
-        article:
-          - {}
+        articles:
+          - articleNumber: '011040'
+            modelNumber: '10009'
+            articleDescription: null
+            brand:
+              code: '11'
+              description: ADIDAS
+            productDivision:
+              code: '1'
+              description: sample
+            productType:
+              code: '1'
+              description: sample
+            gender:
+              code: '1'
+              description: sample
+            ageGroup:
+              code: '1'
+              description: sample
+            _links:
+              self:
+                href: /articles/011040
+              assets:
+                href: /articles/011040/assets
+              skus:
+                href: /articles/011040/skus
+              prices:
+                href: /articles/011040/prices
+              seasons:
+                href: /articles/011040/seasons
+              ecom:
+                href: /articles/011040/ecom
+              catalogue:
+                href: /articles/011040/catalogue
   supermodelIoAdidasProductApiAssetsHAL:
     title: HAL Representation of Collection of Assets
     type: object
@@ -1368,8 +4204,8 @@ definitions:
     allOf:
       - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
-      priceCount:
-        type: number
+      articleNumber:
+        type: string
       prices:
         type: array
         items:
@@ -1400,62 +4236,119 @@ definitions:
       skuCount: 1
       skus:
         - {}
+  supermodelIoAdidasProductApiSeasonsHAL:
+    title: HAL Representation of Collection of Seasons
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      articleNumber:
+        type: string
+      modelNumber:
+        type: string
+      seasons:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductSeason'
+    example:
+      _links:
+        self:
+          href: /articles/AB1234/seasons
+      articleNumber: AB1234
+      modelNumber: MD9876
+      seasons:
+        - {}
   supermodelIoAdidasProductEcomArticle:
     title: eCom Article
     type: object
     properties:
-      athlete:
+      articleNumber:
         type: string
-      clearance:
-        type: boolean
-      comingSoonSignup:
-        type: number
-      customizable:
-        type: boolean
-      age:
+      modelNumber:
         type: string
-        example: Infant &amp; Toddler
+      locale:
+        type: string
+        example: en-GB
+      activity:
+        type: string
+      ages:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      athletes:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      badge:
+        type: string
+      bestFor:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
       brand:
         type: string
-        example: Performance
-      campaign:
+      campaignPLP:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      clearance:
+        type: number
+      clicks3:
         type: string
-        example: >-
-          Black Friday;Cyber Monday;After Christmas Sale;End of Season
-          Sale;Friends Family;Presidents Day Sale;MLK Jr Day Sale
-      color:
+      clicks14:
         type: string
-        example: White
+      colors:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      comingSoonSignup:
+        type: boolean
+      customizable:
+        type: boolean
       defaultColor:
         type: string
-        example: Copper Metalic / White Chalk / Cardboard
-      gender:
-        type: string
-        example: K
-      genderSub:
-        type: string
-        example: KB
-      hastag:
-        type: string
-      maxQuantity:
-        type: string
-      productDivision:
-        type: string
-        example: Accessories
-      productLine:
-        type: string
-        example: Tiro
-      productType:
-        type: string
-      price:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomPrice'
-      sport:
-        type: string
-        example: Running
       fitbarPosition:
         type: string
-      care:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomCare'
+      flashProduct:
+        type: boolean
+      frequency:
+        type: string
+      functions:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      gender:
+        type: string
+      genderSub:
+        type: string
+      hashtag:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      hypeProduct:
+        type: boolean
+      maxQuantity:
+        type: number
+      miInspirationName:
+        type: string
+      miPdpBackgroundImage:
+        type: string
+      miQuickBuy:
+        type: string
+      miRecipeUrl:
+        type: string
+      miSearchSizes:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      miTeamCountries:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      miBnmCountries:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
       onlineFrom:
         type: string
         description: ISO 8601 Date
@@ -1464,66 +4357,92 @@ definitions:
         type: string
         description: ISO 8601 Date
         example: '2017-06-21T14:07:17Z'
-      previewTo:
+      outlet:
+        type: boolean
+      pageKeywords:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      partners:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      pdpCallout:
         type: string
-        description: ISO 8601 Date
-        example: '2017-06-21T14:07:17Z'
-      pdp:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomPDP'
-      flashProduct:
-        type: boolean
-      hypeProduct:
-        type: boolean
+      pdpContent:
+        type: string
+      pdpModel:
+        type: string
       personalizable:
         type: boolean
       preorder:
         type: boolean
-      soldout:
-        type: boolean
+      previewTo:
+        type: string
+        description: ISO 8601 Date
+        example: '2017-06-21T14:07:17Z'
+      productDivision:
+        type: string
       productFamily:
-        type: string
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
       productFilter:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      productFit:
         type: string
-      prodcutLine:
+      productLines:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      productType:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      sales3:
+        type: string
+      sales14:
+        type: string
+      searchableIfUnavailable:
+        type: boolean
+      shippingOn:
         type: string
       sizeChart:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      soldout:
+        type: boolean
+      sports:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      surface:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      taxClass:
+        type: string
+      teamkits:
         type: string
       teams:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      teamwear:
         type: string
+      technologies:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
       template:
         type: string
-        description: >-
-          The 'Template' is used to identify if the inline or miadidas PDP
-          template should be applied in the ecommerce frontend.
-      articleNumber:
-        $ref: >-
-          #/definitions/supermodelIoAdidasProductArticle/properties/articleNumber
-      modelNumber:
-        $ref: '#/definitions/supermodelIoAdidasProductArticle/properties/modelNumber'
-      articleDescription:
-        $ref: >-
-          #/definitions/supermodelIoAdidasProductArticle/properties/articleDescription
-      name:
+      type:
         type: string
-        example: Obuv F/22 Primeknit
-      badge:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomBadge'
-      assets:
-        type: array
-        items:
-          $ref: '#/definitions/supermodelIoAdidasProductAsset'
-      colorVariants:
-        type: array
-        items:
-          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
-      miadidas:
-        type: array
-        items:
-          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
-      completeLook:
-        type: array
-        items:
-          $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+      width:
+        type: string
   supermodelIoAdidasProductEcomBadge:
     title: Badge
     type: object
@@ -1556,6 +4475,52 @@ definitions:
         type: string
       extraCareInstruction:
         type: string
+  supermodelIoAdidasProductEcomCareInstruction:
+    title: CareInstruction
+    description: Care instruction detail description
+    type: object
+    properties:
+      locale:
+        type: string
+      bleaching:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      ironing:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      professionalCare:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      drying:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      washing:
+        $ref: '#/definitions/supermodelIoAdidasProductUtilsCodeDescription'
+      extraCare:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+    example:
+      locale: de-DE
+      bleaching:
+        code: A2
+        description: Nur Handwäsche
+      drying:
+        code: C1
+        description: Nicht im Trockner trocknen
+      professionalCare:
+        code: B1
+        description: Nicht bleichen
+      ironing:
+        code: D1
+        description: Nicht bügeln
+      washing:
+        code: E1
+        description: Nicht chemisch reinigen
+      extraCare:
+        description: Nicht über der Heizung trocknen
+  supermodelIoAdidasProductEcomMultiValue:
+    title: MultiValue
+    type: object
+    properties:
+      value:
+        type: string
   supermodelIoAdidasProductEcomPDP:
     title: PDP
     description: PDP model description
@@ -1569,69 +4534,246 @@ definitions:
         type: string
   supermodelIoAdidasProductEcomPrice:
     title: Price
-    description: Price model description
+    description: Ecom price detail description
     type: object
     properties:
+      locale:
+        type: string
       standardPrice:
-        type: number
-        example: 3799
-      standardPriceWithoutVAT:
-        type: number
-        example: 3139.67
-      currentPrice:
-        type: number
-        example: 3799
+        type: string
       salesPrice:
-        type: number
-  supermodelIoAdidasProductEcomApiArticleAvro:
-    title: eCom Article Avro Model
+        type: string
+      vipSalesPrice:
+        type: string
+      currency:
+        type: string
+    example:
+      locale: en-IE
+      standardPrice: 24.95
+      salesPrice: 12.5
+      vipSalesPrice: 10.95
+      currency: EUR
+  supermodelIoAdidasProductEcomSort:
+    title: eCom Sort
     type: object
     properties:
-      brand:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/brand'
-      age:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/age'
-      changeInfo:
-        type: object
-        properties:
-          articleGeneralInfo:
-            type: boolean
+      locale:
+        type: string
+        example: en-GB
+      sort1:
+        type: string
+      sort2:
+        type: string
+      sort3:
+        type: string
+      sort4:
+        type: string
+      sort5:
+        type: string
+      sort6:
+        type: string
+      sort7:
+        type: string
+      sort8:
+        type: string
+      sort9:
+        type: string
+      sort10:
+        type: string
+      sort11:
+        type: string
+      sort12:
+        type: string
+      sort13:
+        type: string
+      sort14:
+        type: string
+      sort15:
+        type: string
+      sort16:
+        type: string
+      sort17:
+        type: string
+      sort18:
+        type: string
+      sort19:
+        type: string
+      sort20:
+        type: string
+  supermodelIoAdidasProductEcomSpecification:
+    title: Specification
+    description: Specification detail description
+    type: object
+    properties:
+      locale:
+        type: string
+      legalCertNo:
+        type: string
+      legalCertValidFrom:
+        type: string
+        description: ISO 8601 Date
+      legalCertValidTo:
+        type: string
+        description: ISO 8601 Date
+      legalCountryOfOrigin:
+        type: string
+      legalManufName:
+        type: string
+      legalManufAddress:
+        type: string
+      productFit:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      sleeveLength:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      baseMaterial:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      pattern:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      backLength:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      lining:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      pantLength:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      rise:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      neckline:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      support:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      designFeature:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      strap:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      closure:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      width:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      dimensions:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      capacity:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      compatibility:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      compareOutsoleTechnology:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      compareUpperTechnology:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
+      compareWeight:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomMultiValue'
     example:
-      brand: 11
-      age: 10000
-      changeInfo:
-        articleGeneralInfo: true
+      locale: de-DE
+      legalCertNo: null
+      legalCertValidFrom: null
+      legalCertValidTo: null
+      legalCountryOfOrigin: null
+      legalManufName: null
+      legalManufAddress: null
+      productFit:
+        - value: Regulär
+      sleeveLength: []
+      baseMaterial:
+        - value: Polyester
+      pattern:
+        - value: Logo-Print
+      backLength: []
+      lining: []
+      pantLength: []
+      rise: []
+      neckline:
+        - value: Rundhalsausschnitt
+      support: []
+      designFeature: []
+      strap: []
+      closure: []
+      width: []
+      dimensions: []
+      capacity: []
+      compatibility: []
+      compareOutsoleTechnology:
+        - value: boost™
+      compareUpperTechnology:
+        - value: Rubber
+      compareWeight:
+        - value: '270'
   supermodelIoAdidasProductEcomApiArticleHAL:
     title: eCom Article HAL Representation
     type: object
     allOf:
       - $ref: '#/definitions/supermodelIoAdidasApiHAL'
     properties:
-      age:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/age'
-      articleDescription:
-        $ref: >-
-          #/definitions/supermodelIoAdidasProductEcomArticle/properties/articleDescription
       articleNumber:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/articleNumber
-      assets:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/assets'
-      athlete:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/athlete'
+      modelNumber:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/modelNumber
+      locale:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/locale'
+      activity:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/activity'
+      ages:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/ages'
+      athletes:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/athletes'
       badge:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/badge'
+      bestFor:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/bestFor'
       brand:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/brand'
-      campaign:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/campaign'
-      care:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/care'
+      campaignPLP:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/campaignPLP
       clearance:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/clearance
-      color:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/color'
+      clicks3:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/clicks3'
+      clicks14:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/clicks14'
+      colors:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/colors'
       comingSoonSignup:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/comingSoonSignup
@@ -1647,31 +4789,66 @@ definitions:
       flashProduct:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/flashProduct
+      frequency:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/frequency
+      functions:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/functions
       gender:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/gender'
       genderSub:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/genderSub
-      hastag:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/hastag'
+      hashtag:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/hashtag'
       hypeProduct:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/hypeProduct
       maxQuantity:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/maxQuantity
-      modelNumber:
+      miInspirationName:
         $ref: >-
-          #/definitions/supermodelIoAdidasProductEcomArticle/properties/modelNumber
-      name:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/name'
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/miInspirationName
+      miPdpBackgroundImage:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/miPdpBackgroundImage
+      miQuickBuy:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/miQuickBuy
+      miRecipeUrl:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/miRecipeUrl
+      miSearchSizes:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/miSearchSizes
+      miTeamCountries:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/miTeamCountries
+      miBnmCountries:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/miBnmCountries
       onlineFrom:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/onlineFrom
       onlineTo:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/onlineTo'
-      pdp:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/pdp'
+      outlet:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/outlet'
+      pageKeywords:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/pageKeywords
+      partners:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/partners'
+      pdpCallout:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/pdpCallout
+      pdpContent:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/pdpContent
+      pdpModel:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/pdpModel'
       personalizable:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/personalizable
@@ -1680,11 +4857,6 @@ definitions:
       previewTo:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/previewTo
-      price:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/price'
-      prodcutLine:
-        $ref: >-
-          #/definitions/supermodelIoAdidasProductEcomArticle/properties/prodcutLine
       productDivision:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/productDivision
@@ -1694,35 +4866,68 @@ definitions:
       productFilter:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/productFilter
-      productLine:
+      productFit:
         $ref: >-
-          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productLine
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productFit
+      productLines:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/productLines
       productType:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/productType
+      sales3:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/sales3'
+      sales14:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/sales14'
+      searchableIfUnavailable:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/searchableIfUnavailable
+      shippingOn:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/shippingOn
       sizeChart:
         $ref: >-
           #/definitions/supermodelIoAdidasProductEcomArticle/properties/sizeChart
       soldout:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/soldout'
-      sport:
-        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/sport'
+      sports:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/sports'
+      surface:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/surface'
+      taxClass:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/taxClass'
+      teamkits:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/teamkits'
       teams:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/teams'
+      teamwear:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/teamwear'
+      technologies:
+        $ref: >-
+          #/definitions/supermodelIoAdidasProductEcomArticle/properties/technologies
       template:
         $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/template'
+      type:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/type'
+      width:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle/properties/width'
     example:
       _links:
         self:
           href: /articles/AH2171?site=cz
-      _embedded:
-        colorvariant:
-          - _links:
-              self:
-                href: /articles/AH2172?site=cz
-          - _links:
-              self:
-                href: /articles/CQ3025?site=cz
+        assets:
+          href: /articles/015110/assets
+        catalogue:
+          href: /articles/015110/ecom/catalogue
+        ecomCareInstructions:
+          href: /articles/015110/ecom/care-instructions
+        ecomPrices:
+          href: /articles/015110/ecom/prices
+        ecomSort:
+          href: /articles/015110/ecom/sort
+        relatedArticles:
+          - href: /articles/AH2172?site=cz
+          - href: /articles/CQ3025?site=cz
       age: Infant &amp; Toddler
       articleDescription: string
       articleNumber: string
@@ -1795,6 +5000,195 @@ definitions:
       sport: Running
       teams: string
       template: string
+  supermodelIoAdidasProductEcomApiAvro:
+    title: eCom Avro Model
+    description: >-
+      Model of Kafka topic that communicates any updates to the whole ecom data
+      model
+    type: object
+    properties:
+      article:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomArticle'
+      price:
+        $ref: '#/definitions/supermodelIoAdidasProductEcomPrice'
+      assets:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductAsset'
+      catalog:
+        $ref: '#/definitions/supermodelIoAdidasProductCatalog'
+      skus:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductSKU'
+      changeInfo:
+        type: object
+        description: >-
+          Change information object carries information on what areas of the
+          topic have changed since the last event.
+        properties:
+          articleGeneralInfo:
+            type: boolean
+          articleColorInfo:
+            type: boolean
+          articleAssetInfo:
+            type: boolean
+          catalogGeneralInfo:
+            type: boolean
+          modelGeneralInfo:
+            type: boolean
+          articleSeasonInfo:
+            type: boolean
+          articleSKUInfo:
+            type: boolean
+          eComArticleGeneralInfo:
+            type: boolean
+          eComArticleCustomInfo:
+            type: boolean
+          eComArticlePriceInfo:
+            type: boolean
+          eComArticleSortInfo:
+            type: boolean
+          eComArticleCareInfo:
+            type: boolean
+          eComArticleSpecificationInfo:
+            type: boolean
+          eComArticleSKUInfo:
+            type: boolean
+          articlePriceInfo:
+            type: boolean
+          CTA:
+            type: string
+  supermodelIoAdidasProductEcomApiCareInstructionsHAL:
+    title: eCom Article Care Instructions HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      articleNumber:
+        type: string
+      careInstructions:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomCareInstruction'
+    example:
+      articleNumber: T12345
+      careInstructions:
+        - locale: de-DE
+          bleaching:
+            code: A2
+            description: Nur Handwäsche
+          drying:
+            code: C1
+            description: Nicht im Trockner trocknen
+          professionalCare:
+            code: B1
+            description: Nicht bleichen
+          ironing:
+            code: D1
+            description: Nicht bügeln
+          washing:
+            code: E1
+            description: Nicht chemisch reinigen
+          extraCare:
+            description: Nicht über der Heizung trocknen
+      _links:
+        self:
+          href: /articles/T12345/ecom/care-instructions?site=DE
+  supermodelIoAdidasProductEcomApiPricesHAL:
+    title: eCom Article Prices HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      articleNumber:
+        type: string
+      prices:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomPrice'
+    example:
+      articleNumber: T12345
+      careInstructions:
+        - locale: en-IE
+          standardPrice: 24.95
+          salesPrice: 12.5
+          vipSalesPrice: 10.95
+          currency: EUR
+      _links:
+        self:
+          href: /articles/T12345/ecom/prices?site=IE
+  supermodelIoAdidasProductEcomApiSortHAL:
+    title: eCom Sort HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      articleNumber:
+        type: string
+      prices:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomSort'
+    example:
+      articleNumber: string
+      sortAttributes:
+        - {}
+      _links:
+        self:
+          href: /articles/015110/ecom/sort?site=GB
+  supermodelIoAdidasProductEcomApiSpecificationsHAL:
+    title: eCom Article Specifications HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      articleNumber:
+        type: string
+      specifications:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasProductEcomSpecification'
+    example:
+      articleNumber: T12345
+      specifications:
+        - locale: de-DE
+          legalCertNo: null
+          legalCertValidFrom: null
+          legalCertValidTo: null
+          legalCountryOfOrigin: null
+          legalManufName: null
+          legalManufAddress: null
+          productFit:
+            - value: Regulär
+          sleeveLength: []
+          baseMaterial:
+            - value: Polyester
+          pattern:
+            - value: Logo-Print
+          backLength: []
+          lining: []
+          pantLength: []
+          rise: []
+          neckline:
+            - value: Rundhalsausschnitt
+          support: []
+          designFeature: []
+          strap: []
+          closure: []
+          width: []
+          dimensions: []
+          capacity: []
+          compatibility: []
+          compareOutsoleTechnology:
+            - value: boost™
+          compareUpperTechnology:
+            - value: Rubber
+          compareWeight:
+            - value: '270'
+      _links:
+        self:
+          href: /articles/T12345/ecom/specifications?site=de
   supermodelIoAdidasProductUtilsCodeDescription:
     title: Code Description Tuple
     description: Helper data structure to hold any code - description pair
@@ -1804,54 +5198,255 @@ definitions:
         type: string
       description:
         type: string
-  supermodelIoAdidasApiHAL:
-    title: HAL
-    description: >-
-      JSON Hypertext Application Language. Definition of [HAL message
-      format](https://tools.ietf.org/html/draft-kelly-json-hal-08)
+  supermodelIoAdidasReferenceCategory:
+    title: Category
+    description: Category model description
     type: object
     properties:
-      _links:
-        type: object
-        additionalProperties:
-          allOf:
-            - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
-            - type: array
-              items:
-                $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalLinkObject'
-        properties:
-          curies:
-            allOf:
-              - $ref: '#/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink'
-              - type: array
-                items:
-                  $ref: >-
-                    #/definitions/supermodelIoAdidasApiHALDefinitionsHalCuriesLink
-      _embedded:
-        type: object
-        additionalProperties:
-          allOf:
-            - $ref: '#/definitions/supermodelIoAdidasApiHAL'
-            - type: array
-              items:
-                $ref: '#/definitions/supermodelIoAdidasApiHAL'
-  supermodelIoAdidasApiProblemDetail:
-    title: Problem Details for HTTP APIs
-    description: >-
-      Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem
-      detail
+      name:
+        type: string
+      domains:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceDomain'
+      parents:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+      children:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+      entities:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceEntity'
+  supermodelIoAdidasReferenceDomain:
+    title: Domain
+    description: Domain model description
     type: object
     properties:
-      type:
+      name:
         type: string
-      title:
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+  supermodelIoAdidasReferenceEntity:
+    title: Entity
+    description: Entity model description
+    type: object
+    properties:
+      code:
         type: string
-      status:
+      description:
+        type: string
+      isActive:
+        type: boolean
+      category:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory'
+      combinations:
+        type: array
+        items:
+          $ref: '#/definitions/supermodelIoAdidasReferenceEntity'
+  supermodelIoAdidasReferenceApiCategoriesHAL:
+    title: Categories HAL
+    description: Categories HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      categoriesCount:
         type: number
-      detail:
-        type: string
-      instance:
-        type: string
-    required:
-      - title
-      - detail
+    example:
+      _links:
+        self:
+          href: /domains/product/categories
+        category:
+          - href: /domains/product/categories/brand
+          - href: /domains/product/categories/brandGroup
+          - href: /domains/product/categories/brandAsset
+          - href: /domains/product/categories/ageGroup
+      categoriesCount: 4
+  supermodelIoAdidasReferenceApiCategoryHAL:
+    title: Category HAL
+    description: Category HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      name:
+        $ref: '#/definitions/supermodelIoAdidasReferenceCategory/properties/name'
+    example:
+      _links:
+        self:
+          href: /domains/product/categories/brand
+        entities:
+          href: /domains/product/categories/brand/entities
+        entity:
+          - href: /domains/product/categories/brand/entities/11
+          - href: /domains/product/categories/brand/entities/23
+          - href: /domains/product/categories/brand/entities/42
+        domain:
+          - href: /domains/product
+        parent:
+          - href: /domains/product/categories/brandGroup
+          - href: /domains/product/categories/anoteherCategory
+        child:
+          - href: /domains/product/categories/someCategoryA
+          - href: /domains/product/categories/someCategoryB
+          - href: /domains/product/categories/someCategoryC
+      name: Brand
+  supermodelIoAdidasReferenceApiDomainHAL:
+    title: Domain HAL
+    description: Domain HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      name:
+        $ref: '#/definitions/supermodelIoAdidasReferenceDomain/properties/name'
+    example:
+      _links:
+        self:
+          href: /domains/product
+        categories:
+          href: /domains/product/categories
+      name: Product
+  supermodelIoAdidasReferenceApiDomainsHAL:
+    title: Domains HAL
+    description: Domains HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      domainCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /domains
+        domain:
+          - href: /domains/product
+          - href: /domains/vendor
+          - href: /domains/store
+      domainCount: 3
+  supermodelIoAdidasReferenceApiEntitiesHAL:
+    title: Entities HAL
+    description: Entities HAL model description
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      entitiesCount:
+        type: number
+    example:
+      _links:
+        self:
+          href: /domains/product/categories/brand/entities
+        entity:
+          - href: /domains/product/categories/brand/entities/11
+          - href: /domains/product/categories/brand/entities/23
+          - href: /domains/product/categories/brand/entities/42
+      entitiesCount: 3
+  supermodelIoAdidasReferenceApiEntityHAL:
+    title: Entity HAL
+    description: >
+      One design object instance representation, in its simple form it includes
+      only the three common attributes (code, description and acitivity flag).
+      However, it might include additional attributes based on the category of
+      the entity. To be documented.
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+    properties:
+      code:
+        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/code'
+      description:
+        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/description'
+      isActive:
+        $ref: '#/definitions/supermodelIoAdidasReferenceEntity/properties/isActive'
+    example:
+      _links:
+        self:
+          href: /domains/product/categories/brand/entities/11
+        category:
+          href: /domains/product/categories/brand
+        combination:
+          - href: /domains/product/categories/someCategory/entities/7
+          - href: /domains/product/categories/someCategory/entities/23
+          - href: /domains/product/categories/someOtherCategory/entities/42
+        brandGroup:
+          - href: /domains/product/categories/brandGroup/entities/8
+      code: 11
+      description: adidas
+      isActive: true
+  supermodelIoAdidasStoreMasterDataApiStoreHAL:
+    title: Store HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasStoreMasterDataCoreStore'
+    example:
+      _links:
+        self:
+          href: /stores/1234
+        nearby:
+          href: /stores/1234/nearby
+      identifier:
+        ssmId: 123
+        bcsCode: abc
+        posID: '0001'
+      store: {}
+      storeClassification: {}
+      financialClassification: {}
+      location: {}
+      operations: {}
+      systems: {}
+      capabilitiesAndServices: {}
+      organization: {}
+      events: {}
+      consumer: {}
+  supermodelIoAdidasStoreMasterDataApiStoresHAL:
+    title: Stores HAL Representation
+    type: object
+    allOf:
+      - $ref: '#/definitions/supermodelIoAdidasApiHAL'
+      - $ref: '#/definitions/supermodelIoAdidasStoreMasterDataCoreStore'
+    example:
+      _links:
+        self:
+          href: /stores?country=DE
+        next:
+          href: /stores?country=DE&offset=10
+        last:
+          href: /stores?country=DE&offset=80
+      numberOfResults: 87
+      _embedded:
+        store:
+          - _links:
+              self:
+                href: /stores/1234
+              someStoreInfo: Store 1
+          - _links:
+              self:
+                href: /stores/1235
+              someStoreInfo: Store 2
+          - _links:
+              self:
+                href: /stores/1236
+              someStoreInfo: Store 3
+  supermodelIoAdidasStoreMasterDataCoreStore:
+    title: Store
+    type: object
+  supermodelIoSchemaorgDateTime:
+    title: DateTime
+    type: string
+    description: >-
+      A combination of date and time of day in the form
+      [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm] (see Chapter 5.4 of ISO 8601).
+    allOf:
+      - $ref: '#/definitions/supermodelIoSchemaorgDataType'
+  supermodelIoSchemaorgDataType:
+    title: DataType
+    description: 'The basic data types such as Integers, Strings, etc.'
